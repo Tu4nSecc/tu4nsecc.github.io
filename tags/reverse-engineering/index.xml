@@ -12,12 +12,39 @@
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
     
-    <lastBuildDate></lastBuildDate>
+    <lastBuildDate>Fri, 19 Sep 2025 00:00:00 +0000</lastBuildDate>
     
     
     <atom:link href="https://tu4nsecc.github.io/tags/reverse-engineering/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>Writeup PicoCTF - Reverse Engineering</title>
+      <link>https://tu4nsecc.github.io/posts/picoctf-reverse/</link>
+      <pubDate>Fri, 19 Sep 2025 00:00:00 &#43;0000</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>https://tu4nsecc.github.io/posts/picoctf-reverse/</guid>
+      <description>
+        <![CDATA[<h1>Writeup PicoCTF - Reverse Engineering</h1><p>Author: D-Sketon(xxx@example.com)</p>
+        
+          <h2 id="-challenge-crackme1">
+<a class="header-anchor" href="#-challenge-crackme1"></a>
+🔎 Challenge: crackme1
+</h2><p>Phân tích file binary với strings và ghidra&hellip;</p>
+<h2 id="-solution">
+<a class="header-anchor" href="#-solution"></a>
+✅ Solution
+</h2><p>Sau khi đọc mã, ta phát hiện điều kiện so sánh chuỗi&hellip;</p>
+        
+        <hr><p>Published on 2025-09-19 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2025-09-19</p>]]>
+      </description>
+      
+        <category>Writeup</category>
+      
+    </item>
     
   </channel>
 </rss>

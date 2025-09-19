@@ -3,3 +3,6 @@ languageCode = "en-us"
 title = "Welcome to my blog"
 theme = "reimu"
 publishDir = "."
+[params]
+  mainSections = ["posts"]
+  sort_order = { home = "date-reverse" }
