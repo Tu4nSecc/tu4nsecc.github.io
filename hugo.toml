@@ -3,6 +3,12 @@ languageCode = "en-us"
 title = "Welcome to my blog"
 theme = "reimu"
 publishDir = "."
+
 [params]
   mainSections = ["posts"]
   sort_order = { home = "date-reverse" }
+
+  author = "Diep Manh Tuan"
+  nickname = "Tu4nSec"
+  description = "Digital Forensics | @VSL.0utl4w"
+  avatar = "/images/tuan.jpg"
