@@ -3,7 +3,7 @@ title: "Holmes CTF 2025 - The Card"
 date: 2025-09-27T14:20:00+07:00
 draft: false
 categories: ["CTF", "writeup"]
-image: "/images/holmes_2025/the_card/anh1.png"
+cover: "/images/holmes_2025/the_card/anh1.png"
 ---
 
 # Holmes CTF 2025 – The Card
