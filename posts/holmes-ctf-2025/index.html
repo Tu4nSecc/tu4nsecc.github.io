@@ -145,18 +145,18 @@ This article does not have a corresponding language version
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#-question-1">❓ Question 1</a></li>
-    <li><a href="#-question-2">❓ Question 2:</a></li>
-    <li><a href="#-question-3">❓ Question 3:</a></li>
-    <li><a href="#-question-4">❓ Question 4:</a></li>
-    <li><a href="#-question-5">❓ Question 5:</a></li>
-    <li><a href="#-question-6">❓ Question 6:</a></li>
-    <li><a href="#-question-7">❓ Question 7:</a></li>
-    <li><a href="#-question-8">❓ Question 8:</a></li>
-    <li><a href="#-question-9">❓ Question 9:</a></li>
-    <li><a href="#-question-10">❓ Question 10:</a></li>
-    <li><a href="#-question-11">❓ Question 11:</a></li>
-    <li><a href="#-question-12">❓ Question 12:</a></li>
+    <li><a href="#question-1">Question 1</a></li>
+    <li><a href="#question-2">Question 2:</a></li>
+    <li><a href="#question-3">Question 3:</a></li>
+    <li><a href="#question-4">Question 4:</a></li>
+    <li><a href="#question-5">Question 5:</a></li>
+    <li><a href="#question-6">Question 6:</a></li>
+    <li><a href="#question-7">Question 7:</a></li>
+    <li><a href="#question-8">Question 8:</a></li>
+    <li><a href="#question-9">Question 9:</a></li>
+    <li><a href="#question-10">Question 10:</a></li>
+    <li><a href="#question-11">Question 11:</a></li>
+    <li><a href="#question-12">Question 12:</a></li>
   </ul>
 </nav>
 </div></div>
@@ -266,9 +266,9 @@ Challenge name: <strong>The Card</strong><br>
 Difficulty: <strong>Easy</strong><br>
 Describe: Holmes receives a breadcrumb from Dr. Nicole Vale – fragments from a string of cyber incidents across Cogwork-1. Each lead ends the same way: a digital calling card signed JM.</p>
 <hr>
-<h2 id="-question-1">
-<a class="header-anchor" href="#-question-1"></a>
-❓ Question 1
+<h2 id="question-1">
+<a class="header-anchor" href="#question-1"></a>
+Question 1
 </h2><p>Analyze the provided logs and identify what is the first User-Agent used by the attacker against Nicole Vale&rsquo;s honeypot. (string)</p>
 <p>*From the provided snippet of the access.log, we can see the following entry:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-05-01 08:23:12 121.36.37.224 - - [01/May/2025:08:23:12 +0000] 
@@ -283,16 +283,16 @@ User-Agent: &ldquo;Lilnunc/4A4D - SpecterEye&rdquo;</p>
 <p>Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">Lilnunc/4A4D - SpecterEye
 </code></pre><hr>
-<h2 id="-question-2">
-<a class="header-anchor" href="#-question-2"></a>
-❓ Question 2:
+<h2 id="question-2">
+<a class="header-anchor" href="#question-2"></a>
+Question 2:
 </h2><p>It appears the threat actor deployed a web shell after bypassing the WAF. What is the file name? (filename.ext)</p>
 <p>Log Analysis:</p>
 <ol>
 <li>Application log evidence
 In application.log, we see that the attacker successfully deployed a backdoor web shell:</li>
 </ol>
-<pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-05-15 11:25:01 [CRITICAL] webapp.api.v2.debug - Backdoor deployment initiated by 121.36.37.224 - command: &#39;echo &#34;&lt;?php system($_GET[&#34;cmd&#34;]); ?&gt;&#34; &gt; /var/www/html/uploads/temp_4A4D.php&#39;
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-05-15 11:25:01 [CRITICAL] webapp.api.v2.debug - Backdoor deployment initiated by 121.36.37.224 - command: &#39;echo &#34;&amp;lt;?php system($_GET[&#34;cmd&#34;]); ?&amp;gt;&#34; &gt; /var/www/html/uploads/temp_4A4D.php&#39;
 2025-05-15 11:25:12 [CRITICAL] webapp.api.v2.debug - Web shell created at /uploads/temp_4A4D.php by 121.36.37.224
 </code></pre><p>This shows the exact filename and path of the malicious PHP web shell: <code>/uploads/temp_4A4D.php</code></p>
 <ol start="2">
@@ -311,9 +311,9 @@ The WAF also detected this malicious activity but shows that the attacker bypass
 </code></pre><p>Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">temp_4A4D.php
 </code></pre><hr>
-<h2 id="-question-3">
-<a class="header-anchor" href="#-question-3"></a>
-❓ Question 3:
+<h2 id="question-3">
+<a class="header-anchor" href="#question-3"></a>
+Question 3:
 </h2><p>The threat actor also managed to exfiltrate some data. What is the name of the database that was exfiltrated? (filename.ext)</p>
 <p>Log Analysis:</p>
 <ol>
@@ -336,9 +336,9 @@ Finally, the WAF confirms the event, showing the attacker bypassed protections:<
 </code></pre><p>Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">database_dump_4A4D.sql
 </code></pre><hr>
-<h2 id="-question-4">
-<a class="header-anchor" href="#-question-4"></a>
-❓ Question 4:
+<h2 id="question-4">
+<a class="header-anchor" href="#question-4"></a>
+Question 4:
 </h2><p>During the attack, a seemingly meaningless string seems to be recurring. Which one is it? (string)</p>
 <p>Log Analysis:
 Reviewing the logs across different stages of the attack, one specific string keeps showing up:</p>
@@ -352,66 +352,216 @@ Reviewing the logs across different stages of the attack, one specific string ke
 <p>Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">4A4D
 </code></pre><hr>
-<h2 id="-question-5">
-<a class="header-anchor" href="#-question-5"></a>
-❓ Question 5:
+<h2 id="question-5">
+<a class="header-anchor" href="#question-5"></a>
+Question 5:
 </h2><p>OmniYard-3 (formerly Scotland Yard) has granted you access to its CTI platform. Browse to the first IP:port address and count how many campaigns appear to be linked to the honeypot attack.</p>
 <p><img src="/images/holmes_2025/the_card/anh2.png" alt="CTI Graph"></p>
-<p>Analysis &amp; Conclusion:</p>
+<p>Analysis:</p>
+<ol>
+<li>Accessing the CTI platform
+We were given three possible Docker instances to investigate:
+http://94.237.51.202:31849/
+http://94.237.51.202:52486/
+http://94.237.51.202:40489/
+The first one (:31849) loads the CogWork-Intel Graph interface, as shown in the screenshot.</li>
+<li>Entity types and connections
+In the graph view, different types of entities are shown with unique colors:
+-Campaigns (red)
+-Infrastructure, Indicators, Malware, Tools, Organizations, etc.</li>
+<li>Identifying the honeypot attack link
+On the left, we see an Investigation Alert:
+-“JM signature (4A4D) detected across multiple breach campaigns. Investigate entity connections for attribution patterns.”
+-This confirms the platform has associated the attacker’s recurring marker (4A4D) with several campaigns.</li>
+<li>Counting campaigns
+Looking at the graph:
+-The entity labeled JM (center node, related to Nicole Vale’s honeypot) is connected to five red nodes.
+-Each red node corresponds to a campaign entity.
+-This means the CTI platform has correlated the honeypot attack with five separate campaigns.
+Conclusion:
+The honeypot attack is linked to:</li>
+</ol>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">5
 </code></pre><hr>
-<h2 id="-question-6">
-<a class="header-anchor" href="#-question-6"></a>
-❓ Question 6:
-</h2><p>How many tools and malware in total are linked to the previously identified campaigns? (number)</p>
-<p>Analysis &amp; Conclusion:</p>
+<h2 id="question-6">
+<a class="header-anchor" href="#question-6"></a>
+Question 6:
+</h2><p>How many tools and malware in total are linked to the previously identified campaigns? (number)
+-Analysis:</p>
+<ol>
+<li>From Question 5, we already identified that the honeypot attack (JM signature 4A4D) is linked to 5 campaigns.</li>
+<li>In the CogWork-Intel Graph view (screenshot of http://94.237.51.202:31849/), each campaign node (red) has connections to other entities such as:</li>
+</ol>
+<ul>
+<li>Tools (brown)</li>
+<li>Malware (dark red)</li>
+</ul>
+<ol start="3">
+<li>By counting all the tools and malware linked to those 5 campaigns, we get a total of 9 entities.
+Conclusion:
+The total number of tools and malware linked to the identified campaigns is:</li>
+</ol>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">9
 </code></pre><hr>
-<h2 id="-question-7">
-<a class="header-anchor" href="#-question-7"></a>
-❓ Question 7:
-</h2><p>It appears that the threat actor has always used the same malware in their campaigns. What is its SHA-256 hash? (sha-256 hash)</p>
-<p><img src="/images/holmes_2025/the_card/anh3.png" alt="Malware Hash"></p>
-<p>Conclusion:</p>
+<h2 id="question-7">
+<a class="header-anchor" href="#question-7"></a>
+Question 7:
+</h2><p>It appears that the threat actor has always used the same malware in their campaigns. What is its SHA-256 hash? (sha-256 hash)
+Analysis:</p>
+<ol>
+<li>In the CogWork-Intel Graph view (http://94.237.51.202:31849/), selecting the malware indicator entity (indicator&ndash;bio-falsifier-hash-2025-0004) reveals its details.</li>
+<li>On the right-hand side under Description and Properties, we see the malware identified as BioMetric Falsifier targeting medical monitoring systems.</li>
+<li>The Pattern field provides the hash value:</li>
+</ol>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">{file:hashes.SHA256 = &#39;7477c4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d9c0b1a2f3e4d5c6b7a8f9e0d17477&#39;}
+</code></pre><p><img src="/images/holmes_2025/the_card/anh3.png" alt="Malware Hash"></p>
+<p>This confirms the SHA-256 hash of the recurring malware.
+Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">7477c4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d9c0b1a2f3e4d5c6b7a8f9e0d17477
 </code></pre><hr>
-<h2 id="-question-8">
-<a class="header-anchor" href="#-question-8"></a>
-❓ Question 8:
-</h2><p>Browse to the second IP:port address and use the CogWork Security Platform to look for the hash and locate the IP address to which the malware connects. (Credentials: nvale/CogworkBurning!)</p>
-<p>Analysis &amp; Conclusion:</p>
+<h2 id="question-8">
+<a class="header-anchor" href="#question-8"></a>
+Question 8:
+</h2><p>Browse to the second IP:port address and use the CogWork Security Platform to look for the hash and locate the IP address to which the malware connects. (Credentials: nvale/CogworkBurning!)
+Analysis:</p>
+<ol>
+<li>Accessing the platform
+When logging into the second instance (http://94.237.51.202:52486/) with the provided credentials, we can search for the malware hash previously identified in Question 7:</li>
+</ol>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">7477c4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d9c0b1a2f3e4d5c6b7a8f9e0d17477
+</code></pre><ol start="2">
+<li>Detailed malware analysis
+The malware is shown as neurostorm_implant_4A4D.bin with the following attributes:
+File Type: ELF 64-bit executable
+Detections: 45/72 engines flagging it as malicious
+Attribution: James Moriarty–themed attacks
+Campaign ID: 4A4D-NEUROSTORM</li>
+<li>Critical infrastructure
+Scrolling down in the analysis view, under Critical C2 Infrastructure, we find the following entry:</li>
+</ol>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">74.77.74.77
+Primary Command &amp; Control Server
+Ports: 443, 8080, 4444
+</code></pre><p>This identifies the IP address the malware communicates with.
+Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">74.77.74.77
 </code></pre><hr>
-<h2 id="-question-9">
-<a class="header-anchor" href="#-question-9"></a>
-❓ Question 9:
+<h2 id="question-9">
+<a class="header-anchor" href="#question-9"></a>
+Question 9:
 </h2><p>What is the full path of the file that the malware created to ensure its persistence on systems? (/path/filename.ext)</p>
 <p><img src="/images/holmes_2025/the_card/anh4.png" alt="Persistence Evidence"><br>
-<img src="/images/holmes_2025/the_card/anh5.png" alt="Persistence File"></p>
-<p>Conclusion:</p>
+Analysis:
+From the CogWork Security Platform – Behavioral Analysis section, we can observe the malware’s activity:</p>
+<p>*Network Activity</p>
+<p>-HTTPS → 74.77.74.77:443
+-TCP → 74.77.74.77:7474 (Backdoor listener port)
+-TCP → 74.77.74.77:8080 (Secondary C2 channel)
+-DNS → 4a4d-nullinc.revenge.onion (Tor hidden service)</p>
+<p>*File Operations</p>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">CREATE → /opt/lilnunc/implant/4a4d_persistence.sh   (21:46:30 20/7/2025)
+CREATE → /etc/lilnunc/4a4d_config.xml               (21:46:45 20/7/2025)
+</code></pre><p><img src="/images/holmes_2025/the_card/anh5.png" alt="Persistence File"></p>
+<p>*Registry Operations</p>
+<ul>
+<li>MODIFY → /etc/rc.local
+Conclusion:</li>
+</ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">/opt/lilnunc/implant/4a4d_persistence.sh
 </code></pre><hr>
-<h2 id="-question-10">
-<a class="header-anchor" href="#-question-10"></a>
-❓ Question 10:
+<h2 id="question-10">
+<a class="header-anchor" href="#question-10"></a>
+Question 10:
 </h2><p>Finally, browse to the third IP:port address and use the CogNet Scanner Platform to discover additional details about the TA&rsquo;s infrastructure. How many open ports does the server have?</p>
 <p><img src="/images/holmes_2025/the_card/anh6.png" alt="Open Ports"></p>
-<p>Conclusion:</p>
-<pre tabindex="0"><code class="language-velocity" data-lang="velocity">11
+<p>Analysis:</p>
+<ol>
+<li>
+<p>Accessing the platform
+Navigating to the third instance (http://94.237.51.202:40489/) loads the CogNet Scanner interface.</p>
+</li>
+<li>
+<p>Searching for the C2 server
+We query the previously identified C2 IP address:74.77.74.77</p>
+</li>
+<li>
+<p>Scan results
+The scanner flags the host and displays its details:
+-Location: United Kingdom (CogWork-1 Networks)
+-Role: Enterprise Management Server
+-Status: Flagged as malicious</p>
+</li>
+<li>
+<p>Open ports
+The result lists the following services:</p>
+</li>
+</ol>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">22/tcp    ssh
+25/tcp    smtp
+53/udp    dns
+80/tcp    http
+110/tcp   pop3
+143/tcp   imap
+443/tcp   https
+3389/tcp  rdp
+7477/tcp  unknown
+8080/tcp  http-proxy
+8443/tcp  https-alt
+
+Counting them gives a total of 11 open ports.
+
+Conclusion:
+```velocity
+11
 </code></pre><hr>
-<h2 id="-question-11">
-<a class="header-anchor" href="#-question-11"></a>
-❓ Question 11:
+<h2 id="question-11">
+<a class="header-anchor" href="#question-11"></a>
+Question 11:
 </h2><p>Which organization does the previously identified IP belong to? (string)</p>
 <p><img src="/images/holmes_2025/the_card/anh7.png" alt="Organization Evidence"></p>
-<p>Conclusion:</p>
+<p>Analysis:</p>
+<ol>
+<li>
+<p>From Question 10, we identified the threat actor’s C2 server as 74.77.74.77.</p>
+</li>
+<li>
+<p>Using the CogNet Scanner Platform (http://94.237.51.202:40489/), the Overview tab of the scan results provides network information.</p>
+</li>
+<li>
+<p>The details show:</p>
+</li>
+</ol>
+<ul>
+<li>IP Address: 74.77.74.77</li>
+<li>Device Type: Enterprise Management Server</li>
+<li>Operating System: Ubuntu Server 18.04 LTS</li>
+<li>Hostname: msp-sense-33.local</li>
+<li>Organization: SenseShield MSP
+Thus, the organization linked to the IP is SenseShield MSP.
+Conclusion:</li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">SenseShield MSP
+</code></pre><p>Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">SenseShield MSP
 </code></pre><hr>
-<h2 id="-question-12">
-<a class="header-anchor" href="#-question-12"></a>
-❓ Question 12:
+<h2 id="question-12">
+<a class="header-anchor" href="#question-12"></a>
+Question 12:
 </h2><p>One of the exposed services displays a banner containing a cryptic message. What is it? (string)</p>
 <p><img src="/images/holmes_2025/the_card/anh8.png" alt="Service Banner"></p>
+<p>Analysis:</p>
+<ol>
+<li>
+<p>Using the CogNet Scanner Platform (http://94.237.51.202:40489/), we switched to the Services tab to review banners from all detected open ports.</p>
+</li>
+<li>
+<p>Most services displayed standard banners (e.g., OpenSSH, Postfix SMTP, Dovecot POP3/IMAP, nginx).</p>
+</li>
+<li>
+<p>However, the service running on port 7477/tcp (unknown service) revealed a unique banner containing a cryptic phrase:He&rsquo;s a ghost I carry, not to haunt me, but to hold me
+together - NULLINC REVENGE</p>
+</li>
+</ol>
 <p>Conclusion:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">He&#39;s a ghost I carry, not to haunt me, but to hold me together - NULLINC REVENGE
 </code></pre></div>
@@ -437,10 +587,10 @@ Reviewing the logs across different stages of the attack, one specific string ke
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;755</span
+          >&nbsp;1.4k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:04</span>
+        <span class="icon-coffee">&nbsp;00:07</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -466,18 +616,18 @@ Reviewing the logs across different stages of the attack, one specific string ke
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#-question-1">❓ Question 1</a></li>
-    <li><a href="#-question-2">❓ Question 2:</a></li>
-    <li><a href="#-question-3">❓ Question 3:</a></li>
-    <li><a href="#-question-4">❓ Question 4:</a></li>
-    <li><a href="#-question-5">❓ Question 5:</a></li>
-    <li><a href="#-question-6">❓ Question 6:</a></li>
-    <li><a href="#-question-7">❓ Question 7:</a></li>
-    <li><a href="#-question-8">❓ Question 8:</a></li>
-    <li><a href="#-question-9">❓ Question 9:</a></li>
-    <li><a href="#-question-10">❓ Question 10:</a></li>
-    <li><a href="#-question-11">❓ Question 11:</a></li>
-    <li><a href="#-question-12">❓ Question 12:</a></li>
+    <li><a href="#question-1">Question 1</a></li>
+    <li><a href="#question-2">Question 2:</a></li>
+    <li><a href="#question-3">Question 3:</a></li>
+    <li><a href="#question-4">Question 4:</a></li>
+    <li><a href="#question-5">Question 5:</a></li>
+    <li><a href="#question-6">Question 6:</a></li>
+    <li><a href="#question-7">Question 7:</a></li>
+    <li><a href="#question-8">Question 8:</a></li>
+    <li><a href="#question-9">Question 9:</a></li>
+    <li><a href="#question-10">Question 10:</a></li>
+    <li><a href="#question-11">Question 11:</a></li>
+    <li><a href="#question-12">Question 12:</a></li>
   </ul>
 </nav>
 </div></div>

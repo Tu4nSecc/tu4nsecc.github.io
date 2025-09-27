@@ -39,9 +39,9 @@ Challenge name: <strong>The Card</strong><br>
 Difficulty: <strong>Easy</strong><br>
 Describe: Holmes receives a breadcrumb from Dr. Nicole Vale – fragments from a string of cyber incidents across Cogwork-1. Each lead ends the same way: a digital calling card signed JM.</p>
 <hr>
-<h2 id="-question-1">
-<a class="header-anchor" href="#-question-1"></a>
-❓ Question 1
+<h2 id="question-1">
+<a class="header-anchor" href="#question-1"></a>
+Question 1
 </h2><p>Analyze the provided logs and identify what is the first User-Agent used by the attacker against Nicole Vale&rsquo;s honeypot. (string)</p>
         
         <hr><p>Published on 2025-09-27 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2025-09-27</p>]]>
