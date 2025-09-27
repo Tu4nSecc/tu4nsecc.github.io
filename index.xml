@@ -12,7 +12,7 @@
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
     
-    <lastBuildDate>Fri, 19 Sep 2025 11:45:16 +0700</lastBuildDate>
+    <lastBuildDate>Sat, 27 Sep 2025 14:20:00 +0700</lastBuildDate>
     
     
     <atom:link href="https://tu4nsecc.github.io/index.xml" rel="self" type="application/rss&#43;xml" />
@@ -22,47 +22,32 @@
     
 
     <item>
-      <title>Hcmus Ctf 2025</title>
-      <link>https://tu4nsecc.github.io/posts/hcmus-ctf-2025/</link>
-      <pubDate>Fri, 19 Sep 2025 11:45:16 &#43;0700</pubDate>
+      <title>Holmes CTF 2025 - The Card</title>
+      <link>https://tu4nsecc.github.io/posts/holmes-ctf-2025/</link>
+      <pubDate>Sat, 27 Sep 2025 14:20:00 &#43;0700</pubDate>
       <author>xxx@example.com (D-Sketon)</author>
-      <guid>https://tu4nsecc.github.io/posts/hcmus-ctf-2025/</guid>
+      <guid>https://tu4nsecc.github.io/posts/holmes-ctf-2025/</guid>
       <description>
-        <![CDATA[<h1>Hcmus Ctf 2025</h1><p>Author: D-Sketon(xxx@example.com)</p>
+        <![CDATA[<h1>Holmes CTF 2025 - The Card</h1><p>Author: D-Sketon(xxx@example.com)</p>
         
-          <p>Hcmus Ctf 2025</p>
+          <h1 id="holmes-ctf-2025--the-card">
+<a class="header-anchor" href="#holmes-ctf-2025--the-card"></a>
+Holmes CTF 2025 – The Card
+</h1><p><img src="/images/holmes_2025/the_card/anh1.png" alt="Challenge Banner"></p>
+<p>Holmes CTF 2025 Event Link: <a href="https://ctf.hackthebox.com/event/2536">https://ctf.hackthebox.com/event/2536</a><br>
+Challenge name: <strong>The Card</strong><br>
+Difficulty: <strong>Easy</strong><br>
+Describe: Holmes receives a breadcrumb from Dr. Nicole Vale – fragments from a string of cyber incidents across Cogwork-1. Each lead ends the same way: a digital calling card signed JM.</p>
+<hr>
+<h2 id="-question-1">
+<a class="header-anchor" href="#-question-1"></a>
+❓ Question 1
+</h2><p>Analyze the provided logs and identify what is the first User-Agent used by the attacker against Nicole Vale&rsquo;s honeypot. (string)</p>
         
-        <hr><p>Published on 2025-09-19 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2025-09-19</p>]]>
+        <hr><p>Published on 2025-09-27 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2025-09-27</p>]]>
       </description>
       
-        <category></category>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>Writeup PicoCTF - Reverse Engineering</title>
-      <link>https://tu4nsecc.github.io/posts/picoctf-reverse/</link>
-      <pubDate>Fri, 19 Sep 2025 00:00:00 &#43;0000</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>https://tu4nsecc.github.io/posts/picoctf-reverse/</guid>
-      <description>
-        <![CDATA[<h1>Writeup PicoCTF - Reverse Engineering</h1><p>Author: D-Sketon(xxx@example.com)</p>
-        
-          <h2 id="-challenge-crackme1">
-<a class="header-anchor" href="#-challenge-crackme1"></a>
-🔎 Challenge: crackme1
-</h2><p>Phân tích file binary với strings và ghidra&hellip;</p>
-<h2 id="-solution">
-<a class="header-anchor" href="#-solution"></a>
-✅ Solution
-</h2><p>Sau khi đọc mã, ta phát hiện điều kiện so sánh chuỗi&hellip;</p>
-        
-        <hr><p>Published on 2025-09-19 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2025-09-19</p>]]>
-      </description>
-      
-        <category>Writeup</category>
+        <category>CTF</category><category>writeup</category>
       
     </item>
     
