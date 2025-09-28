@@ -353,11 +353,12 @@ He's a ghost I carry, not to haunt me, but to hold me together - NULLINC REVENGE
 Challenge name:**The Enduring Echo**
 Difficulty:**Easy**
 Describe:LeStrade passes a disk image artifacts to Watson. It's one of the identified breach points, now showing abnormal CPU activity and anomalies in process logs.
-## Question 1:What was the first (non cd) command executed by the attacker on the host? (string)
+## Question 1:
+What was the first (non cd) command executed by the attacker on the host? (string)
 
 **Evidence & where it was found**
 
-![Organization Evidence](images/holmes_2025/the_enduring_echo/anh1.png)
+![Organization Evidence](/images/holmes_2025/the_enduring_echo/anh1.png)
 
 - I located the process creation event in the Windows Security log (Event ID 4688 — A new process has been created).
 - The NewProcessName is C:\Windows\System32\cmd.exe
@@ -392,7 +393,8 @@ The first User-Agent used by the attacker is:
 ```velocity
 systeminfo
 ```
-## Question 2: Which parent process (full path) spawned the attacker’s commands? (C:\FOLDER\PATH\FILE.ext)
+## Question 2: 
+Which parent process (full path) spawned the attacker’s commands? (C:\FOLDER\PATH\FILE.ext)
 -Similarly, in question 1, the answer is
 
 **Conclusion:**
@@ -400,7 +402,8 @@ systeminfo
 ```velocity
 C:\Windows\System32\wbem\WmiPrvSE.exe
 ```
-## Question 3:Which remote-execution tool was most likely used for the attack? (filename.ext)
+## Question 3:
+Which remote-execution tool was most likely used for the attack? (filename.ext)
 
 **Conclusion:**
 
@@ -441,11 +444,12 @@ strongly points to a WMI-based remote execution technique.
 
 2. Using wmiexec.py provides a non-interactive, stealthy channel to run commands without an interactive shell, which reduces noise and leaves a trail primarily in event logs (4688) rather than interactive user logs.
 
-## Question 4: What was the attacker’s IP address? (IPv4 address)
+## Question 4: 
+What was the attacker’s IP address? (IPv4 address)
 
 **Evidence & where it was found**
 
-![Organization Evidence](images/holmes_2025/the_enduring_echo/anh2.png)
+![Organization Evidence](/images/holmes_2025/the_enduring_echo/anh2.png)
 
 1. I examined the relevant Windows Security Event (Event ID 4688 — A new process has been created).
 
@@ -487,11 +491,12 @@ cmd /C "echo 10.129.242.110 NapoleonsBlackPearl.htb >> C:\Windows\System32\drive
 10.129.242.110
 ```
 
-## Question 5:What is the first element in the attacker's sequence of persistence mechanisms? (string)
+## Question 5:
+What is the first element in the attacker's sequence of persistence mechanisms? (string)
 
 **Evidence & where it was found**
 
-![Organization Evidence](images/holmes_2025/the_enduring_echo/anh3.png)
+![Organization Evidence](/images/holmes_2025/the_enduring_echo/anh3.png)
 
 1. I inspected the relevant Windows Security Event (Event ID 4688 — A new process has been created).
 
@@ -530,7 +535,8 @@ schtasks /create /tn "SysHelper Update" /tr "powershell -ExecutionPolicy Bypass 
 ```velocity
 SysHelper Update
 ```
-## Question 6:Identify the script executed by the persistence mechanism. (C:\FOLDER\PATH\FILE.ext)
+## Question 6:
+Identify the script executed by the persistence mechanism. (C:\FOLDER\PATH\FILE.ext)
 
 -Similarly, in question 5, the answer is
 
@@ -540,7 +546,8 @@ SysHelper Update
 C:\Users\Werni\Appdata\Local\JM.ps1
 ```
 
-## Question 7:What local account did the attacker create? (string)
+## Question 7:
+What local account did the attacker create? (string)
 
 **Evidence & where it was found**
 
@@ -580,7 +587,7 @@ if (-not $existing) {
 }
 ```
 
-![Organization Evidence](images/holmes_2025/the_enduring_echo/anh3.png)
+![Organization Evidence](/images/holmes_2025/the_enduring_echo/anh3.png)
 
 -and logic that checks for existing users and, if none exist, picks one at random:
 -That shows the script’s intent: create a user from that list, add it to the Administrators and Remote Desktop Users groups.
@@ -610,7 +617,8 @@ So not only was the account created, its credentials were likely sent to the att
 ```velocity
 svc_netupd
 ```
-## Question 8: What domain name did the attacker use for credential exfiltration? (domain)
+## Question 8: 
+What domain name did the attacker use for credential exfiltration? (domain)
 
 **Evidence & where it was found**
 
@@ -635,7 +643,8 @@ This maps NapoleonsBlackPearl.htb to 10.129.242.110, ensuring that the HTTP requ
 ```velocity
 NapoleonsBlackPearl.htb
 ```
-## Question 9: What password did the attacker's script generate for the newly created user? (string)
+## Question 9: 
+What password did the attacker's script generate for the newly created user? (string)
 
 **Evidence & where it was found**
 
@@ -662,14 +671,15 @@ New-LocalUser -Name $newUser -Password $securePass ...
 ```
 - This event corresponds to the account creation (TargetUserName svc_netupd). The SystemTime value is in UTC.
 
-![Organization Evidence](images/holmes_2025/the_enduring_echo/anh5.png)
+![Organization Evidence](/images/holmes_2025/the_enduring_echo/anh5.png)
 3. Timezone / timestamp adjustment — The forensic view of the host shows the system time zone is Pacific Time (ActiveTimeBias 420), which is UTC−07:00. Converting the UTC event time 2025-08-24T23:05:09Z to local Pacific time gives 2025-08-24 16:05:09. Formatting that local time as yyyyMMddHHmmss produces 20250824160509. Prepending Watson_ yields the final password: Watson_20250824160509.
 
 **Conclusion:**
 ```velocity
 Watson_20250824160509
 ```
-## Question 10: What was the IP address of the internal system the attacker pivoted to? (IPv4 address)
+## Question 10:
+ What was the IP address of the internal system the attacker pivoted to? (IPv4 address)
 
 **Evidence & where it was found**
 
@@ -679,7 +689,7 @@ Watson_20250824160509
 ```velocity
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=9999 connectaddress=192.168.1.101 connectport=22
 ```
-![Organization Evidence](images/holmes_2025/the_enduring_echo/anh6.png)
+![Organization Evidence](/images/holmes_2025/the_enduring_echo/anh6.png)
 
 - This command explicitly sets up a port forwarding rule that forwards local traffic on port 9999 (listening on all interfaces 0.0.0.0) to 192.168.1.101:22 (SSH on the internal host). The connectaddress=192.168.1.101 value is the pivot target.
 
@@ -693,14 +703,16 @@ netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=9999 conne
 ```velocity
 192.168.1.101
 ```
-## Question 11: Which TCP port on the victim was forwarded to enable the pivot? (port 0-65565)
+## Question 11: 
+Which TCP port on the victim was forwarded to enable the pivot? (port 0-65565)
 
 -Similarly, in question 10, the answer is
 **Conclusion:**
 ```velocity
 9999
 ```
-## Question 12: What is the full registry path that stores persistent IPv4→IPv4 TCP listener-to-target mappings? (HKLM\...\...)
+## Question 12:
+ What is the full registry path that stores persistent IPv4→IPv4 TCP listener-to-target mappings? (HKLM\...\...)
 
 **Analysis**
 
@@ -715,7 +727,8 @@ netsh interface portproxy add v4tov4 listenport=... listenaddress=... connectpor
 ```velocity
 HKLM\SYSTEM\CurrentControlSet\Services\PortProxy\v4tov4\tcp
 ```
-## Question 13: What is the MITRE ATT&CK ID associated with the previous technique used by the attacker to pivot to the internal system? (Txxxx.xxx)
+## Question 13:
+ What is the MITRE ATT&CK ID associated with the previous technique used by the attacker to pivot to the internal system? (Txxxx.xxx)
 
 **Analysis**
 
@@ -731,7 +744,8 @@ HKLM\SYSTEM\CurrentControlSet\Services\PortProxy\v4tov4\tcp
 ```velocity
 T1090.001
 ```
-## Question 14: Before the attack, the administrator configured Windows to capture command line details in the event logs. What command did they run to achieve this? (command)
+## Question 14: 
+Before the attack, the administrator configured Windows to capture command line details in the event logs. What command did they run to achieve this? (command)
 
 **Evidence & where it was found**
 
@@ -751,7 +765,7 @@ it allowed investigators to identify attacker TTPs (WMI remote execution, schedu
 - From an operational perspective, organizations should balance the value of detailed logging with storage and privacy considerations (command lines can include sensitive data). The registry change is a deliberate, system-level switch and should be documented and monitored.
 - Attackers are less likely to hide their behavior when command-line logging is enabled — it makes post-compromise detection and attribution much easier.
 
-![Organization Evidence](images/holmes_2025/the_enduring_echo/anh7.png)
+![Organization Evidence](/images/holmes_2025/the_enduring_echo/anh7.png)
 
 **Conclusion:**
 ```velocity
