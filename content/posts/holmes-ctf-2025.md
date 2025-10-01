@@ -796,7 +796,7 @@ WATSON-ALPHA-2
 ## Question 3:
 What was the first message the attacker sent to the AI chatbot? (string)
 - Use the Wireshark display filter ip.addr == 10.0.69.45 && http.request.method == "POST" to display only the connections from the suspicious host.
-![image](https://hackmd.io/_uploads/SyBVLnL3gl.png)
+![images](/images/holmes_2025/the_watchman_residue/anh3.png)
 **Conclusion:**
 ```velocity
 Hello Old Friend
@@ -804,9 +804,9 @@ Hello Old Friend
 ## Question 4:
 When did the attacker's prompt injection attack make MSP-HELPDESK-AI leak remote management tool info? (YYYY-MM-DD HH:MM:SS)
 - Follow the "HTTP Stream" on the last frame number (2910) from the filtered results. Then, copy the last HTTP response JSON field and view it using this site to properly read the text.
-![images](/images/holmes_2025/the_watchman_residue/anh3.png)
 ![images](/images/holmes_2025/the_watchman_residue/anh4.png)
 ![images](/images/holmes_2025/the_watchman_residue/anh5.png)
+![images](/images/holmes_2025/the_watchman_residue/anh6.png)
 **Conclusion:**
 ```velocity
 2025-08-19 12:02:06
@@ -821,7 +821,7 @@ What is the Remote management tool Device ID and password? (IDwithoutspace:Passw
 ## Question 6:
 What was the last message the attacker sent to MSP-HELPDESK-AI? (string)
 - The last message from attacker:
-![images](/images/holmes_2025/the_watchman_residue/anh6.png)
+![images](/images/holmes_2025/the_watchman_residue/anh7.png)
 **Conclusion:**
 ```velocity
 JM WILL BE BACK
@@ -829,7 +829,7 @@ JM WILL BE BACK
 ## Question 7:
 When did the attacker remotely access Cogwork Central Workstation? (YYYY-MM-DD HH:MM:SS)
 - We observed TeamViewer installed in the provided triage files at TRIAGE_IMAGE_COGWORK-CENTRAL\C\Program Files\TeamViewer. Upon reviewing the Connections_incoming.txt file, we identified three connections. The last connection was established using the username "James Moriarty."
-![images](/images/holmes_2025/the_watchman_residue/anh7.png)
+![images](/images/holmes_2025/the_watchman_residue/anh8.png)
 **Conclusion:**
 ```velocity
 2025-08-20 09:58:25
@@ -857,12 +857,12 @@ The attacker brought some tools to the compromised workstation to achieve its ob
 ```velocity
 MFTECmd.exe -f '.\The_Watchman''s_Residue\TRIAGE_IMAGE_COGWORK-CENTRAL\C\$Extend\$J' --csv . --csvf journal_log.csv
 ```
-![images](/images/holmes_2025/the_watchman_residue/anh8.png)
+![images](/images/holmes_2025/the_watchman_residue/anh9.png)
 - When we hover over the pointer to the safe shortcut folder, it shows "C:\Windows\Temp". This is a common location where attackers typically store malware or tools. Therefore, we checked that folder in the parsed log file(journal_log.csv) using the Timeline Explorer.
 
 - We observed that the 'safe' folder has an entry number of 52307. Then we filtered using that number as the 'Parent Entry Number' to view its contents. We found various tools inside the 'safe' folder, indicating that the attacker staged these tools there.
-![images](/images/holmes_2025/the_watchman_residue/anh9.png)
 ![images](/images/holmes_2025/the_watchman_residue/anh10.png)
+![images](/images/holmes_2025/the_watchman_residue/anh11.png)
 **Conclusion:**
 ```velocity
 C:\Windows\Temp\safe\
@@ -870,7 +870,7 @@ C:\Windows\Temp\safe\
 ## Question 11:
 Among the tools that the attacker staged was a browser credential harvesting tool. Find out how long it ran before it was closed? (Answer in milliseconds) (number)
 - We observed that the attacker also downloaded the 'webbrowserpassview' tool. Using the 'Registry Explorer' tool, we loaded the NTUSER.dat file from 'TRIAGE_IMAGE_COGWORK-CENTRAL\C\Users\Cogwork_Admin'. Upon checking the 'Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist' registry sub key, we observed that the 'Focus Time' was '0d, 0h, 00m, and 08s', indicating that the application ran for 8000 milliseconds.
-![images](/images/holmes_2025/the_watchman_residue/anh11.png)
+![images](/images/holmes_2025/the_watchman_residue/anh12.png)
 **Conclusion:**
 ```velocity
 8000
@@ -878,7 +878,7 @@ Among the tools that the attacker staged was a browser credential harvesting too
 ## Question 12:
 The attacker executed a OS Credential dumping tool on the system. When was the tool executed? (YYYY-MM-DD HH:MM:SS)
 - From Q10, we observed that the attacker downloaded the mimikatz.exe file. Upon filtering for "mimikatz," we found the MIMIKATZ.EXE-A6294E76.pf file. Based on this evidence, we can conclude that the attacker executed mimikatz.exe at that time.
-![images](/images/holmes_2025/the_watchman_residue/anh12.png)
+![images](/images/holmes_2025/the_watchman_residue/anh13.png)
 **Conclusion:**
 ```velocity
 2025-08-20 10:07:08
@@ -888,11 +888,11 @@ The attacker exfiltrated multiple sensitive files. When did the exfiltration sta
 - For the first time, it was difficult for us to determine the exact exfiltration time. From Q14, we observed that the attacker moved the files to the staged folder. We then examined files such as dump.txt, which we had previously seen in the Recent folder, and found it in two different directories with a new parent entry number of 286680. Upon checking the contents of that folder, we identified the time when the Heisen-9 facility backup database was moved there. Next, we arranged the entries by Timestamp and reviewed the events around that time. We discovered a suspicious file type, .cab. A .cab file, or Cabinet file, is a Microsoft Windows archive format used to compress multiple files into a single, smaller file. Based on this evidence, we determined the start time of the exfiltration.
 
 - dump.txt in two different directories:
-![images](/images/holmes_2025/the_watchman_residue/anh13.png)
-- Heisen-9 facility backup database:
 ![images](/images/holmes_2025/the_watchman_residue/anh14.png)
-- exfiltration:
+- Heisen-9 facility backup database:
 ![images](/images/holmes_2025/the_watchman_residue/anh15.png)
+- exfiltration:
+![images](/images/holmes_2025/the_watchman_residue/anh16.png)
 **Conclusion:**
 ```velocity
 2025-08-20 10:12:07
@@ -909,7 +909,7 @@ When did the attacker access and read a txt file, which was probably the output 
 ```velocity
  LECmd.exe -f '.\The_Watchman''s_Residue\TRIAGE_IMAGE_COGWORK-CENTRAL\C\Users\Cogwork_Admin\AppData\Roaming\Microsoft\Windows\Recent' --csv . --csvf links_logs.csv
 ```
-![images](/images/holmes_2025/the_watchman_residue/anh16.png)
+![images](/images/holmes_2025/the_watchman_residue/anh17.png)
 **Conclusion:**
 ```velocity
 2025-08-20 10:08:06
@@ -917,7 +917,7 @@ When did the attacker access and read a txt file, which was probably the output 
 ## Question 16:
 The attacker created a persistence mechanism on the workstation. When was the persistence setup? (YYYY-MM-DD HH:MM:SS)
 - Upon checking the SOFTWARE hive, we observed that the attacker established persistence via the Microsoft\Windows NT\CurrentVersion\Winlogon registry subkey by configuring Logon Autostart execution of the JM.exe file.
-![images](/images/holmes_2025/the_watchman_residue/anh17.png)
+![images](/images/holmes_2025/the_watchman_residue/anh18.png)
 **Conclusion:**
 ```velocity
 2025-08-20 10:13:57
@@ -925,9 +925,9 @@ The attacker created a persistence mechanism on the workstation. When was the pe
 ## Question 17:
 What is the MITRE ID of the persistence subtechnique? (Txxxx.xxx)
 - Search:
-![images](/images/holmes_2025/the_watchman_residue/anh18.png)
-- Click the first one
 ![images](/images/holmes_2025/the_watchman_residue/anh19.png)
+- Click the first one
+![images](/images/holmes_2025/the_watchman_residue/anh20.png)
 **Conclusion:**
 ```velocity
 T1547.004
@@ -942,8 +942,8 @@ When did the malicious RMM session end? (YYYY-MM-DD HH:MM:SS)
 ## Question 19:
 The attacker found a password from exfiltrated files, allowing him to move laterally further into CogWork-1 infrastructure. What are the credentials for Heisen-9-WS-6? (user:password)
 - We used keepass2john to extract the hash and cracked it with John. Then we opened the database file and obtained the username and password for Heisen-9-WS-6.
-![images](/images/holmes_2025/the_watchman_residue/anh20.png)
 ![images](/images/holmes_2025/the_watchman_residue/anh21.png)
+![images](/images/holmes_2025/the_watchman_residue/anh22.png)
 **Conclusion:**
 ```velocity
 Werni:Quantum1!

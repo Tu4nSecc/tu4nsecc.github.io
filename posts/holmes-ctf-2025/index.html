@@ -1023,7 +1023,7 @@ Question 3:
 </h2><p>What was the first message the attacker sent to the AI chatbot? (string)</p>
 <ul>
 <li>Use the Wireshark display filter ip.addr == 10.0.69.45 &amp;&amp; http.request.method == &ldquo;POST&rdquo; to display only the connections from the suspicious host.
-<img src="https://hackmd.io/_uploads/SyBVLnL3gl.png" alt="image">
+<img src="/images/holmes_2025/the_watchman_residue/anh3.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">Hello Old Friend
@@ -1033,9 +1033,9 @@ Question 4:
 </h2><p>When did the attacker&rsquo;s prompt injection attack make MSP-HELPDESK-AI leak remote management tool info? (YYYY-MM-DD HH:MM:SS)</p>
 <ul>
 <li>Follow the &ldquo;HTTP Stream&rdquo; on the last frame number (2910) from the filtered results. Then, copy the last HTTP response JSON field and view it using this site to properly read the text.
-<img src="/images/holmes_2025/the_watchman_residue/anh3.png" alt="images">
 <img src="/images/holmes_2025/the_watchman_residue/anh4.png" alt="images">
 <img src="/images/holmes_2025/the_watchman_residue/anh5.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh6.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-08-19 12:02:06
@@ -1054,7 +1054,7 @@ Question 6:
 </h2><p>What was the last message the attacker sent to MSP-HELPDESK-AI? (string)</p>
 <ul>
 <li>The last message from attacker:
-<img src="/images/holmes_2025/the_watchman_residue/anh6.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh7.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">JM WILL BE BACK
@@ -1064,7 +1064,7 @@ Question 7:
 </h2><p>When did the attacker remotely access Cogwork Central Workstation? (YYYY-MM-DD HH:MM:SS)</p>
 <ul>
 <li>We observed TeamViewer installed in the provided triage files at TRIAGE_IMAGE_COGWORK-CENTRAL\C\Program Files\TeamViewer. Upon reviewing the Connections_incoming.txt file, we identified three connections. The last connection was established using the username &ldquo;James Moriarty.&rdquo;
-<img src="/images/holmes_2025/the_watchman_residue/anh7.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh8.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-08-20 09:58:25
@@ -1095,15 +1095,15 @@ Question 10:
 <li>We observed some interesting files and directories in &ldquo;TRIAGE_IMAGE_COGWORK-CENTRAL\C\Users\Cogwork_Admin\AppData\Roaming\Microsoft\Windows\Recent&rdquo;. To further investigate, we used Eric Zimmerman&rsquo;s MFTECmd.exe tool to parse the USN journal data and check for logged changes to those files.</li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">MFTECmd.exe -f &#39;.\The_Watchman&#39;&#39;s_Residue\TRIAGE_IMAGE_COGWORK-CENTRAL\C\$Extend\$J&#39; --csv . --csvf journal_log.csv
-</code></pre><p><img src="/images/holmes_2025/the_watchman_residue/anh8.png" alt="images"></p>
+</code></pre><p><img src="/images/holmes_2025/the_watchman_residue/anh9.png" alt="images"></p>
 <ul>
 <li>
 <p>When we hover over the pointer to the safe shortcut folder, it shows &ldquo;C:\Windows\Temp&rdquo;. This is a common location where attackers typically store malware or tools. Therefore, we checked that folder in the parsed log file(journal_log.csv) using the Timeline Explorer.</p>
 </li>
 <li>
 <p>We observed that the &lsquo;safe&rsquo; folder has an entry number of 52307. Then we filtered using that number as the &lsquo;Parent Entry Number&rsquo; to view its contents. We found various tools inside the &lsquo;safe&rsquo; folder, indicating that the attacker staged these tools there.
-<img src="/images/holmes_2025/the_watchman_residue/anh9.png" alt="images">
 <img src="/images/holmes_2025/the_watchman_residue/anh10.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh11.png" alt="images">
 <strong>Conclusion:</strong></p>
 </li>
 </ul>
@@ -1114,7 +1114,7 @@ Question 11:
 </h2><p>Among the tools that the attacker staged was a browser credential harvesting tool. Find out how long it ran before it was closed? (Answer in milliseconds) (number)</p>
 <ul>
 <li>We observed that the attacker also downloaded the &lsquo;webbrowserpassview&rsquo; tool. Using the &lsquo;Registry Explorer&rsquo; tool, we loaded the NTUSER.dat file from &lsquo;TRIAGE_IMAGE_COGWORK-CENTRAL\C\Users\Cogwork_Admin&rsquo;. Upon checking the &lsquo;Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist&rsquo; registry sub key, we observed that the &lsquo;Focus Time&rsquo; was &lsquo;0d, 0h, 00m, and 08s&rsquo;, indicating that the application ran for 8000 milliseconds.
-<img src="/images/holmes_2025/the_watchman_residue/anh11.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh12.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">8000
@@ -1124,7 +1124,7 @@ Question 12:
 </h2><p>The attacker executed a OS Credential dumping tool on the system. When was the tool executed? (YYYY-MM-DD HH:MM:SS)</p>
 <ul>
 <li>From Q10, we observed that the attacker downloaded the mimikatz.exe file. Upon filtering for &ldquo;mimikatz,&rdquo; we found the MIMIKATZ.EXE-A6294E76.pf file. Based on this evidence, we can conclude that the attacker executed mimikatz.exe at that time.
-<img src="/images/holmes_2025/the_watchman_residue/anh12.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh13.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-08-20 10:07:08
@@ -1138,15 +1138,15 @@ Question 13:
 </li>
 <li>
 <p>dump.txt in two different directories:
-<img src="/images/holmes_2025/the_watchman_residue/anh13.png" alt="images"></p>
-</li>
-<li>
-<p>Heisen-9 facility backup database:
 <img src="/images/holmes_2025/the_watchman_residue/anh14.png" alt="images"></p>
 </li>
 <li>
+<p>Heisen-9 facility backup database:
+<img src="/images/holmes_2025/the_watchman_residue/anh15.png" alt="images"></p>
+</li>
+<li>
 <p>exfiltration:
-<img src="/images/holmes_2025/the_watchman_residue/anh15.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh16.png" alt="images">
 <strong>Conclusion:</strong></p>
 </li>
 </ul>
@@ -1165,7 +1165,7 @@ Question 14:
 Question 15:
 </h2><p>When did the attacker access and read a txt file, which was probably the output of one of the tools they brought, due to the naming convention of the file? (YYYY-MM-DD HH:MM:SS)</p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity"> LECmd.exe -f &#39;.\The_Watchman&#39;&#39;s_Residue\TRIAGE_IMAGE_COGWORK-CENTRAL\C\Users\Cogwork_Admin\AppData\Roaming\Microsoft\Windows\Recent&#39; --csv . --csvf links_logs.csv
-</code></pre><p><img src="/images/holmes_2025/the_watchman_residue/anh16.png" alt="images">
+</code></pre><p><img src="/images/holmes_2025/the_watchman_residue/anh17.png" alt="images">
 <strong>Conclusion:</strong></p>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-08-20 10:08:06
 </code></pre><h2 id="question-16">
@@ -1174,7 +1174,7 @@ Question 16:
 </h2><p>The attacker created a persistence mechanism on the workstation. When was the persistence setup? (YYYY-MM-DD HH:MM:SS)</p>
 <ul>
 <li>Upon checking the SOFTWARE hive, we observed that the attacker established persistence via the Microsoft\Windows NT\CurrentVersion\Winlogon registry subkey by configuring Logon Autostart execution of the JM.exe file.
-<img src="/images/holmes_2025/the_watchman_residue/anh17.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh18.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">2025-08-20 10:13:57
@@ -1184,9 +1184,9 @@ Question 17:
 </h2><p>What is the MITRE ID of the persistence subtechnique? (Txxxx.xxx)</p>
 <ul>
 <li>Search:
-<img src="/images/holmes_2025/the_watchman_residue/anh18.png" alt="images"></li>
+<img src="/images/holmes_2025/the_watchman_residue/anh19.png" alt="images"></li>
 <li>Click the first one
-<img src="/images/holmes_2025/the_watchman_residue/anh19.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh20.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">T1547.004
@@ -1205,8 +1205,8 @@ Question 19:
 </h2><p>The attacker found a password from exfiltrated files, allowing him to move laterally further into CogWork-1 infrastructure. What are the credentials for Heisen-9-WS-6? (user:password)</p>
 <ul>
 <li>We used keepass2john to extract the hash and cracked it with John. Then we opened the database file and obtained the username and password for Heisen-9-WS-6.
-<img src="/images/holmes_2025/the_watchman_residue/anh20.png" alt="images">
 <img src="/images/holmes_2025/the_watchman_residue/anh21.png" alt="images">
+<img src="/images/holmes_2025/the_watchman_residue/anh22.png" alt="images">
 <strong>Conclusion:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">Werni:Quantum1!
