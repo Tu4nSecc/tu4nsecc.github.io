@@ -9,8 +9,9 @@ cover: "/images/securinets_2025/SilentVisitor/mota.png"
 SecurinetsCTF 2025 event link: https://quals.securinets.tn/
 
 # Securinets CTF 2025 – Silent Visitor
+![Challenge Banner](/images/securinets_2025/SilentVisitor/mota.png)
 
-![Challenge Banner](/images/securinets_2025/SilentVisitor/anh1.png)
+![image](/images/securinets_2025/SilentVisitor/anh1.png)
 Challenge name: **Silent Visitor** 
 Difficulty: **Easy** 
 Describe: A user reported suspicious activity on their Windows workstation. Can you investigate the incident and uncover what really happened?
