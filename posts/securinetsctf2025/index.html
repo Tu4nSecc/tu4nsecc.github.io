@@ -1,0 +1,751 @@
+<!doctype html>
+<html
+  lang="en-us" 
+  data-theme-mode="auto"
+  >
+  <head><meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/><title>
+  Securinets CTF 2025 | Diep Manh Tuan
+</title>
+<meta
+  name="description"
+  content="Digital Forensics | @VSL.0utl4w"
+/><script>
+  window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"https://tu4nsecc.github.io/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
+  
+</script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<link
+    rel="preload"
+    href="//at.alicdn.com/t/c/font_4552607_4k4bc36ef96.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  /><link rel="stylesheet" href="/css/loader.min.ac746e154f756f8220326eeb52a719f142ab038be5a8ddf30ea5ef15ef2356ea.css" />
+<meta property="og:type" content="website" />
+  <meta property="og:title" content="Securinets CTF 2025 | Diep Manh Tuan" />
+  <meta
+    property="og:description"
+    content="Digital Forensics | @VSL.0utl4w"
+  />
+  <meta property="og:url" content="https://tu4nsecc.github.io/posts/securinetsctf2025/" />
+  <meta
+    property="og:site_name"
+    content="Welcome to my blog"
+  />
+  <meta
+    property="og:image"
+    content="/images/securinets_2025/SilentVisitor/mota.png"
+  />
+  <meta property="article:author" content="Diep Manh Tuan" />
+  <meta property="article:published_time" content="2025-10-06T18:59:10&#43;07:00" />
+  <meta property="article:modified_time" content="2025-10-06T18:59:10&#43;07:00" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="/images/securinets_2025/SilentVisitor/mota.png" />
+<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.min.4144fa01088e2f1aeffb738e4d6a4e5ee43adcecf79d0e39d50414c5234dada0.css" />
+<link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css"
+    integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei&#43;Zx/1oA/0l8ysE" crossorigin="anonymous"onload="this.onload=null;this.rel='stylesheet'"
+  /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/katex@0.16.22/dist/katex.min.css"
+    integrity="sha384-5TcZemv2l/9On385z///&#43;d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous"onload="this.onload=null;this.rel='stylesheet'"
+  /><script
+    src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"
+    integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script><link
+    rel="stylesheet"
+    href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css"
+    integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous"/></head>
+  <body><div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate"><svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+          M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg></div><div class="loading-word">Loading...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script><div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+<div id="lang-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+This article does not have a corresponding language version
+</div>
+<div id="heatmap-tooltip"></div><div id="container">
+      <div id="wrap"><div id="header-nav">
+  <nav id="main-nav"><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/">Home</a>
+      </span><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/archives">Archives</a>
+      </span><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/about">About</a>
+      </span><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/friend">Friend</a>
+      </span><a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav"></nav></div>
+<header id="header"><picture></picture>
+    <img  fetchpriority="high" src="/images/securinets_2025/SilentVisitor/mota.png" alt="Securinets CTF 2025"><div id="header-outer">
+    <div id="header-title"><span id="logo">
+            <h1 data-aos="slide-up">Securinets CTF 2025</h1>
+          </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
+  </div>
+</header><div id="content"
+          
+          class="sidebar-right"  ><aside id="sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
+    <div
+      class="sidebar-wrap"
+      data-aos="fade-up"
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#securinets-ctf-2025--silent-visitor">Securinets CTF 2025 – Silent Visitor</a></li>
+  </ul>
+</nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/images/tuan.jpg"
+    data-sizes="auto"
+    alt="Diep Manh Tuan"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Diep Manh Tuan</div>
+  <div class="sidebar-description">Digital Forensics | @VSL.0utl4w</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div><div class="sidebar-state-number">2</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>Categories</div>
+    <div class="sidebar-state-number">
+      2
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </a>
+</div>
+<div class="sidebar-social"></div>
+<div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="Home"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Home</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/archives"
+        aria-label="Archives"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Archives</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="About"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">About</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/friend"
+        aria-label="Friend"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Friend</div>
+    </div></div>
+</div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main"><article
+  class="h-entry article"
+  itemprop="blogPost"
+  itemscope
+  itemtype="https://schema.org/BlogPosting"
+>
+  <div
+    class="article-inner"
+    data-aos="fade-up"
+  >
+    <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2025-10-06 18:59:10 &#43;0700 &#43;07" itemprop="datePublished"
+      >2025-10-06</time
+    >
+    <time style="display: none;" id="post-update-time"
+      >2025-10-06</time
+    >
+  </span></div>
+<div class="article-category"><a
+      class="article-category-link"
+      href="/categories/ctf"
+      data-aos="zoom-in"
+      >CTF</a
+    ><a
+      class="article-category-link"
+      href="/categories/writeup"
+      data-aos="zoom-in"
+      >WRITEUP</a
+    ></div>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><p>SecurinetsCTF 2025 event link: <a href="https://quals.securinets.tn/">https://quals.securinets.tn/</a></p>
+<h1 id="securinets-ctf-2025--silent-visitor">
+<a class="header-anchor" href="#securinets-ctf-2025--silent-visitor"></a>
+Securinets CTF 2025 – Silent Visitor
+</h1><p><img src="/images/securinets_2025/SilentVisitor/anh1.png" alt="Challenge Banner">
+Challenge name: <strong>Silent Visitor</strong>
+Difficulty: <strong>Easy</strong>
+Describe: A user reported suspicious activity on their Windows workstation. Can you investigate the incident and uncover what really happened?
+<strong>author:</strong> Enigma522
+<strong>link chall:</strong> <a href="https://drive.google.com/file/d/1-nrWp4YFP0ULqQAHS2JNWzeLPyeiKbgQ/view?usp=sharing">https://drive.google.com/file/d/1-nrWp4YFP0ULqQAHS2JNWzeLPyeiKbgQ/view?usp=sharing</a></p>
+<h2 id="question-1">
+<a class="header-anchor" href="#question-1"></a>
+Question 1:
+</h2><p>What is the SHA256 hash of the disk image provided?</p>
+<ul>
+<li>Given the provided disk image test.ad1, the task was to determine its SHA-256 hash. I computed it with:</li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">sha256sum test.ad1
+</code></pre><ul>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">122b2b4bf1433341ba6e8fefd707379a98e6e9ca376340379ea42edb31a5dba2 
+</code></pre><h2 id="question-2">
+<a class="header-anchor" href="#question-2"></a>
+Question 2:
+</h2><p>Identify the OS build number of the victim’s system?</p>
+<ul>
+<li>I inspected the victim user&rsquo;s NTUSER.DAT hive and navigated to:
+SOFTWARE → Microsoft → Windows NT → CurrentVersion → Winlogon.
+<img src="/images/securinets_2025/SilentVisitor/anh2.png" alt="image"></li>
+<li>The BuildNumber value shown in the registry was 0x4a65 (hex). Converting that hex value to decimal:
+<img src="/images/securinets_2025/SilentVisitor/anh3.png" alt="image"></li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">19045 
+</code></pre><h2 id="question-3">
+<a class="header-anchor" href="#question-3"></a>
+Question 3:
+</h2><p>What is the ip of the victim&rsquo;s machine?</p>
+<ul>
+<li>I examined the system’s registry under the path
+ControlSet001\Services\Tcpip\Parameters\Interfaces{GUID}
+and found the DhcpIPAddress key.
+The value of this key was 192.168.206.131, which indicates the IP address assigned to the victim’s machine via DHCP.
+<img src="/images/securinets_2025/SilentVisitor/anh4.png" alt="image"></li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">192.168.206.131 
+</code></pre><h2 id="question-4">
+<a class="header-anchor" href="#question-4"></a>
+Question 4:
+</h2><p>What is the name of the email application used by the victim?</p>
+<ul>
+<li>I examined the user’s AppData\Roaming directory and found a folder path indicating the presence of an email client:
+AppData → Roaming → Thunderbird → Profiles → 6red5uxz.default-release.
+The “Thunderbird” folder clearly shows that the victim used Mozilla Thunderbird as their email application.</li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">Thunderbird
+</code></pre><h2 id="question-5">
+<a class="header-anchor" href="#question-5"></a>
+Question 5:
+</h2><p>What is the email of the victim?</p>
+<h2 id="question-6">
+<a class="header-anchor" href="#question-6"></a>
+Question 6:
+</h2><p>What is the email of the attacker?</p>
+<ul>
+<li>I inspected the victim’s Thunderbird mail store (Sent / Mail folders) and examined the email headers. The correspondence shows the victim’s address as <a href="mailto:ammar55221133@gmail.com">ammar55221133@gmail.com</a> and the correspondent as Mohamed Masmoudi with the address <a href="mailto:masmoudim522@gmail.com">masmoudim522@gmail.com</a>. From the headers and message threads, the attacker’s email address is <a href="mailto:masmoudim522@gmail.com">masmoudim522@gmail.com</a></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity=" data-lang="velocity=">From - Sat Apr 05 17:44:52 2025
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Return-Path: &lt;ammar55221133@gmail.com&gt;
+Received: from [192.168.206.131] ([196.229.176.255])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7c013f80dsm319261066b.119.2025.04.04.15.34.34
+ †††
+ for &lt;masmoudim522@gmail.com&gt;
+ †††
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ †††
+ Fri, 04 Apr 2025 15:34:35 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary=&#34;------------raR1SEF8jeVEr70i0C3YovfW&#34;
+Message-ID: &lt;935a0322-e611-4354-af36-de6b23274b1f@gmail.com&gt;
+Date: Sat, 5 Apr 2025 00:34:32 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Project idea
+To: mohamed Masmoudi &lt;masmoudim522@gmail.com&gt;
+References: &lt;CAJwm=751GYmE-TX1Mh+Gs=yWfBkxJHG-iWb8Kzd+n-QmkR+Ymg@mail.gmail.com&gt;
+Content-Language: en-US
+From: ammar test &lt;ammar55221133@gmail.com&gt;
+In-Reply-To: &lt;CAJwm=751GYmE-TX1Mh+Gs=yWfBkxJHG-iWb8Kzd+n-QmkR+Ymg@mail.gmail.com&gt;
+This is a multi-part message in MIME format.
+--------------raR1SEF8jeVEr70i0C3YovfW
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+nice can you send me what you did
+On 4/5/2025 12:31 AM, mohamed Masmoudi wrote:
+&gt; Hope your week’s going okay :)
+&gt; So I was thinking for the class project, maybe we could build a small 
+&gt; Node.js API — something super basic, like a course registration thing 
+&gt; or a little student dashboard.
+&gt; I already played around with some boilerplate code to get us started. 
+&gt; I’ll clean it up a bit and share it with you.
+&gt; Let me know what you think!ro
+--------------raR1SEF8jeVEr70i0C3YovfW
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;nice can you send me what you did&lt;/p&gt;
+    &lt;div class=&#34;moz-cite-prefix&#34;&gt;On 4/5/2025 12:31 AM, mohamed Masmoudi
+      wrote:&lt;br&gt;
+    &lt;/div&gt;
+    &lt;blockquote type=&#34;cite&#34;
+cite=&#34;mid:CAJwm=751GYmE-TX1Mh+Gs=yWfBkxJHG-iWb8Kzd+n-QmkR+Ymg@mail.gmail.com&#34;&gt;
+      &lt;meta http-equiv=&#34;content-type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
+      &lt;div dir=&#34;ltr&#34;&gt;
+ †††
+ &lt;p class=&#34;gmail-&#34;&gt;Hope your week’s going okay :)&lt;/p&gt;
+ †††
+ &lt;p class=&#34;gmail-&#34;&gt;So I was thinking for the class project, maybe
+ ††††
+ we could build a small Node.js API — something super basic,
+          like a course registration thing or a little student
+          dashboard.&lt;/p&gt;
+        &lt;p class=&#34;gmail-&#34;&gt;I already played around with some boilerplate
+ ††††
+ code to get us started. I’ll clean it up a bit and share it
+          with you.&lt;/p&gt;
+ †††
+ &lt;p class=&#34;gmail-&#34;&gt;Let me know what you think!ro&lt;/p&gt;
+        &lt;br&gt;
+      &lt;/div&gt;
+    &lt;/blockquote&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+--------------raR1SEF8jeVEr70i0C3YovfW--
+From - Sat Apr 05 17:50:33 2025
+Content-Type: multipart/alternative;
+ boundary=&#34;------------q85m0GUDIiuretamoqJ1I1Zi&#34;
+Message-ID: &lt;791576c6-9bef-4f9b-800a-426212cd75e6@gmail.com&gt;
+Date: Sat, 5 Apr 2025 19:50:28 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: run this
+To: mohamed Masmoudi &lt;masmoudim522@gmail.com&gt;
+References: &lt;CAJwm=77ngOVR=zxaYaB78WHQ=NebedFi1stLmNCYp-biF+Qm5g@mail.gmail.com&gt;
+Content-Language: en-US
+From: ammar &lt;ammar55221133@gmail.com&gt;
+In-Reply-To: &lt;CAJwm=77ngOVR=zxaYaB78WHQ=NebedFi1stLmNCYp-biF+Qm5g@mail.gmail.com&gt;
+This is a multi-part message in MIME format.
+--------------q85m0GUDIiuretamoqJ1I1Zi
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+thanks
+On 4/5/2025 5:44 PM, mohamed Masmoudi wrote:
+&gt; Hey hey!
+&gt; Just pushed up the starter code here:
+ https://github.com/lmdr7977/student-api
+&gt; You can just clone it and run |npm install|, then |npm run dev| to get 
+&gt; it going. Should open on port 3000.
+&gt; I set up a couple of helpful scripts in there too, so feel free to 
+&gt; tweak whatever.
+&gt; Lmk if anything’s broken 
+--------------q85m0GUDIiuretamoqJ
+</code></pre><ul>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">ammar55221133@gmail.com
+</code></pre><ul>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">masmoudim522@gmail.com
+</code></pre><h2 id="quetion-7">
+<a class="header-anchor" href="#quetion-7"></a>
+Quetion 7:
+</h2><p>What is the URL that the attacker used to deliver the malware to the victim?
+<img src="/images/securinets_2025/SilentVisitor/anh5.png" alt="image"></p>
+<ul>
+<li>I examined the repository referenced in the victim’s mail (<a href="https://github.com/lmdr7977/student-api">https://github.com/lmdr7977/student-api</a>) and opened the package.json. The postinstall script contained an EncodedCommand which, after Base64 decoding, produced the following PowerShell snippet:
+<img src="/images/securinets_2025/SilentVisitor/anh6.png" alt="image"></li>
+<li>This shows the attacker delivered the malware using the URL <a href="https://tmpfiles.org/dl/23860773/sys.exe">https://tmpfiles.org/dl/23860773/sys.exe</a></li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">https://tmpfiles.org/dl/23860773/sys.exe
+</code></pre><h2 id="quetion-8">
+<a class="header-anchor" href="#quetion-8"></a>
+Quetion 8:
+</h2><p>What is the SHA256 hash of the malware file?
+<img src="/images/securinets_2025/SilentVisitor/anh7.png" alt="image"></p>
+<ul>
+<li>I uploaded the malware file sys.exe to VirusTotal for analysis. The report indicated that 10 out of 72 security vendors flagged it as malicious.
+Under the Details tab, the SHA-256 hash of the file was listed as:</li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">be4f01b3d537b17c5ba7dc1bb7cd4078251364398565a0ca1e96982cff820b6d
+</code></pre><p>Quetion 9:</p>
+<h2 id="what-is-the-ip-address-of-the-c2-server-that-the-malware-communicates-with">
+<a class="header-anchor" href="#what-is-the-ip-address-of-the-c2-server-that-the-malware-communicates-with"></a>
+What is the IP address of the C2 server that the malware communicates with?
+</h2><p>Quetion 10:</p>
+<h2 id="what-port-does-the-malware-use-to-communicate-with-its-command--control-c2-server">
+<a class="header-anchor" href="#what-port-does-the-malware-use-to-communicate-with-its-command--control-c2-server"></a>
+What port does the malware use to communicate with its Command &amp; Control (C2) server?
+</h2><ul>
+<li>I reviewed the VirusTotal analysis for the sys.exe sample. Under the Contacted URLs and Contacted IP addresses sections the sample shows requests to http://40.113.161.85:5000/&hellip;, indicating the malware contacted the host at IP 40.113.161.85 on port 5000.
+<img src="/images/securinets_2025/SilentVisitor/anh8.png" alt="image"></li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">40.113.161.85
+</code></pre><ul>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">5000
+</code></pre><h2 id="quetion-11">
+<a class="header-anchor" href="#quetion-11"></a>
+Quetion 11:
+</h2><p>What is the url if the first Request made by the malware to the c2 server?</p>
+<ul>
+<li>In the malware behavior section I inspected the network communication logs. The first HTTP request shown is a GET to:
+http://40.113.161.85:5000/helppppiscofebabe23
+This confirms the initial C2 request path used by the sample.
+<img src="/images/securinets_2025/SilentVisitor/anh9.png" alt="image"></li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">http://40.113.161.85:5000/helppppiscofebabe23
+</code></pre><h2 id="quetion-12">
+<a class="header-anchor" href="#quetion-12"></a>
+Quetion 12:
+</h2><p>The malware created a file to identify itself. What is the content of that file?</p>
+<ul>
+<li>In the behavior analysis section of the malware report, I noticed the malware created and wrote to the file:
+C:\Users\Public\Documents\id.txt.
+I then located and examined this file in the forensic image. The file contained the following unique identifier string:
+<img src="/images/securinets_2025/SilentVisitor/anh10.png" alt="image">
+<img src="/images/securinets_2025/SilentVisitor/anh11.png" alt="image"></li>
+<li>This indicates the malware likely used it as a unique ID to identify the infected host.</li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">3649ba90-266f-48e1-960c-b908e1f28aef
+</code></pre><h2 id="quetion-13">
+<a class="header-anchor" href="#quetion-13"></a>
+Quetion 13:
+</h2><p>Which registry key did the malware modify or add to maintain persistence?
+<img src="/images/securinets_2025/SilentVisitor/anh12.png" alt="image">
+In the behavioral analysis section of the VirusTotal report, I observed the registry activity performed by the malware. It accessed and modified several keys under HKEY_CURRENT_USER and HKEY_LOCAL_MACHINE.
+Among them, the key:</p>
+<ul>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\MyApp
+</code></pre><ul>
+<li>was specifically added to ensure persistence — causing the malicious executable to run automatically whenever the user logs in.</li>
+</ul>
+<h2 id="quetion-14">
+<a class="header-anchor" href="#quetion-14"></a>
+Quetion 14:
+</h2><p>What is the content of this registry?</p>
+<ul>
+<li>In the behavior analysis section of the report, I found that the malware wrote a file named sys.exe to the victim’s Documents directory:
+C:\Users&lt;USER&gt;\Documents\sys.exe.
+By examining the infected user’s directory (C:\Users\ammar\Documents), I confirmed that the same file sys.exe was present there.
+This indicates that the malware dropped its payload in the user’s Documents folder.
+<img src="/images/securinets_2025/SilentVisitor/anh13.png" alt="image"></li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">C:\Users\ammar\Documents\sys.exe
+</code></pre><h2 id="quetion-15">
+<a class="header-anchor" href="#quetion-15"></a>
+Quetion 15:
+</h2><p>The malware uses a secret token to communicate with the C2 server. What is the value of this key?</p>
+<ul>
+<li>I performed a string search on the sys.exe file using the command:</li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">strings sys.exe | grep &#34;main.secret&#34;
+</code></pre><ul>
+<li>The result revealed a hardcoded secret key used by the malware to authenticate or communicate with its Command &amp; Control (C2) server.
+The extracted key value is:e7bcc0ba5fb1dc9cc09460baaa2a6986</li>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">e7bcc0ba5fb1dc9cc09460baaa2a6986
+</code></pre></div>
+    <footer class="article-footer"><ul class="article-tag-list" itemprop="keywords"></ul>
+</footer>
+  </div><nav
+    id="article-nav"
+    data-aos="fade-up"
+  ><div class="article-nav-link-wrap left"><img
+            data-src="/images/holmes_2025/the_card/anh1.png"
+            data-sizes="auto"
+            alt="Holmes CTF 2025"
+            class="lazyload"
+          /><a href="/posts/holmes-ctf-2025/"></a>
+        <div class="article-nav-caption">Prev</div>
+        <h3 class="article-nav-title">Holmes CTF 2025</h3>
+      </div></nav></article></section>
+        </div><footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info"><div>
+      <span class="icon-copyright"></span>2020-2025<span class="footer-info-sep rotate"></span>
+      Diep Manh Tuan
+    </div><div>
+        Powered by&nbsp;<a
+          href="https://gohugo.io/"
+          target="_blank"
+          >Hugo</a
+        >&nbsp; Theme.<a
+          href="https://github.com/D-Sketon/hugo-theme-reimu"
+          target="_blank"
+          >Reimu</a
+        >
+      </div><div>
+        <span class="icon-brush"
+          >&nbsp;6.8k</span
+        >
+        &nbsp;|&nbsp;
+        <span class="icon-coffee">&nbsp;00:33</span>
+      </div><div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv"
+          >Number of visits&nbsp;<span
+            id="busuanzi_value_site_pv"
+          ></span
+        ></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv"
+          >Number of visitors&nbsp;<span
+            id="busuanzi_value_site_uv"
+          ></span
+        ></span>
+      </div></div>
+</footer>
+<div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div><div id="mask" class="hide"></div>
+      </div><nav id="mobile-nav">
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#securinets-ctf-2025--silent-visitor">Securinets CTF 2025 – Silent Visitor</a></li>
+  </ul>
+</nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/images/tuan.jpg"
+    data-sizes="auto"
+    alt="Diep Manh Tuan"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Diep Manh Tuan</div>
+  <div class="sidebar-description">Digital Forensics | @VSL.0utl4w</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div><div class="sidebar-state-number">2</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>Categories</div>
+    <div class="sidebar-state-number">
+      2
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </a>
+</div>
+<div class="sidebar-social"></div>
+<div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="Home"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Home</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/archives"
+        aria-label="Archives"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Archives</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="About"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">About</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/friend"
+        aria-label="Friend"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Friend</div>
+    </div></div>
+</div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
+</div><script
+    src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"
+    integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"
+    integrity="sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script><script src="/js/main.js" integrity="" crossorigin="anonymous" ></script><script src="/js/aos.js" integrity="" crossorigin="anonymous" ></script><script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", aosInit);
+    } else {
+      aosInit();
+    }
+  </script><script src="/js/pjax_main.js" integrity="" crossorigin="anonymous" data-pjax></script><script
+    src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js"
+    integrity="sha384-8LyaidD9GPxQQgLJO/WRw/O2h3BoNq/ApI/ecpvM6RsrCz2qP2ppBXUKihP4V/2d" crossorigin="anonymous"></script><script>
+  if (window.firework) {
+    const options = JSON.parse("{\"excludeelements\":[\"a\",\"button\"],\"particles\":[{\"colors\":[\"var(--red-1)\",\"var(--red-2)\",\"var(--red-3)\",\"var(--red-4)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"emit\"],\"number\":20,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.3,0.5],\"radius\":[16,32]}},{\"colors\":[\"var(--red-0)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"diffuse\"],\"number\":1,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.2,0.5],\"lineWidth\":6,\"radius\":20}}]}");
+    options.excludeElements = options.excludeelements;
+    delete options.excludeelements;
+    window.firework(options);
+  }
+</script>
+
+<div id="lazy-script">
+  <div><script data-pjax>
+        window.REIMU_POST = {
+          author: "Diep Manh Tuan",
+          title: "Securinets CTF 2025",
+          url: "https:\/\/tu4nsecc.github.io\/posts\/securinetsctf2025\/",
+          description: "SecurinetsCTF 2025 event link: https:\/\/quals.securinets.tn\/\nSecurinets CTF 2025 – Silent Visitor\rChallenge name: Silent Visitor Difficulty: Easy Describe: A user reported suspicious activity on their Windows workstation. Can you investigate the incident and uncover what really happened? author: …",
+          cover: "https:\/\/tu4nsecc.github.io\/images\/securinets_2025\/SilentVisitor\/mota.png",
+        };
+      </script><script src="/js/insert_highlight.js" integrity="" crossorigin="anonymous" data-pjax></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script></div>
+</div><script
+    src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js"
+    asyncintegrity="sha384-0M75wtSkhjIInv4coYlaJU83&#43;OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id&#43;S" crossorigin="anonymous"></script><script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script><script>
+  const reimuCopyright = String.raw`
+   ______     ______     __     __    __     __  __    
+  /\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+  \ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+   \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+    \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                    
+  `;
+  console.log(String.raw`%c ${reimuCopyright}`, "color: #ff5252;");
+  console.log(
+    "%c Theme.Reimu" + " %c https://github.com/D-Sketon/hugo-theme-reimu ",
+    "color: white; background: #ff5252; padding:5px 0;",
+    "padding:4px;border:1px solid #ff5252;",
+  );
+</script></body>
+</html>

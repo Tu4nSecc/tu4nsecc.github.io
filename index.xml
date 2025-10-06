@@ -12,12 +12,57 @@
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
     
-    <lastBuildDate>Sat, 27 Sep 2025 14:20:00 +0700</lastBuildDate>
+    <lastBuildDate>Mon, 06 Oct 2025 18:59:10 +0700</lastBuildDate>
     
     
     <atom:link href="https://tu4nsecc.github.io/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>Securinets CTF 2025</title>
+      <link>https://tu4nsecc.github.io/posts/securinetsctf2025/</link>
+      <pubDate>Mon, 06 Oct 2025 18:59:10 &#43;0700</pubDate>
+      <author>xxx@example.com (Diep Manh Tuan)</author>
+      <guid>https://tu4nsecc.github.io/posts/securinetsctf2025/</guid>
+      <description>
+        <![CDATA[<h1>Securinets CTF 2025</h1><p>Author: Diep Manh Tuan(xxx@example.com)</p>
+        
+          <p>SecurinetsCTF 2025 event link: <a href="https://quals.securinets.tn/">https://quals.securinets.tn/</a></p>
+<h1 id="securinets-ctf-2025--silent-visitor">
+<a class="header-anchor" href="#securinets-ctf-2025--silent-visitor"></a>
+Securinets CTF 2025 – Silent Visitor
+</h1><p><img src="/images/securinets_2025/SilentVisitor/anh1.png" alt="Challenge Banner">
+Challenge name: <strong>Silent Visitor</strong>
+Difficulty: <strong>Easy</strong>
+Describe: A user reported suspicious activity on their Windows workstation. Can you investigate the incident and uncover what really happened?
+<strong>author:</strong> Enigma522
+<strong>link chall:</strong> <a href="https://drive.google.com/file/d/1-nrWp4YFP0ULqQAHS2JNWzeLPyeiKbgQ/view?usp=sharing">https://drive.google.com/file/d/1-nrWp4YFP0ULqQAHS2JNWzeLPyeiKbgQ/view?usp=sharing</a></p>
+<h2 id="question-1">
+<a class="header-anchor" href="#question-1"></a>
+Question 1:
+</h2><p>What is the SHA256 hash of the disk image provided?</p>
+<ul>
+<li>Given the provided disk image test.ad1, the task was to determine its SHA-256 hash. I computed it with:</li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">sha256sum test.ad1
+</code></pre><ul>
+<li><strong>answer:</strong></li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">122b2b4bf1433341ba6e8fefd707379a98e6e9ca376340379ea42edb31a5dba2 
+</code></pre><h2 id="question-2">
+<a class="header-anchor" href="#question-2"></a>
+Question 2:
+</h2><p>Identify the OS build number of the victim’s system?</p>
+        
+        <hr><p>Published on 2025-10-06 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2025-10-06</p>]]>
+      </description>
+      
+        <category>CTF</category><category>writeup</category>
+      
+    </item>
     
     
 
