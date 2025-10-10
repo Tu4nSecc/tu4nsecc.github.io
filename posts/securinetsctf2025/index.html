@@ -146,6 +146,7 @@ This article does not have a corresponding language version
   <nav id="TableOfContents">
   <ul>
     <li><a href="#securinets-ctf-2025--silent-visitor">Securinets CTF 2025 – Silent Visitor</a></li>
+    <li><a href="#securinets-ctf-2025--lost-file">Securinets CTF 2025 – Lost File</a></li>
   </ul>
 </nav>
 </div></div>
@@ -535,7 +536,400 @@ The extracted key value is:e7bcc0ba5fb1dc9cc09460baaa2a6986</li>
 <li><strong>answer:</strong></li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">e7bcc0ba5fb1dc9cc09460baaa2a6986
-</code></pre></div>
+</code></pre><h1 id="securinets-ctf-2025--lost-file">
+<a class="header-anchor" href="#securinets-ctf-2025--lost-file"></a>
+Securinets CTF 2025 – Lost File
+</h1><p><img src="/images/securinets_2025/lostfile/mota.png" alt="mota">
+Challenge name: <strong>Lost File</strong>
+Difficulty: <strong>Easy</strong>
+Describe: My friend told me to run this executable, but it turns out he just wanted to encrypt my precious file.
+And to make things worse, I don’t even remember what password I used. 😳
+Good thing I have this memory capture taken at a very convenient moment, right?
+<strong>author:</strong> Kaizo
+<strong>link chall:</strong> <a href="https://drive.google.com/file/d/1AO3nhe859X8DIA5DyMsulFplDv9ddkn-/view?usp=sharing">https://drive.google.com/file/d/1AO3nhe859X8DIA5DyMsulFplDv9ddkn-/view?usp=sharing</a></p>
+<p>I began by loading disk.ad1 into FTK Imager and navigating to the victim profile Documents and Settings\RagdollFan2005\Desktop. Two files stood out immediately: the program locker_sim.exe and the ciphertext to_encrypt.txt.enc.
+<img src="/images/securinets_2025/lostfile/anh1.png" alt="image"></p>
+<ul>
+<li>To understand the encryption, I reversed locker_sim.exe in Ghidra.</li>
+<li>In the main function, you just need to copy the code below and put it in chatgpt, it will explain.</li>
+</ul>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">
+int __cdecl _main(int _Argc,char **_Argv,char **_Env)
+
+{
+  int iVar1;
+  DWORD DVar2;
+  int iVar3;
+  BYTE *pBVar4;
+  undefined4 *puVar5;
+  CHAR *pCVar6;
+  char local_69c [260];
+  size_t local_598;
+  void *local_594;
+  size_t local_590;
+  void *local_58c;
+  char local_588 [260];
+  undefined4 local_484;
+  undefined4 local_480;
+  undefined4 local_47c;
+  undefined4 local_478;
+  undefined4 local_474;
+  undefined4 local_470;
+  undefined4 local_46c;
+  undefined4 local_468;
+  size_t local_454;
+  void *local_450;
+  char local_44c [259];
+  char cStack_349;
+  CHAR local_348 [259];
+  char cStack_245;
+  undefined4 local_244 [64];
+  undefined1 local_141;
+  BYTE local_140 [255];
+  undefined1 local_41;
+  FILE *local_40;
+  BYTE *local_3c;
+  size_t local_38;
+  int local_34;
+  DWORD local_30;
+  char *local_2c;
+  size_t local_28;
+  char *local_24;
+  int *local_14;
+  
+  local_14 = &amp;_Argc;
+  ___main();
+  if (_Argc &lt; 2) {
+    return 1;
+  }
+  local_2c = _Argv[1];
+  pBVar4 = local_140;
+  for (iVar3 = 0x40; iVar3 != 0; iVar3 = iVar3 + -1) {
+    pBVar4[0] = &#39;\0&#39;;
+    pBVar4[1] = &#39;\0&#39;;
+    pBVar4[2] = &#39;\0&#39;;
+    pBVar4[3] = &#39;\0&#39;;
+    pBVar4 = pBVar4 + 4;
+  }
+  iVar3 = read_computername_from_registry(local_140,0x100);
+  if (iVar3 != 0) {
+    strncpy((char *)local_140,&#34;UNKNOWN_HOST&#34;,0xff);
+    local_41 = 0;
+  }
+  fflush((FILE *)(_iob_exref + 0x20));
+  puVar5 = local_244;
+  for (iVar3 = 0x41; iVar3 != 0; iVar3 = iVar3 + -1) {
+    *puVar5 = 0;
+    puVar5 = puVar5 + 1;
+  }
+  pCVar6 = local_348;
+  for (iVar3 = 0x41; iVar3 != 0; iVar3 = iVar3 + -1) {
+    pCVar6[0] = &#39;\0&#39;;
+    pCVar6[1] = &#39;\0&#39;;
+    pCVar6[2] = &#39;\0&#39;;
+    pCVar6[3] = &#39;\0&#39;;
+    pCVar6 = pCVar6 + 4;
+  }
+  local_30 = _GetModuleFileNameA@12((HMODULE)0x0,local_348,0x104);
+  if ((local_30 == 0) || (0x103 &lt; local_30)) {
+    local_244[0]._0_2_ = 0x2e;
+  }
+  else {
+    for (local_24 = local_348 + (local_30 - 1);
+        ((local_348 &lt;= local_24 &amp;&amp; (*local_24 != &#39;\\&#39;)) &amp;&amp; (*local_24 != &#39;/&#39;));
+        local_24 = local_24 + -1) {
+    }
+    if (local_24 &lt; local_348) {
+      local_244[0]._0_2_ = 0x2e;
+    }
+    else {
+      local_28 = (int)local_24 - (int)local_348;
+      if (local_28 == 0) {
+        strncpy((char *)local_244,local_348,0x103);
+        local_141 = 0;
+      }
+      else {
+        if (0x103 &lt; local_28) {
+          local_28 = 0x103;
+        }
+        strncpy((char *)local_244,local_348,local_28);
+        *(undefined1 *)((int)local_244 + local_28) = 0;
+      }
+    }
+  }
+  local_34 = strlen((char *)local_244);
+  if ((local_34 == 0) ||
+     ((*(char *)((int)local_244 + local_34 + -1) != &#39;\\&#39; &amp;&amp;
+      (*(char *)((int)local_244 + local_34 + -1) != &#39;/&#39;)))) {
+    _snprintf(local_44c,0x104,&#34;%s\\secret_part.txt&#34;,local_244);
+  }
+  else {
+    _snprintf(local_44c,0x104,&#34;%ssecret_part.txt&#34;,local_244);
+  }
+  local_450 = (void *)0x0;
+  local_454 = 0;
+  read_file_to_buffer(local_44c,(int *)&amp;local_450,&amp;local_454);
+  _DeleteFileA@4(local_44c);
+  iVar3 = strlen(local_2c);
+  iVar1 = strlen((char *)local_140);
+  local_38 = local_454 + iVar3 + iVar1 + 10;
+  local_3c = (BYTE *)malloc(local_38);
+  if (local_454 == 0) {
+    _snprintf((char *)local_3c,local_38,&#34;%s|%s|&#34;,local_2c,local_140);
+  }
+  else {
+    _snprintf((char *)local_3c,local_38,&#34;%s|%s|%s&#34;,local_2c,local_140,local_450);
+  }
+  DVar2 = strlen((char *)local_3c);
+  iVar3 = sha256_buf(local_3c,DVar2,(BYTE *)&amp;local_474);
+  if (iVar3 == 0) {
+    local_484 = local_474;
+    local_480 = local_470;
+    local_47c = local_46c;
+    local_478 = local_468;
+    iVar3 = strlen((char *)local_244);
+    if ((*(char *)((int)local_244 + iVar3 + -1) == &#39;\\&#39;) ||
+       (iVar3 = strlen((char *)local_244), *(char *)((int)local_244 + iVar3 + -1) == &#39;/&#39;)) {
+      _snprintf(local_588,0x104,&#34;%sto_encrypt.txt&#34;,local_244);
+    }
+    else {
+      _snprintf(local_588,0x104,&#34;%s\\to_encrypt.txt&#34;,local_244);
+    }
+    local_58c = (void *)0x0;
+    local_590 = 0;
+    iVar3 = read_file_to_buffer(local_588,(int *)&amp;local_58c,&amp;local_590);
+    if (iVar3 == 0) {
+      local_594 = (void *)0x0;
+      local_598 = 0;
+      iVar3 = aes256_encrypt_simple
+                        (&amp;local_474,(BYTE *)&amp;local_484,local_58c,local_590,&amp;local_594,&amp;local_598);
+      if (iVar3 == 0) {
+        iVar3 = strlen((char *)local_244);
+        if ((*(char *)((int)local_244 + iVar3 + -1) == &#39;\\&#39;) ||
+           (iVar3 = strlen((char *)local_244), *(char *)((int)local_244 + iVar3 + -1) == &#39;/&#39;)) {
+          _snprintf(local_69c,0x104,&#34;%sto_encrypt.txt.enc&#34;,local_244);
+        }
+        else {
+          _snprintf(local_69c,0x104,&#34;%s\\to_encrypt.txt.enc&#34;,local_244);
+        }
+        local_40 = (FILE *)fopen(local_69c,&#34;wb&#34;);
+        if (local_40 == (FILE *)0x0) {
+          iVar3 = 1;
+        }
+        else {
+          fwrite(local_594,1,local_598,local_40);
+          fclose(local_40);
+          if (local_450 != (void *)0x0) {
+            free(local_450);
+          }
+          if (local_58c != (void *)0x0) {
+            free(local_58c);
+          }
+          if (local_594 != (void *)0x0) {
+            free(local_594);
+          }
+          free(local_3c);
+          iVar3 = 0;
+        }
+        return iVar3;
+      }
+      puts(&#34;Encryption failed&#34;);
+      return 1;
+    }
+    printf(&#34;Target file not found: %s\n&#34;);
+    return 1;
+  }
+  puts(&#34;SHA256 failed&#34;);
+  return 1;
+}
+</code></pre><p><strong>What the program does (logic of _main)</strong></p>
+<ul>
+<li>Requires exactly one CLI argument (argv[1]). If none, exits with 1.</li>
+<li>Reads COMPUTERNAME from the registry key
+HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName.</li>
+<li>If it fails, it falls back to &ldquo;UNKNOWN_HOST&rdquo;.</li>
+<li>Resolves the directory of the EXE (GetModuleFileNameA + manual dirname).</li>
+<li>Tries to read secret_part.txt from that directory and deletes it immediately after reading.</li>
+<li>Builds a single byte-exact string S into local_3c:</li>
+<li>If secret_part.txt was not read:</li>
+<li>S = argv1 + &ldquo;|&rdquo; + COMPUTERNAME + &ldquo;|&rdquo;</li>
+<li>If secret_part.txt was read:</li>
+<li>S = argv1 + &ldquo;|&rdquo; + COMPUTERNAME + &ldquo;|&rdquo; + secret_part_content</li>
+<li>Computes SHA-256(S) via sha256_buf.</li>
+<li>The 32-byte digest is split as follows:</li>
+<li>AES-256 key = the entire 32 bytes of the digest. (Pointer &amp;local_474.)</li>
+<li>IV = the first 16 bytes of that same digest (they’re explicitly copied into local_484…, which is passed as the IV).</li>
+<li>Reads plaintext from to_encrypt.txt in the same directory.</li>
+<li>Calls aes256_encrypt_simple(key, iv, buf, len, &amp;out, &amp;outlen) which uses the Windows CryptoAPI to perform AES-256-CBC with PKCS#7 padding.</li>
+<li>Writes the ciphertext to to_encrypt.txt.enc in the same directory, frees buffers, and returns 0 on success.</li>
+</ul>
+<p><strong>Variable/argument mapping (quick reference)</strong></p>
+<ul>
+<li>local_2c → argv[1] (the single required command-line argument).</li>
+<li>local_140 → buffer that receives COMPUTERNAME from the registry.</li>
+<li>local_450 (+ local_454 size) → contents of secret_part.txt if it exists.</li>
+<li>local_3c → the assembled string S that is hashed.</li>
+<li>sha256_buf → produces the 32-byte digest into local_474…local_468.</li>
+<li>local_484…local_478 → copy of the first 16 bytes of the digest (used as IV).</li>
+</ul>
+<p>Now we need to find 3 parts argv1, COMPUTERNAME, secret_part.
+Start the first part:</p>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">import sys
+import os
+def printable(s):
+    return &#39;&#39;.join([chr(c) if 32 &lt;= c &lt; 127 else &#39;.&#39; for c in s])
+
+def find_all(data, sub):
+    start = 0
+    while True:
+        idx = data.find(sub, start)
+        if idx == -1:
+            return
+        yield idx
+        start = idx + 1
+def extract_ascii(data, center_pos, pattern_len, back_limit=512, fwd_limit=2048):
+    left = max(0, center_pos - back_limit)
+    prev_bar = data.rfind(b&#39;|&#39;, left, center_pos)
+    if prev_bar == -1:
+        argv1 = data[left:center_pos]
+    else:
+        argv1 = data[prev_bar+1:center_pos]
+    right_search_start = center_pos + pattern_len
+    right_search_end = min(len(data), right_search_start + fwd_limit)
+    next_bar = data.find(b&#39;|&#39;, right_search_start, right_search_end)
+    if next_bar == -1:
+        secret = data[right_search_start:right_search_end]
+    else:
+        secret = data[right_search_start:next_bar]
+
+    return argv1, secret
+
+def extract_utf16(data, center_pos, pattern_len, back_limit=1024, fwd_limit=4096):
+    BAR = b&#39;|\x00&#39;
+    left = max(0, center_pos - back_limit)
+    prev_bar = data.rfind(BAR, left, center_pos)
+    if prev_bar == -1:
+        argv1_bytes = data[left:center_pos]
+    else:
+        argv1_bytes = data[prev_bar+len(BAR):center_pos]
+    right_search_start = center_pos + pattern_len
+    right_search_end = min(len(data), right_search_start + fwd_limit)
+    next_bar = data.find(BAR, right_search_start, right_search_end)
+    if next_bar == -1:
+        secret_bytes = data[right_search_start:right_search_end]
+    else:
+        secret_bytes = data[right_search_start:next_bar]
+    try:
+        argv1 = argv1_bytes.decode(&#39;utf-16le&#39;, errors=&#39;ignore&#39;).strip(&#39;\x00&#39;)
+    except Exception:
+        argv1 = &#39;&#39;
+    try:
+        secret = secret_bytes.decode(&#39;utf-16le&#39;, errors=&#39;ignore&#39;).strip(&#39;\x00&#39;)
+    except Exception:
+        secret = &#39;&#39;
+    return argv1, secret
+
+def scan_for_cmdline_utf16(data, exe_hint=b&#39;.exe&#39;):
+    results = []
+    exe16 = b&#39;.\x00e\x00x\x00e\x00&#39;
+    for pos in find_all(data, exe16):
+        start = max(0, pos - 300)
+        end = min(len(data), pos + 800)
+        chunk = data[start:end]
+        try:
+            txt = chunk.decode(&#39;utf-16le&#39;, errors=&#39;ignore&#39;)
+        except Exception:
+            continue
+        if &#39;.exe&#39; in txt:
+            snippet = txt
+            if len(snippet) &gt; 400:
+                snippet = snippet[:400]
+            exe_idx = snippet.lower().find(&#39;.exe&#39;)
+            has_arg = False
+            if exe_idx != -1 and exe_idx + 4 &lt; len(snippet):
+                rest = snippet[exe_idx+4:]
+                import re
+                m = re.search(r&#39;\s+(\S{1,80})&#39;, rest)
+                has_arg = bool(m)
+            if has_arg:
+                results.append((start, snippet))
+    return results
+
+def main():
+    if len(sys.argv) != 3:
+        print(&#34;Usage: python3 find_argv1_and_secret_from_mem.py mem.vmem COMPUTERNAME&#34;)
+        sys.exit(1)
+    mem_path = sys.argv[1]
+    compname = sys.argv[2]
+    if not os.path.exists(mem_path):
+        print(&#34;File not found:&#34;, mem_path)
+        sys.exit(1)
+
+    with open(mem_path, &#39;rb&#39;) as f:
+        data = f.read()
+    patt_ascii = (&#39;|&#39; + compname + &#39;|&#39;).encode(&#39;ascii&#39;, errors=&#39;ignore&#39;)
+    hits_ascii = list(find_all(data, patt_ascii))
+    comp16 = compname.encode(&#39;utf-16le&#39;, errors=&#39;ignore&#39;)
+    patt_utf16 = b&#39;|\x00&#39; + comp16 + b&#39;|\x00&#39;
+    hits_utf16 = list(find_all(data, patt_utf16))
+
+    print(&#34;=== ASCII hits for pattern &#39;|%s|&#39; : %d ===&#34; % (compname, len(hits_ascii)))
+    argv1_candidates = set()
+    secret_snippets = []
+    for i, pos in enumerate(hits_ascii, 1):
+        argv1_bytes, secret_bytes = extract_ascii(data, pos, len(patt_ascii))
+        argv1_str = printable(argv1_bytes).strip()
+        secret_str = printable(secret_bytes).strip()
+        if argv1_str:
+            argv1_candidates.add(argv1_str)
+        secret_snippets.append(secret_str)
+        print(f&#34;\n-- ASCII HIT #{i} at offset {pos} --&#34;)
+        print(&#34;argv1 (raw/printable):&#34;, repr(argv1_str[:120]))
+        print(&#34;secret (snippet, printable):&#34;, repr(secret_str[:200]))
+
+    print(&#34;\n=== UTF-16LE hits for pattern &#39;|%s|&#39; : %d ===&#34; % (compname, len(hits_utf16)))
+    for i, pos in enumerate(hits_utf16, 1):
+        argv1_str, secret_str = extract_utf16(data, pos, len(patt_utf16))
+        if argv1_str:
+            argv1_candidates.add(argv1_str)
+        print(f&#34;\n-- UTF16 HIT #{i} at offset {pos} --&#34;)
+        print(&#34;argv1 (utf16 decoded):&#34;, repr(argv1_str[:120]))
+        print(&#34;secret (utf16 decoded, snippet):&#34;, repr(secret_str[:200]))
+    print(&#34;\n=== Heuristic: UTF-16LE command line scans near &#39;.exe&#39; ===&#34;)
+    cmd_hits = scan_for_cmdline_utf16(data)
+    if not cmd_hits:
+        print(&#34;(no obvious cmdline snippets found)&#34;)
+    else:
+        for idx, (off, snip) in enumerate(cmd_hits, 1):
+            print(f&#34;\n-- CMDLINE SNIPPET #{idx} around offset {off} --&#34;)
+            print(snip)
+    print(&#34;\n=== SUMMARY: argv1 candidates (deduplicated) ===&#34;)
+    if argv1_candidates:
+        for cand in sorted(argv1_candidates, key=lambda x: (len(x), x)):
+            print(&#34;-&#34;, cand)
+    else:
+        print(&#34;(no argv1 candidates found; consider increasing limits or using Volatility &#39;cmdline&#39;/&#39;consoles&#39;)&#34;)
+
+if __name__ == &#34;__main__&#34;:
+    main()
+</code></pre><p>Run this code as follows:</p>
+<pre tabindex="0"><code class="language-velocity=" data-lang="velocity=">python3 find_argv1_and_secret_from_mem.py mem.vmem RAGDOLLF-F9AC5A &gt; argv1_scan.txt
+</code></pre><p>We get the first part &ldquo;hmmisitreallyts&rdquo;
+<img src="/images/securinets_2025/lostfile/anh2.png" alt="image">
+The second part is &ldquo;RAGDOLLF-F9AC5A&rdquo;
+<img src="/images/securinets_2025/lostfile/anh3.png" alt="image">
+The third part we find it in the trash
+We get the third part &ldquo;sigmadroid&rdquo;
+<img src="/images/securinets_2025/lostfile/anh4.png" alt="image">
+Now calculate the hash for it
+<img src="/images/securinets_2025/lostfile/anh5.png" alt="image"></p>
+<pre tabindex="0"><code class="language-velocity" data-lang="velocity">KEY (SHA-256):
+1117e5b8fdff9d7be375e7a88354c497b93788da64a3968621499687f10474e5
+</code></pre><pre tabindex="0"><code class="language-velocity" data-lang="velocity">IV = 16 byte đầu của KEY:
+1117e5b8fdff9d7be375e7a88354c497
+</code></pre><p><img src="/images/securinets_2025/lostfile/anh6.png" alt="image">
+flag is: Securinets{screen+registry+mft??}</p>
+</div>
     <footer class="article-footer"><ul class="article-tag-list" itemprop="keywords"></ul>
 </footer>
   </div><nav
@@ -569,10 +963,10 @@ The extracted key value is:e7bcc0ba5fb1dc9cc09460baaa2a6986</li>
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;6.8k</span
+          >&nbsp;8.3k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:33</span>
+        <span class="icon-coffee">&nbsp;00:40</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -599,6 +993,7 @@ The extracted key value is:e7bcc0ba5fb1dc9cc09460baaa2a6986</li>
   <nav id="TableOfContents">
   <ul>
     <li><a href="#securinets-ctf-2025--silent-visitor">Securinets CTF 2025 – Silent Visitor</a></li>
+    <li><a href="#securinets-ctf-2025--lost-file">Securinets CTF 2025 – Lost File</a></li>
   </ul>
 </nav>
 </div></div>
