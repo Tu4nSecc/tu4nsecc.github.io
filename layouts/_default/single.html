@@ -101,6 +101,9 @@
             content.innerHTML = new TextDecoder().decode(plaintext);
             content.hidden = false;
             gate.hidden = true;
+            content.querySelectorAll("img").forEach((image) => {
+              image.classList.add("lazyloaded");
+            });
             document.querySelectorAll("pre code").forEach((block) => {
               if (window.hljs) window.hljs.highlightElement(block);
             });
