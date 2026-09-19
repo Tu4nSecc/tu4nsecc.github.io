@@ -1,0 +1,117 @@
+{{- define "main" -}}
+  {{- if .Params.protected -}}
+    {{- $payload := index .Site.Data "holmes-ctf-2026" -}}
+    <article
+      class="h-entry article protected-article"
+      itemprop="blogPost"
+      itemscope
+      itemtype="https://schema.org/BlogPosting"
+    >
+      <div
+        class="article-inner"
+        data-aos="{{ .Site.Params.animation.options.article.whole }}"
+      >
+        <div class="article-meta">
+          {{- partial "post/date.html" . -}}
+          {{- partial "post/category.html" . -}}
+        </div>
+        <div class="hr-line"></div>
+        <div class="e-content article-entry" itemprop="articleBody">
+          <section class="protected-gate" id="protected-gate">
+            <div class="protected-gate-icon" aria-hidden="true">🔒</div>
+            <h2>This writeup is password-protected</h2>
+            <p>Enter the password to unlock the Holmes CTF 2026 writeup.</p>
+            <form id="protected-writeup-form" autocomplete="off">
+              <label for="protected-writeup-password">Password</label>
+              <div class="protected-form-row">
+                <input id="protected-writeup-password" name="password" type="password" required autocomplete="current-password" />
+                <button type="submit">Unlock</button>
+              </div>
+              <p class="protected-status" id="protected-writeup-status" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+          <section class="protected-content" id="protected-writeup-content" hidden></section>
+        </div>
+        <footer class="article-footer">
+          {{- partial "post/tag.html" . -}}
+        </footer>
+      </div>
+      {{- partial "post/nav.html" . -}}
+    </article>
+    <script id="protected-writeup-data" type="application/json">{
+      "algorithm": "{{ $payload.algorithm }}",
+      "kdf": "{{ $payload.kdf }}",
+      "iterations": {{ $payload.iterations }},
+      "salt": "{{ $payload.salt }}",
+      "iv": "{{ $payload.iv }}",
+      "ciphertext": "{{ $payload.ciphertext }}",
+      "tag": "{{ $payload.tag }}"
+    }</script>
+    <script data-pjax>
+      (() => {
+        const form = document.getElementById("protected-writeup-form");
+        const gate = document.getElementById("protected-gate");
+        const content = document.getElementById("protected-writeup-content");
+        const status = document.getElementById("protected-writeup-status");
+        const dataElement = document.getElementById("protected-writeup-data");
+        if (!form || !gate || !content || !status || !dataElement) return;
+
+        const payload = JSON.parse(dataElement.textContent);
+        const bytesFromBase64 = (value) => Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
+
+        const deriveKey = async (password, salt) => {
+          const material = await crypto.subtle.importKey(
+            "raw",
+            new TextEncoder().encode(password),
+            "PBKDF2",
+            false,
+            ["deriveKey"],
+          );
+          return crypto.subtle.deriveKey(
+            {
+              name: "PBKDF2",
+              salt,
+              iterations: payload.iterations,
+              hash: "SHA-256",
+            },
+            material,
+            { name: "AES-GCM", length: 256 },
+            false,
+            ["decrypt"],
+          );
+        };
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const password = new FormData(form).get("password");
+          status.textContent = "Unlocking…";
+          status.className = "protected-status";
+          try {
+            const key = await deriveKey(password, bytesFromBase64(payload.salt));
+            const ciphertext = bytesFromBase64(payload.ciphertext);
+            const tag = bytesFromBase64(payload.tag);
+            const encrypted = new Uint8Array(ciphertext.length + tag.length);
+            encrypted.set(ciphertext);
+            encrypted.set(tag, ciphertext.length);
+            const plaintext = await crypto.subtle.decrypt(
+              { name: "AES-GCM", iv: bytesFromBase64(payload.iv), tagLength: 128 },
+              key,
+              encrypted,
+            );
+            content.innerHTML = new TextDecoder().decode(plaintext);
+            content.hidden = false;
+            gate.hidden = true;
+            document.querySelectorAll("pre code").forEach((block) => {
+              if (window.hljs) window.hljs.highlightElement(block);
+            });
+          } catch (error) {
+            status.textContent = "Incorrect password.";
+            status.className = "protected-status protected-status-error";
+          }
+        });
+      })();
+    </script>
+  {{- else -}}
+    {{- partial "article.html" . -}}
+  {{- end -}}
+{{- end -}}

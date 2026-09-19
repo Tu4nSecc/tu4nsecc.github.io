@@ -14,6 +14,9 @@ publishDir = "."
   avatar = "images/tuan.jpg"
   subtitle = "Tu4nSec"
 
+[params.injector]
+  head_end = '<link rel="stylesheet" href="/css/protected-post.css">'
+
 [markup.tableOfContents]
 startLevel = 1
 endLevel = 1

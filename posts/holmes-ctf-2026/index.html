@@ -1,0 +1,550 @@
+<!doctype html>
+<html
+  lang="en-us" 
+  data-theme-mode="auto"
+  >
+  <head><meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/><title>
+  Holmes CTF 2026 | Diep Manh Tuan
+</title>
+<meta
+  name="description"
+  content="A password-protected digital forensics writeup for the Paper Ghost challenge."
+/><script>
+  window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"https://tu4nsecc.github.io/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
+  
+</script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<link
+    rel="preload"
+    href="//at.alicdn.com/t/c/font_4552607_4k4bc36ef96.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  /><link rel="stylesheet" href="/css/loader.min.ac746e154f756f8220326eeb52a719f142ab038be5a8ddf30ea5ef15ef2356ea.css" />
+<meta property="og:type" content="website" />
+  <meta property="og:title" content="Holmes CTF 2026 | Diep Manh Tuan" />
+  <meta
+    property="og:description"
+    content="A password-protected digital forensics writeup for the Paper Ghost challenge."
+  />
+  <meta property="og:url" content="https://tu4nsecc.github.io/posts/holmes-ctf-2026/" />
+  <meta
+    property="og:site_name"
+    content="Welcome to my blog"
+  />
+  <meta
+    property="og:image"
+    content="/images/holmes_2026/paper_ghost/anh1.png"
+  />
+  <meta property="article:author" content="Diep Manh Tuan" />
+  <meta property="article:published_time" content="2026-09-17T14:20:00&#43;07:00" />
+  <meta property="article:modified_time" content="2026-09-17T14:20:00&#43;07:00" /><meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="/images/holmes_2026/paper_ghost/anh1.png" />
+<link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.min.4144fa01088e2f1aeffb738e4d6a4e5ee43adcecf79d0e39d50414c5234dada0.css" />
+<link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css"
+    integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei&#43;Zx/1oA/0l8ysE" crossorigin="anonymous"onload="this.onload=null;this.rel='stylesheet'"
+  /><link
+    rel="preload"
+    as="style"
+    href="https://npm.webcache.cn/katex@0.16.22/dist/katex.min.css"
+    integrity="sha384-5TcZemv2l/9On385z///&#43;d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous"onload="this.onload=null;this.rel='stylesheet'"
+  /><script
+    src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"
+    integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script><link
+    rel="stylesheet"
+    href="https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css"
+    integrity="sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa" crossorigin="anonymous"/><link rel="stylesheet" href="/css/protected-post.css"></head>
+  <body><div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate"><svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+          M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg></div><div class="loading-word">Loading...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script><div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+<div id="lang-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+This article does not have a corresponding language version
+</div>
+<div id="heatmap-tooltip"></div><div id="container">
+      <div id="wrap"><div id="header-nav">
+  <nav id="main-nav"><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/">Home</a>
+      </span><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/archives">Archives</a>
+      </span><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/about">About</a>
+      </span><span class="main-nav-link-wrap">
+        <div class='main-nav-icon icon rotate'>&#xe62b;</div>
+        <a class="main-nav-link" href="/friend">Friend</a>
+      </span><a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav"></nav></div>
+<header id="header"><picture></picture>
+    <img  fetchpriority="high" src="/images/holmes_2026/paper_ghost/anh1.png" alt="Holmes CTF 2026"><div id="header-outer">
+    <div id="header-title"><span id="logo">
+            <h1 data-aos="slide-up">Holmes CTF 2026</h1>
+          </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
+  </div>
+</header><div id="content"
+          
+          class="sidebar-right"  ><aside id="sidebar"><div class="sidebar-wrapper-container sticky"><div class="sidebar-wrapper">
+    <div
+      class="sidebar-wrap"
+      data-aos="fade-up"
+    ><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents"></nav>
+</div></div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/images/tuan.jpg"
+    data-sizes="auto"
+    alt="Diep Manh Tuan"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Diep Manh Tuan</div>
+  <div class="sidebar-description">Digital Forensics | @VSL.0utl4w</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div><div class="sidebar-state-number">3</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>Categories</div>
+    <div class="sidebar-state-number">
+      3
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </a>
+</div>
+<div class="sidebar-social"></div>
+<div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="Home"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Home</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/archives"
+        aria-label="Archives"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Archives</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="About"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">About</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/friend"
+        aria-label="Friend"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Friend</div>
+    </div></div>
+</div><div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div></div>
+  </div><div class="sidebar-widget"></div></div></aside>
+<section id="main"><article
+      class="h-entry article protected-article"
+      itemprop="blogPost"
+      itemscope
+      itemtype="https://schema.org/BlogPosting"
+    >
+      <div
+        class="article-inner"
+        data-aos="fade-up"
+      >
+        <div class="article-meta"><div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="zoom-in"
+  >
+    <time datetime="2026-09-17 14:20:00 &#43;0700 &#43;07" itemprop="datePublished"
+      >2026-09-17</time
+    >
+    <time style="display: none;" id="post-update-time"
+      >2026-09-17</time
+    >
+  </span></div>
+<div class="article-category"><a
+      class="article-category-link"
+      href="/categories/ctf"
+      data-aos="zoom-in"
+      >CTF</a
+    ><a
+      class="article-category-link"
+      href="/categories/writeup"
+      data-aos="zoom-in"
+      >WRITEUP</a
+    ><a
+      class="article-category-link"
+      href="/categories/forensics"
+      data-aos="zoom-in"
+      >FORENSICS</a
+    ></div>
+</div>
+        <div class="hr-line"></div>
+        <div class="e-content article-entry" itemprop="articleBody">
+          <section class="protected-gate" id="protected-gate">
+            <div class="protected-gate-icon" aria-hidden="true">🔒</div>
+            <h2>This writeup is password-protected</h2>
+            <p>Enter the password to unlock the Holmes CTF 2026 writeup.</p>
+            <form id="protected-writeup-form" autocomplete="off">
+              <label for="protected-writeup-password">Password</label>
+              <div class="protected-form-row">
+                <input id="protected-writeup-password" name="password" type="password" required autocomplete="current-password" />
+                <button type="submit">Unlock</button>
+              </div>
+              <p class="protected-status" id="protected-writeup-status" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+          <section class="protected-content" id="protected-writeup-content" hidden></section>
+        </div>
+        <footer class="article-footer"><ul class="article-tag-list" itemprop="keywords"></ul>
+</footer>
+      </div><nav
+    id="article-nav"
+    data-aos="fade-up"
+  ><div class="article-nav-link-wrap left"><img
+            data-src="/images/securinets_2025/SilentVisitor/mota.png"
+            data-sizes="auto"
+            alt="Securinets CTF 2025"
+            class="lazyload"
+          /><a href="/posts/securinetsctf2025/"></a>
+        <div class="article-nav-caption">Prev</div>
+        <h3 class="article-nav-title">Securinets CTF 2025</h3>
+      </div></nav></article>
+    <script id="protected-writeup-data" type="application/json">{
+      "algorithm": "AES-GCM",
+      "kdf": "PBKDF2-SHA-256",
+      "iterations":  250000 ,
+      "salt": "V2k9DYMPomT7pxF1cUUCeg==",
+      "iv": "syamEiUwOtplCRQ4",
+      "ciphertext": "\/GdMXACmEHgu\u002bMl\/JrcLvimsZPl82uCVwwqxzYDhoVXnCLiRtzD\/fnS\u002bl4TvNaSVKJ0FH8t7q2GNV5i5kVZuJEqpn\/30z9MHuujfHM7BTvsiogolTLz\/wjotNsBcZv\/Lib9\/BhYZiVEZTGxB4K7PgYxq6F5U2EUF4zpLFoDUAc56LtmVRc6Ob88\/7c4Sl2yOvdYo30o81TyeAclucVW3xkyCKXid30gBwVehXmDfTtquQbuLPI9VwrcwDChYZqnb9dlIdRl43s\/GP0sK9JR9OMLnEExDwYAz\u002bjpDejecpCPytWIMUOmDQ71MUAe3zGVH0tQCDIZo0IvOax\u002bUtY\u002bD8HhGEVzN\/Y6MtpRg2VzgR\/3CbzEUdJAFYyyUxWcHpKOivLjrUlXu7o0iejcqUx9gcNRCG8aRNrOz76FoaqjeAq0X9NRKmbGy\/6xc2wvEffLtYUaHqzevYsTef89BJkmrUwIu0a3qC2lxOj6fu7zW2tEekCNnaohLyf8251arzTCQjpJW3zUJX34CttlJGWqxh5Og8g800jlcx1FPa2MBEPOhvn5lmuw1YwPxO8jSnhPRCu75AbRoTfHdIJU2wyULK1j9SXgBXOQW6icdjgmHw7knbcivADBTWO\/uN\u002biKZw5LU\/1LRyN\u002bmWQ78T\/6ozMBk8NuhW8E8HaI2oXupuKrMlvFyHRNCSrFT4ev9ROjlNrGl1\/GDVI18jdoKXzfWALn\u002b4dIydGLeFQk\u002b0wA2F\u002biAu\u002bx9apzZ4Rw\/iZ69COv\u002bfORubikr5CYHfYW599p33OxtnLfgPMubFkXeURsTQ66Uzg2NXhw\u002bCMvWmxClnyUCb9b7XaOnhrBkWlBpYNjQnlc4JbZe3v1m30Vax0zrTD9\/\/GJMZGASKzx9aNdhC\u002bM1K5EsWw\u002b\/WJjr2BUmz7npTAWDrikxeEFq\/UMOXqQ\/yyInjlOo0gPfPhrlaQIlfALuIVR8jmLuvswe4h\u002b4csL0ropuU7GafAPINk2oKxuD5YhTwiQb\u002by4gV5Lp4O\u002bEeLHwgdoA9R\/z\/ibmEFu1y\/Y\u002bQjll\u002bvOpdoIH204\/KEYgZgfDq1zeXFnRIojZcRD\/w7c9lTyh2K\/OJYsmyZDcNQD7ZKI95WP4xVQKl4ulZFGtj\/vJaoMsEIUR7IaSC0eBh\u002b5D\/lqi6ep5Iks9XvtDUrvjP979mVEg\/tXve3FQ6SfQ6X\/Xu5U1i6R8imJGo\u002bR54MB6iWNsRvopq930SXqq2Ewo8mSjQ63v3NWo1SFq5F6hQyKYCZF8h7\/gYUMp\/Dvgi6hZ\/aBQT\/Xt5dHYhXTl4IE8BftonnzXBLq9mvafdmVUo37S1luT7ucP572UgfMysZzotYJOchHUOfa3bKAnYvg3o28EgDMH9MU\u002boI8IjKQ6UGRhRoYOaIwyL99hz9PSo2DCW\u002bLYoyDExBQNIoqlwU1H6MCiWHDK2T0y7CcU8k4JRiufkJMkiJSe5qJx\/EUMrODc9QJGhkJPTjqYoAdNqe3X0zyEFqYjOWc3nIHjQZn4nM8vCJ\u002bXTtn\/ae\u002b\/9mxg5jX19KrIXYVudXeL0KTM\u002b7gc8zU12kWZzpYEyVIkJ0kfdplr12EbppWu8\u002bKMgiFjby93XuyXdIhQzhxxeT1bPp3boudwJoPdO0vQ87\/yJaUupJRd74KeOPs\u002b7F1Io3znhSrKdSKetsd78iR1J5UlfznyxJHJiVRQrGinjE0DZLqlP9ujga5zgqwtMaSaIIFBOvqPYxB\/OYE3c43zjDmIxU847b70\u002bzyRXFxRk\u002byZTvs\u002b9S838pAB3bajq3FkNywXiWaFzsd6G1WW3uOF23UYisqz5LYjWkngOrDxaEUOQje6I\u002bh0sO9xrtQDuWy5XCddq1GWUHw5LClL6alnINS6GQ0GICoUVjtw5\/NepEBo\/B5\u002b\u002bmO0zI1tscH\u002bzjwJqJBb2B9kQV1PmvvuB6X8KSuxwKbm2znePiHAS6JNyHUAcPcgznB\/ZObTLjbGCdPM9llyo8zi2YM\/un25O7IdMdedAr4xCVR20DG04wunLNQDa1UTJV8wm0RrK9zOU8jH2m\/e6ZBGxZxmzgPeMnRkLiteOJxXH\u002bl7qf0jM\u002bEjM5WKP1\/lsYQGMIb1GIFIWi\/TzunGI7MXMQT9mEWmx9DJXBvMZlkWexp84rkH4TCCaEE7NdPncCTSA3srPZjpUCNIkImPv5i8AJx6f\u002b1kaNxncUpuMapVz6\/J6JYNc75el5WbWtlTWhE\/qBVoprycYof6jOiKVfwg8MUgSN84wEZjHVlj7VC5fyz0cP\/1hb0OQM49OVJSbGcJwIktzJyLv1zy5wg9XJdkAMnjoFBy3WIy\u002b9zRCgXaSlW8sfmLGcF5llnMHs\/iZ5WgfVbju9gh6tSwFTlDWuplUpMhOfdtzaj5wdg8U2IMYdsPP0CjbfAVOkWuoiCnae79Kb6JX4Rgd0l9xYeFjVH\u002bwPk67EKXtoDRR2c9FQBEVtDXejcvOHlTQiDAG\/y82ZM5HaVlXY5KZvIYt9YzfywlYpHhkaR7RljLZN4xZGQ5LbX\/HqJwinMaQizPdlGfVBs8e36lwTXM1vDi7Tpx\/hqzryqPbyouEsOy6QT0ygCOjTJhLmOpKx\u002bIw6pnsrbozjBJMFA1kiTWHd86me\/O0ya7KGi2uxSveUS3\/fflmOhpH2wjupbTPTxEXxqJdkDznIBJyGMvW0PNE5934AKKJ9axu9ltt\u002bZunDUSLHCjGyc8GDr3wljleNE3bK13jRap\u002bD2g7\u002bDYcx25FJVHmUAbMoy3\u002butQAOOIFSbumCCj\u002bjRh66ES4qu3JNNd91rNBFzd\u002bl8Pu35iNvEhUhWLqwYvjdjMEAt9UvhZ2wuhPxyFC9WKkzBuZh\/PU4KEmSlSwm3XAya\u002bmRMBVaHrPx\u002bByOBUrP2NU5JVSZ6vY49BfuCJjNnshsTxpkppOAofJGr4pS7CIh2jxpZ9sI9ibSbTbMqjY3Ek69TiGpifwYWfQk9XMh3taZkiwwHTOJ5JOHK96trp9a\u002buUg9PZO8yCd5cUBtObP7vdn2FXdU5t4Vtp1g8n\/\/e\/pnZVNSndJlb2YIOPwGDBRs221D1TxjYcSvSXYfyGumcSn\u002b3QIzMZHxbzh9UMvWCRVoW4kMLX\/WU3rLY8ppoe0CAjmCrO\/KY4erHNwNx1U5RmkK6TIUnxBZE8SZG4V7XO\u002bjG1CHxL\u002bLk1hLRe9DA\/iZtlPFd00Z1CzoFEhYFPB\/CYogRZpvpiN\/MINgTelf7xsZs5EsPpCPydTMFTs3qmQuH\u002bekocistFn3kXCl4\/iBiZt0XKJRNymKMKJ0wDITsJSRnWk9h0DxvhZMDw\u002bWGIzXJZkaz6xRiJxZ7Bw56cz62T7kpgmWNpvQZu1l3Bwpgs7Xc6pKHMs0ZtkX4u042E6e0mv7CxZFndfLh2AwwLTmwj8vRKzIaAfgmUQUSIH\/igr\u002bEu0\/r0iyGIfa\/0kzdWF2z3mlG7L\u002b78dOKXa7Oxvs2ht\u002bSgCxzwlGg2VEs6g8VMS2qc9dsty03BXY\u002bS7BtcnqlWQXaWzaJg2J6oISC\u002bZMSKjwkbgKPAkwEZmH6pNdmEfW6eeZ6o2ZEZggIgV2yIPIVZW7Jh1O\/ihLIg2nzbr\u002bomvP0Nha1wdLmTlri\u002bS0IoyC0tvOeqW0pYtOJcwBPWzENJY1WTjuTPfXOCkDkcL22aNFTUDLJ0yhUdDIsJL6A8p0I7OsOBTra\u002bOh8KeME04KqJrekeYm1OuPg0gQI023AFspn7Xc63WfC564a5hKu\/YZAKUFxCV1LPVcnoqfYadZ4oPGJlSJM58gs90VIZqSvnqxVnZGhKIwg2bQl\u002b6DGBf1Yni\u002bmV2lOyDzeLEDke53IBdTsuZQDLFEu34bz09N\/3r8LaUSgvQdt8jrY98p0IO\/hsA\u002bEJe0fU2ca12VQEUI46cvf9IlV\u002b3\u002biINOhE8RcLHdKsrunDyIb\u002bzcnWOZDMrXtH7U2MUJbZgAjxO0Ou0qXnSqt57BXmu7fCD1Jvrq5otjtW5VPLd49Ze7trSy3Lyd5OQcrJKba3KzEDefg\/mIZGuTTdF1neX0qDfthDu920yuVOLakobpW3sK53lGL\u002bKVNoikbXKjuUCwZe6fZluIOgI2uQ\/DazO4qN\u002bnkopdsk25q7N\/XZE2NrC\/\/0GN23MHDN\/DoBmyN1VWDYvR75hW75stS3ynve4RG4ATMJh7uajSKLqZ\/owYhkmBYGDD9YdYrWVDXiy0tbP3RxsrM2CHZP42vYs\u002baM0zP1bhmUiXeHxpuPjLpLxZvWzvxbTBQ3JxVA16fG9QblP2ski83Ip\/BSG4jP0yxNnllqxRZfG6gQ3FVbUl3LK9Yxo0Q0Wa7l1yb4DKxFmJlxgK836IN2\/Qp3T46dSx2LRj1kOeyczGP9Vt2M34SZ\u002bzfm794YcRKPXjAcrvx\/4AXjNss5BzoL2Wib8M703Q7g69BOCgmXJODqPN6uwNZKaH0g0kf9xTDtZzc\/sG\u002bqXsWP4vLqrl\u002bx4\/fzn4jTe83lEr7wurQyU9Q19d7zkvGLXM0ut5rYJgEAgKe5c9yda8abIuHTdhdHvPJtFSBVQ\u002b0rR3N4D7JPgcFOyNZXDQ\/QWoLK2yRc\/uxYY18D2\u002b5qBX3OEj22jN22uJzhBPLdMr7JHcTnCKXIFRB72wwxha8kw9gZimEi6r8voV4gG0333nOkhUAmSVHbFrxU5K8v2P6XUS0dMiy2xdTSzYRI4hGuwxCtuuGI9ovVOGELjXFqdjRkJqdX\/W\u002b1HtmUB\u002bMDr\/UrIpyViV3WCowGtZp86CvMIB9UQtzOlYzINQPzdO6B3\/\u002brBhOqFNsy1ialcsfFHB2siPDgiCFQ\u002b02hs3IaO6NQlhZRACsOPjQh\/wnd6LnxxaYaAKCpo4Qz5Gnd2tktbVME9jb0rMcqZJyBD9chZeW\/afxpsnv0Y0cdTNzt60FrWaZH5DXhQLIJzfnnX2XIWQaPFkBKyWedRqij6CPQi8qvWYuQbi9unfLBqNj5rVUwJmMJX5EmIMXCm4JEKy5mZGXvF54fPR\/JUGCX\u002bYQUsi24U1\/FEVbNV3K82Wdr\u002bJwe\u002bMjtuwaJgbqsfBNIuvs5FE5Wdft9wzwvuLXs1Cp2WcUIxt08N7cM5UxBkAjYHNE766ieOhYG2VN0\/jaqOelgGP47Vt4fsuvay95xv\/FssyHzdgr4P8JRTKu4vUS9cx7JZAOHAYO\/A\u002bJJ4x814PV1bIMgIUdwL8c4RV4WIH9WFMQ\u002be\/PCbVd3wM4czgvp7MFWlBspBRRIR\u002bKbFB30HDnxelWbFe75Lw\u002bZa6MNIk\u002bfC\/3AeJ7KEDyY91NAQkBzHoVCVPAJEBTB7Z5oqY39wEGj9Kf4Q4ewIG3x7TbH\/ytF\/bZyEOBhluW58K\/z18wdpcCigtliTmR7ryDA93cxg6SIHQpDoKUNpF3ZNuPpzGRvD4g\u002biZgLignSmI0q5wMvt0Cn6wOW0\u002bKqKH9xLbuWriBxJoLTfF\/q5DuucW4QJwf1aXrUxBQXIdTTDhNQCaA2J8VoH\u002bilYdVcd5eFVgx9xX0G1pg7TbKHK\/IxumSqmOw17jr5HvmXhlzQw5pWQXMxxvYSx5HVoURFKCP\u002btcCtsjLgWytgYHhUgZDkzatQhb1Mh6SV6MP52zRmJC14oWAso3nlfrf4AZP7uWsvpZ1rvjw7T0wK6EL6afLHuyBdm1A9uUWiJ2fC71eSHoHM\/Nr7wRAyp8mjpmPLrmYPIQh\/Lnx2mntabu\/IR6jBS4uJ55Vc\/\/tw9bh\/zVRxwzA\u002bYSnyH\u002bhqvJJjtXPvgEbpKgoH\u002bKtbF6oiw8qzWf9ui\/Y3KLmqDFDII8Axc5wEzfOsEFdwly9VRPj7sBveSo0IPmyRpHtFc\/DmEp5g30SPNdubyiZF5dI8lGSjO99GM5G\u002bMx55tEKXgbpZ2ZnP\u002bQLVl\/2pPPh0NtApMS4Z3PqOef5L1FjPvty07TzwfYRq2xJStkT\u002bLeiJnE\u002bBYdyfKjx8gWb5xjuuE\u002bUpv6SfcFbpiL3cywdIs1c7ykWMkYTHheFEE6Qo62hxcIr\u002bxS1mUE5V3il4xb3QQhiUpA1oaY7sYp\/yOBOr1RftK8RBb9URiZRPsKQcvWM06LfMtrtDroIuTCQHVWeVYW4l2lptyGcpLN0Eu7\/t9uoCVuRwGhU2lgzY8W7D8nm0suv21PDPTOHeYe4LV\u002b8mh9WANM44HjAgkDird0bGBnbv\u002bryAo4gU2SvEDOGj4\u002bfXEFoEqtvOcNDnR4RJmCWMMm6mrQj3MyU2EsR8KZt8hlVNv6mfwk46BMA8KVzRH7g\u002bNLTUw\u002bgUkbO147ZaTGom4gNg8Gt4\/1xk0\/AkV\u002b0FT08u0IzavN1elu\/cGuPrRlmIbw5DUcifttlKhinbeqznFW0szovaEHRpAgNV21S\u002boweV\/2mVfTeGPOpYP15JY1W1D3mto6gMU5dXG9lW0VUKgmmIt6hauef7ck51CaYr\/NmBOImZJyEX4j9wZvbf812LDAwWHhn7l\u002bty1AOx27hAXxo26poJ5NAMLcvSYAtmb\u002bhgUbkFsOKTV6UWUPgojSCEayTOwRuGj5EYDx\u002be7insaEwq9OJ4NE3UDIgGBAqUYlwqMkUw4ZrKaHt5mJRCukeYyWx5cm\/PR6xqJz3fUzthHtA8TcmU6F\u002bjVQJkT\u002bmB4ECt7Pn8GbxJNA\u002byBxbM97Si7Iy4\/zdp0uK5G8cpRKEkQPQFls3sqpqJcAh5CeAu92GEHiVJY70jaqoTyrNVqSs2UsVbBxz55bfp49JoWAad20sa6kOwzlzvAUagI3UJZEt4E3oio2GeXUiumoGSK3kxEfxWww7YfSz0yRsgnt\/CSa10eudSPQX4oX9Xw3h9HrA9y1pdrVyMduuSnor1sMb34F2q07kq4PVf3fq9HyGEtEyhkLqeZLj0lUILiZ\/PopgIXz\/f\/kkDUOUkh39UI9XB84u0syniCcDCP\/PyydzcdcPamnIwzuuHzukxLxe9P\/7elQ6gpB1HVMlXImyVsWckxauYs0dAaHJV67bleMuyVm7YSFfhPL47bHJp2cc4AQNm7eujXexcj54KiIdCY9NyQEiy\/otd6gbrz0x6ifpK5V9KY49\/RARDqvgMPr00ypAJ2JCyj0Qjnv0fxadGJBfQcrYsh4M4\/I7mQdgHky98Ck1enivBPzbsBjVvNYG\u002b\u002b0IY\/I1drVm8Sn4\/g8XAmp2PbmzxHwd4tMHXu1mk5og0N2sxBHW1TLp9ksEsPoMTOD3RDmx2GtIkmGmfNBg70FMXml8HoLrntVfxf9zoNTajlhAJu\/8rpVYcM3F3ltBSYhpLvHHsjPwtVvEqJ6oXK\u002bo7euyl7BOa6liLJjb40PhS26xbEBzUVvcMaGF\u002bmrtvMjFvBVI8oTGVNJl6F7PhW\/TMqHDS\u002b1\u002b431Pk4v7Qzt7HpCbSraQWCb3jMMNQjzSNnKto84k5hJi9ghrI1RU\u002bA5HSrUWASICVLWt9602fwnadImluGK1JmO\u002bbvKcKQGTg32mlxrdUDrWQoJvuIDzFD1HQzlLzKqLjbNl9pAYBqUp9liv\/\u002bKlYmP4qJuXWmUiy2KWxcyjXiqHbH8B65F5RCbPa\/F6lWg3jdIrGltrOULYKZvqwGE0ag2iwP7Gu2LOm\/2RLKedHa9QFnGM7svobo9R\/cOjtwE3SaMT5k88Y5BtjWzxbNqyQDbeelJI8pT05hyH1EwEfq\u002b5\/us30PdWw7oJRcHsKbA4XHkFFNQvhUU7SeUZhhYfeTCToDTNCyoqtsUkt9AsZjI3uqYRlUvYJBxb0rnlVug0iDtZEeTyr2jvdZ3LHwUzpsrTI\/xmjKq12QMPgdfrfjkI2SlFyz2g60dT\u002bGOluB85QX6KHm\/uMDtcWqCLMmgDJFtyGU5oR3qQZEWR8UacV7NW6lWLOOukqVj1FJtDgqId0Q395FPAvsRMV5fD5uTyzpBOBdPGdBuBxaGKXzMkFczgImgo\/4tNvF3KnxP\u002bzYSohRYva8Q\/OP1JkgL99owNUlS4U1fDmd\u002bmKydQ\/q\/1u87sl1XQL7Pf3SlZpj47XnNH0lWkrn8yjSwu1\u002bfqZk8275RcRSmEDciNzkipYe3msDfpzuHeFHtkfayKiYPEFDkY\u002bwy5n3RxBtQkpKZoMpcOql20ZxGaCdmcyMpQz7Ey1AWmMqp5l2n\/n\/YMs4UCJ07jheWyXsEH2KGwU\u002b2Mo1lrwSwwaxYI4PJGyqUcxsTS8GXhVsZamRnsBaqkhH7WeTKoxe6qt\/5JM5gaqT4E8y\/3W4f9tUe0nsOHu65H3wC\u002bSLmSVW5ryWE34WSHDqyr5XUtpFG52LKq20v0wD7h2bDSAeGOBuoNHEM8gR8bs3PlLNoOCnsI5tkIULsaDUYkYbvsit5VXvDEB7y3FYEnMwd9\u002bZImxOFwaVrn\/C5XcjHU2JdUJDpRiuABBePQMl7SXVc7QwmnxzElK9\/5vb\/RBtWZwHmY2NZxpk4m3B\/vOwfHLPtWWcNW9dh2OUY0qgQbVpX55VFwm9ucq0pyfm\/RZ7YrYLTV6PwaogOfYEqj1sZtmmTQJ958pc3YenrJ6Y\u002bMnnz4JUs\u002bEcsk6cpuqD9LRfH7PpYuUmpGGHDdrE8sSNlBZ6JI8vR1bbPDWsNVpFsHy7Q18xACoWKPDjS6ZV8PHAWKGMw4ckrmPN\u002bd9x1eKbZ88I62Si5TjHbdq6Equ2urEOKMIbp3c7DxiIKLA65sBc1SRZcUvGb8Gk1Zj\/Vms1Z0TnUoa7AS2fZNeksgMr87m\/y2vmltjtHTkdJhJJPOk3EQzchMvzo4dW9FBYFItNdyfZrR1Qtynx8oCX86\/nIzqyH3FMvFUBS3Vn306ksOahcIbsfUgvSjmP\/ppC9hrXseut\/FKC7bJq7lel6s6wMTLTHlG\/msfMAlWeMCmc1SOq4g6biLztrt6XxURHR\/\/gUrrf0i1MtXLt38UWGFu3A0bvpDVDsF2whfkZbFrk\u002bmy4UCnq\/jBEJMgB0fl8e202Vww0g315V6yzxkxT3Vfo\/DnX5E670\/K1EBZat0VM5HJIP3aJ6Vv0uJ5rRiwyHAN769EWGlWDBqEeVQhCyJrBuzcHXPoh5KxkMkSkVvNyPCiw5YE4YPDM6PVZuFA3bqjh2Fca4LOlW4RddumURnq2xFxoyE51dLj7WzetYRd94PBrbq\/YkYIgL7amhSXFs0XK44vggzft9ffUoCnDiYEvehYRt3ybnQJda6wnsAbfifxhHiKIQyOVdXZqCZ20f3Ev85SqANZpWR\/4rO2kJxD9kIL2PiELCPJaKLmbiPHEMWFMXlESTbhX0C\/sYhv5J\/yd8lEKoHhz3TlLOpMv4sqlBUslx9yzoYBudcEArcs\u002bpy7fovK9UjJkhwFVmuXq351\u002blwRCWbJvm6mfXtwuCATXFIr3YhiTn5K0KnVac9M6eiPf\u002bA0djfuzxOJyGQd\u002bgTtiR9bhKdzVjFZN7CpqhhX\/\/jd8DxabvQryvjP93ucdgwWjko5oOCWXM3QdPCq9da89pMuos9AKEPvHI9xQcnJwNnY0X22\/yyn3hAOtGAWYjnyBCS\/9aAv83Us4Pu3DnOazcEQVX9fhFBCUKVcagTEck0bz50GkZoOsNsVhfRMdL3tj\/ETUOHkom3vq4QBwTsWTMeGSJPrGgZ8PcKl4iGNpcfmZekDrtTrKMEHC\/GZTbtYBa806VC85YzhY5kirvyvQrFZNhx\/rCwDNtmPTy\u002bqNF\u002bVt0c\u002bnKjsH\u002b\u002bD8bwTEUP5OKvyrob6MgrRT4s4KEI0FfRWYYdLzKEdJEscfCI9\u002bg7kC0Eqtq40YF1Z4kdNZic9T3E\/vCpOt\/0RWNpAsHD6D0UGePpqQHtMvA5Gr4fE0cyTTaInbGXvRrtmMVJFidcfSKCmQgCyGWo6o9GZ87gRGRMKXGi\/2Pdt0bO1xQa87ADMMR5Mxj\u002bDsCl2fL6W5c6XDdSKmd2nLmkIPsv7oyPrB\/OlYUU\/35gP\/lH88yhXe9JcFo3dp55PLiOqaFzyxIcbZUhVBP9PEOPS20N10MuQGkTgBJm\u002bD7lBrFIKbVDHEsuu1lDNfFLOfG2kEczjuS\u002brPCIaF38UzZCwk9or2Ly4xo052gVZPHICyx2NpKXKwmG5NwyT2mGYmDQsCSdYjeyntWU5Jz8I\/\u002bHETcR25mjWsDtkpPjg\/ul27m3HkdWih67ivjci6hH5eGXsA5MfwRCK2f9uIHga153\u002boZscXqizEiuoe6NkZSTxFAnoui12ejV7NbRZncaZQLylrTzN\u002brmN2WUQxktJ6F5AgGyLU7FRdSJ5vVNVusf6pW50KEq8mBbUbvIDT\/dOT9iUOPXrJ2Hw58cLJlrZtTdzWDIhm4aPTpqh9MuGAHVrn2167HhIhHe1ngv1Utwth0lM2XMaFMSUWjIMgu764iMxl35MB1scGu8yGED6rz7WihfSeZx9MKsJhqsUsJiEsg\u002bsXJpODCBNzABq4Gm1Fvj7DG75QScD8p7FgyS\u002bK8iCqN\/P1g7at3Y1AJTvXX\/Udt6cW\/bu\/NbvWptl73aLgH1r9F5SI\/w3z\u002b9Q4WgQBLiBhz8l1ddUtU0MyYu2rzAcL6RgZ9bZ67XmkMij86jkL9zBVH2Gh0RmyKfmh3gKwsC3CvG\u002bY1PLQEeV\/ZqUHmSDZ40ljBhNQY3pspLsVL8EX935E0JG\/JV\u002bOvyKYsDvqXmFgLXmso2DEkvYxxVFWXkIptjxb\/GoWAXJwCFqrzRDrxWPCInkk8JtlpFpy\/WCPR36DQK1EmWi2q7mMWSWcPtRzECWBCy\/CSOJjhPevTds\/rH32EhJz9UgyjHH025YTdAwsGrUBaSZh1MX77JzVBGTL\/tNNfMGQbBZQLJrcNbSWpOYYhvB\u002bblhXq0nTIkzEXLEC8cWO71uAoiYKHcHJZ3TkP3fdwzre9n0Z25gaV2XPdRcqw7jw14\/7kN6V9pu5moFHBv\u002bOkSoQ9ug\u002byFJ2lWmBo5iZVZBwiNtkEChxADKiJ7PmJqyVN6M0cLObHWqBqyFyfe054fu63Fc8dOfBAOABph8t5iDI24MO8m6truGUop2VfhCgRyb3GAX6zNo\/PS8xoi5Ihmap5GMifo7005GL8hGQUwYzBKaEvWYwWbhGgusVhcNJ3m63j5UGlGEUTOwTJRTgtztgQyVaey5reyWTvoxNb5oJJDjFV3YeJyhXsA1TWeU0W49JhF3DeNcISkFHHCLQexfk0zXSFEvYVuStdyAEh74LtxRIbWFZN7zCl7Hn9YHvNSaUvawoUF1ntKDbSsUTqr8qJUcvEiokaN3DeHM23rUNRm\u002bXdTzxtmeclHDABzfUWLLXuHgzfuD3onvjfC1Z2axkvuC4IvO9yDPwH1dgZ0lc5KedpQaogy3G\u002bLjng2pwUOni9PjEvWWR0DC5l\/3HzykA15MqC2tk1\/safFFiSkddYkMTCE0QlkzK\u002bvh4lJ\/hjvYDgFMA17C\u002bUw74kv5K1F90tqG\/ZuR1xX\u002b6nBb6j3EEhE9XLgmFlBOFVojXhaLYSEWCneN2GRvFIVmbz2DfGomZKfIWLQcnzHKBQnj0XT\u002bBryNEvIgJ1lsHExX2zzTThYH\u002bb3vCSSpRwMBXKkBBRhZOE\u002bIWe034OzZJoxxL4Mc4kdDYS77r0hCUitPZ8uW3mcbjN5HNioIibdvIS4KtJkr\/e9nWjErFSN2x06NatTuzLFc7p8AGWNcgJGwHZpX\/jH\u002bZ\u002bDVjwItCBpC4YbqFvUFyydTuGoXMmG8UYFzmJDwPninCxnyqbTMqMXfOuTm3ka272phr7dT5528HQYYWBGmdElsw0EriCrlfRm3blo\/WsYa8JsWD\/vfDHHtORwkhVYDEFOPRoygYB6j\/ka5cxiiFGFz4mS\/lLqwtdq1ebR6BfDCSBZvurDHcmF44\u002bqCA1TPxX6H\u002bQXs9GIwHxUFispuseh5\/DDxALeqkXeXUOsSNL3v\/RKA9ZoLQDHCaqKcE7gE2nGqzwnXxCPXbXnTL\u002bVhFB7TF2LwSKP8h8FctjCzXTznh0\/lakAQrqFbpzsP11bYqAwK9oljgjULyiM\/QBo7UW6Zj6Y2HlO\u002bzJlahEt273iKO9svRdRZL\u002bG2IXEOoc2JFO18zD4hfglh\/NTpX7iqj9GTlwDQys67x2qfktG8PQrpvYFzUbqX3QaLAYQH42Ah4fVjzrO5AR\/6Yn6GjilT3FJOfoiksinvxq9wXclcXFNN2IVP7EBKE5WrWq0zr7OGSaMJ2ACfU0wUpNdPCWswxttyemPvA9mVDXvO3d1fWG9FwACQVbHlw5DlJ6\/jcbESZU093GUZxGt8tBaYSwzPpZjIZ9qWfLWixh1\/RkSfnXHqrIF00EbIM8eiPRN6JbvpsMX\/c8ZKN7zItuJ5OIuENHoybocapKL4ISLwHu6fF59OCbiVbYMcsr7QRN1AvC4sFhkGYg0xbAUEdgbIujRk\/vmBH5kK60rMc559y79LlwoXte98b49zLRISDXWsJJKV2YofqvKpfCVSTWGhA\u002bCC4v1fOcUPAP8KE92\u002bKskHjWL4cO6R\/RKmD3Goutp4ogH0iUwxLBb868RoEw5l5jHLz9\u002bYra29y8Nm4laAK42YkPJViqEBnkeyFAx\u002bQJqxKz22aDqqYwUr1Iz0PlB0mLD1Joh3vEvGKfMsVTeqQQ189mzz91yL3\u002bOdEMl8v0HRHqNrGyMoW57bNKP0Tqs\/byuiDFARON2K733KX6nDSd1SehRIpb24XVgIdumz1\u002bX9j5tvUiCyXDGoXJ5PtVg9u2ia7MyPrUaNUlrSLtVTl7ifENlnUkWSpL10H2t8RP5uRpySC61Ra18padkOfoNp3rhE6p4oORbidI6adeTdjBW5fzRI6G7RHDrPWqWoeckfT1zEJpZEKCnnwZdQwv95gtH9T6\u002bao8KUOX1A5qZpbUeMEF8vaWbbowjQVPFkWEf5RkDEoxRIZyrxdNz38YbxyJHASCaF2m5SdwcNVQxrCwqAClywQQ9CqbhVsHuA7Ewg43GlDR58IBmZb698Xbg5oZsNXsMTLa5aFyrMSDZmuylKKwMSxJHG5oc7qxHjReX8Ev15Ve51jjOZ1\u002brPG1nWJCs59UZPSjqWJp\/I\u002bkuv\/eeZqfXync3D0xRl4wkf6M4e2jmLyCzIZpjYkr3kRqVvDiRNU8kMS4sQaLPIp7GPPTsJj3\/STiNC74jW9YndrDGCmbvlnxiAA6XVHc\/XsCJ5gEbAGFG49YcRgWt\u002bKySBqW2xw8Ks2aD\u002b6Mh\u002bU0VKG5Dkx3whuq2pUxFlRaMHRS23d10czPVzoJIHXxxnGwEy3wX1K5Dh8gj1BO\/wLtce0qAWxApUYvsY15pkQeIHhLD9mR6qBdi1G6r0J4Hxn2x\/eTluIRWX1zBywSTUgSZo8AbxUYTqpFfx9jAdpqXCAXsLkYu4lVxvwMiRYUxf\u002b2ho3hNjqRY78dt\/U0SzT\u002b1QAe44uyfahJQkHhI6D\/joc5eajhTXx8bi8dVrcDYCzeRmRT0B\u002bOwQXAPw4\u002bQc6OLPCc2z\u002b3frM7YeFYqvo7HsqK02qcAEygE6X0KBGWHC87XthOJ7NdpOhe5WlfJxjMJVBTUZHxdZ6WTP\u002b9bmrj\/4pDeqSnVQPL\u002bzvYSKBwr\u002bAY3G\/\/b\/WFTBrJXKs8iS9KxldrogNYKB6wazxDDBJz7eZljjIqi6cfJO2w74IGDAW8pcfhq5DUDgcc\u002b0m\/P6QARAefwHIIhZKKp8yDsCWAYu14C1myIbaAi2E4Ed5n2hllbSYgsuMdSBUsqSnPtcOJLn7Lbp0\/shXSrkvM8PeCvNrhyv7ZHJOOh6XSVWUzjpkd5uiHOdakrkzfUOPp33d6P2p8p2OSp0AVTsSPjGFXrXWZNpA34Kt5dDpZVoILUOQ55etwt3CHrASFbuCsC4ihCp74tQvwZZ75qwui1AFVhLhCDkaDo3nWbslqVF9ZaLOzBGRhQ6HaSs2WdDIYtzfD4gW820hEoiO\/3Ctwdg0EouEm8VWoJJf176SeGb7ywZq9zL\u002bBd6bXcqzCBRkDbUY67XbLA\u002bmj9Sgf6hHCUylFOvpL\u002bAboLC99PcXpAvAbHZY4ghTJHTg11P28KzcVH43ZXg2XJdDKD5GzOQRlo7J\u002bLuoo52YT5p0QCh5yWprpSb8EbYHunJudIR3zpLzPzfytD36qVxlb9GaM\/kMKuVH6y2cO9S2dGrLWppWNibHR\u002bZI7pBW3aCwktTio6ZLlVsd3rxbUuxzyARmFI9CBsppO02mNdznx9Q\u002bnRIzQfqkg9bANFiA0bQfkq\/Wz8YYynl8D1w9c0X\/HTPXUJuuRUSaw16A0ma0Z1SuS\u002b4zL32gMbaG3xziJvYiYsdWdZcAHFgwgJTJBxO\/fD9MlW4abbGfv\/arYrtbbOxtB43jkN4Uzl\/2YBT2jbSmFKO7f\/pLSjLdmlU\u002bG4\u002bSew9\/xBaKS1zqvBf1vzullFlF5DD5kuH1iqC4nbxdoimO4506qi7FFaGMzIb0JRe5KlW3BBMMzf498J7OXqahhQ5d7yfNnX5JabWSQGHjR5PP5sW41EVxbQf6Yf\/27DX7GjMhKc7pG9a2sEzCHgfLRFmt7eUJM7kuL3Setb1b1iSZIH9QPfLVuLrfG9hJoZZnzYAv1z\/Dhm9cf\/X\/0aVR0IvU0NEdSS4MHzeGNp\u002bU7PzG\/IcvjUsSwi4AimmcVhWNCeVSyJHnj1YVF\u002bDetvZU9vYeC2xNcZoB5LCXOpfT9Z51i\/LKdek3s8ai\/B7eyfByRMF792mmEB1lVYnwscKRA2ClpxshW2yWDQTQ1cumiD\u002bvL79F3r0KqJdbGBwsRfsUtUd84UNn5\u002bF\u002bWyin4CRTj3knK\u002bJoR6Y4qgtjXhnACdqjPHF\/ravr9\/tEOY4Mp\u002bpZXSCcTdb4U\u002bPOPJ0nu75UIZkr6NbobPb61wRzdGibRvg6FdcaAgXrDGv5nLx\u002bilXnpBNyClK0VSUkV\/aSb9q6UAn\/nifHMUIEIpuP6Cfu5PG4XTF\/v\/uJimvQHDlZVD4jtImy8CxLPdQkcdO1DiTYkhTqsE3RrVc5LL2QmjfhRA2\/agf4I\u002bbPUK2sb5qUXAdnILSkUiN4OmyBcU7EggocM70ZaHINAnLZFoNWCs2eZxtyqik2kcK6iiZoU2A4HIO614OTXsH7bh3xvxvLYqBOaagu8cPRFpZJ0NqaEI\/nSvViQWBi5lfC0ov\/ordOKAxUpOhrS7BlFp7FP3pYSHmZuQLi24sbTF4uZAgYQm\/RYhG\/h5ya5KZ2AFLH3ILEDSwKKrI19UnV8U1z\u002bn9cVSynzHt7NeaBkMCZwCeJcMHO4nFWidtFeY\u002byO4VBjgP6aCzX7KHicI8UtBXWaxeFpSARchOe8MzZPzIvRwol5KTCY6fO9sbECxvB9yTeHxeWdZadIWwgvrbhBgB1eveP6ApRLQsjQa7k6qWXRBZAKjL0Oq84bnqBBVAsRksx0VU\u002bBTjnOIU5QwjgIQRu1yJVNt4x7avsTjcGvdErmSvq22ZrpEr4usP0iGovygpZkm33YmIfbdFwHt\/6uwHLhKfiV0fDJuIu4TyQ9qAaemhTxm9kYM\u002bgG5Ipnyaw4DSHKGpQVp9\/K4B\/g4lC53HkprdHQAKi8\u002bnGhU29TDg7EBkO5\/\u002bnN6kAGBM2ymI6vTNBo0vseczAJ5PkI9evAtL2gHSzxzXa2euB8RhTwTA2nm6nJWKySpCXjZl0GKft68LUYpuJTEIQNVV0j\/MCTj1PTNBdGwfr\u002bCramuxhyK8dr7IAtG0X\/SgdQVUdpXerbaCBhwfamlcvq4U\u002bz6Fhmjb\u002bL78kBA8Emq7UOguSD4x2QOkU\u002bWcAOQvWTUkIAcCDEI9ZIzSbAe1LCJP7rJidXU3NRCsKdhgmKMelSgw0JIGtQyV2FszozDrJfLj\/G\u002bsLAiilpSUOCPKoWJNRc46zlfDc8WzNuaGfPBh8E9uKDJ\u002bb2O2hepEeV7Z\u002bs87Y\/aq5ps0A2CjB7CWOuZJO\/Itl8DlepKSG7tm2l38C6DCxK8eav44DCkJjryUlE\/5rknXP5KwNXKiVharQRVEEpdHcsiQGOjhxpPy5uS9DHTgowYuhwXtDsErautcO7O\/aeWVqSHFbg5BeAfOvWdf9ImBTM7VOcR5PAj1k6naHsYsewdxqe3gh2ehXIJiB430JpiF8CuD75110Qj91KSVemNrpkPd8wOsJYaq7oy0bazf\u002bjU1e0it\u002bJGG1i2iRwbJpJehHRRiAC62jyc9x4cldfFebKwgcI6E3gzWJCChezq8dA9ZxeWSBASitG3l0\u002b\/QZdDm\/WGOmW4VA5OPDjlsAAjPb1tEfFKWfEz6Az88Ygw3QN05W32HRPplOjLMaXMC\u002biHZ7Tx6PHbiVDcq39WvMJxDmbF7p4RgEsX2UoRmgDTKWYIqKJnEy3vbYTStff1\u002bD6kDnUvpNAEq7TF6wvDJXouhmaNIKHsLIYGYIvoZ\u002b1KL6fIBoSudA98wc22ytIBPl\u002bt38cB3\u002bkqzqX4Ue7ObyszX6V970\u002bxvUDDULhwHGP1JjyB4UdMbnaRuDIJnHHCUxX9GyQ9Sh1n0V4Ipk9gAE5ehgV8vAMFcPEz6KhrU59Y9\u002b\/VzmtvSncv9hyaHlkCRzSquGzjP0zMG8lm\u002bR1qscFG5KmRdubtJxnVK7wtcvbMud1kXFyLpIAee6oT\/PXdo9MEsGD\/KOcTW59SNtCqFsTjU9tXZHBtIe0bLYzResl1jH3CYHaMZbaUTqTOO8KhvSnlgbv1zw6vUWr6PrBNaI0u5ZPV9fAnYPJitwb1\u002baPoB\/\u002bPqX0vnbdVFznq\/ZgD3wv5f\/KJvDRHmxFbhbEooXUF3MMOZTm1p6Mx\/LwciKDEBc10Pe8CtqVcJn7Aa33FRoIjA4s\/7RHMWVlG3xcYyIdXVuFpAdr2uQFk\/oGhGsRaHwgnwzPyTFp8ka4E4LxVJ0zF9D4RPUEf\u002bGyFyhTxd7SP86i21nWgvSGQqyOxX5PFXRuuyuWC27TeYS4M1EB22gqUL5ZKQPQYSg3HbcgqqH0p5SFguIwqQLJR\u002bapPS0xDb2Pn\/VXjTxEB\/wivDE4J\u002b9LbXE3hHQSwX\u002beGqKSmee1ZhbCiAwivTDirqCIEhAYmdEzisyPTmI\u002biRUSfGSSjw\/N3\u002b\/0\/wWDEINnW7d\u002bsDanBueRz9LQN\/W5J3jCIpuxjwJWlh3mL5f1aED0nq86xN8LzzSa0WI8w4wtDsVdnY\u002byLyvxk9Fqa7cxbZw2LohAVNPzu90d6qxBn0PeZtwh2IqlwneOUlFfA1IsyBGUgtAeCTu53b4fgnSx6MT\u002b1b40rRAFZnoX\u002bICw5puYCz\/kc7pCqBBG\/U\u002bPSPdEnoN4o6u86QQ1Cd6lZiuiCfIYkO\/3cR\u002bu3NftvyyD3J3\u002b6N\/vrSyriKhUkfy3ZiwybBbq0AO2DukmXv9F\u002bHxKPiy9YcLeehYo3Mn\u002b3ZlXM3WeuQIOqKjXM8G19eWJi633v3ryELWNwipVTsp\u002bQUO2\u002bYPGnd5akKSfA\u002bdKJLLrU23hBqTE9QwSbc1zPRR1y3FiuUB\/LX8rstZxIVG5dl0vlhEHVqVAmpbPAqx3je\/ARBpMXytnwMMtqZHtVw\u002bn1E\u002bGeYA6I\u002bQmawlRf0zft3B57lsTOb9afnbZp15d571lydPSjpi4uuYEKTh02JnnWx7K4K\u002bKLSfQOYvPMeQoTscvIerCQZ4ZDms\u002bfu0JjGhSz7FExkUDplN2AOpUUjSgP3bXjGkm1f\u002b1L5AIBAaMNa3\/moUi3bPvBQ0laXLS\u002b\/zNUjlWk9Mvf4CTgyXEz1\/0P6KApeMdAIpazaOo1GRi3EZ5HKv8AZUqpUEC\/WspuOuuE5FyNd\/Eteog5ZyXaUCkV4YZO\/5slRUryNTQd\/2Eyxh5IJwOVTeBaxmav79Ii\u002borlklH4\/8s9h7nmBUW60QrCVi4v1e27qlIOBZS2CLJ9hi3mZsfai4lb\/UtQKYwab01xSTbif2OfhXulDOVV2XDWix7xffT0tFejZiCR556FD7ataABl9if\/WOrZpdl\/Huk3axaNMVTuSvdiz3aElkRxho9JaFvrY\u002bh3xld7V9idLVeLE7uN6WiToWwryR16aRCpEmxDpVoOEcMqPbi8hGXB3PxjeFkr5X5KtrOHN10Tty9JRp2rSbB66lrlNKYV5mrMV9jbVAn6vwCEV\/icn3D3yDv4zb0NBiGSrfrOgf\u002bTBRz16c46ta5VjwNsIpWrZuYm\/avPXoqtdWG7fX\/8\u002b\/7nO\/GpyXrgdMzaxXz3yZE3AM4ReTs191s95pdVBIBKDosRNZSDRI\/eiqYTDJP7y0AXg30MUp3s6J8U0Xjt\/9DyZjCAW55NSktoJk11MibLjEQZrFtb\u002b\/c3g0wjQGXSxxOMC984V7006CtS1xzPVKIdssxg\u002bsFXOz9QynvDZOa\/lq2isTGxdPvZ3HjvPYlrEngUGsf\/olFZYnCSe\/6UeiTim8mJc6vMotkHV6fF\/5FNSNZMA4V\/rlAKtWntW14\u002btXlm9rBdauJaIlWyiBmlcrHchl4blbDSfAqQjONUU71\u002bZcZM8kcUi7UFGJW3kM1nPFm1vOqInFvfFjgNNtEs5J13l\/HC\u002b2gSUsq00XBI8JIxYm2gYgZNnyRn5PiFHX86B0qCxzF8w\u002bOhOjmxR4edFhdX229X0Iq2\u002bOoKe4siIbXRL0RGp\/IJuQxb9ZddGhl7jas9qme6Layn5sGgCI70SfiETwEI\u002bClay50nETDunL0ZqdPFdMV9WrH1Osf3GCgoZhD\u002b67yOPUum8vF0P0D6xrs\u002bwhdSt\u002bw23edXpuYGRlBv47S5YnHX3Xrdw6c2cWK73PEzZr9\u002bDQZqtX4nQS6Jan8RF2d65\/VXEVOOw8H79VEfurn\u002bCLR83oxQx62jOtf4\/VRK\/ra8BfAWIR8WEZ4JuMm6i4K8GcUGQO1jHbkufXjUqLOLL4aNLjuW1vhpF7Jup3kUEF7pXFR8Fyv4yYyDTmkl1lpz5ptIWTA8rhZMt\/Eqb8tUeZrzIVudC2d10lf0m5BmC\/waetpqk90byLQcsCVuhtdqSMhI99muLic5kQcqLIp3WFAL9Au19SW7MnjjjL2Dr7GdDGwOG96EeR9M9GY\/Fv2BbtQQa1FHdjxjZiRorBsMUZsHY5GYLNcb3\/N0uqNj1bQt0fqT13TrY2COmali0uM7R\u002bDR2JQZ36wwHzjikpzDjaXWHhwCS8EsNIjF7Lt2lYEd\u002bdLG61ReAz5lurJ7LsCJnfAyNpo1aot7zBibJIIZu9CESWb7mniJOtZ4kbo7JiVZPF2NdT1H0MGzx8tUhvOwEutzCvJuvzqj47FD692uBx6\u002bX4Z88BQhmCN2wrHovvOiKPgntdXiO3xckzPz1Uz5xR\u002bnDJCqsbB9Gr9Gvq57J\u002bQmTyYd04FaFfw110FLCOQGF9qRWdaVxfsY1PuYdiVk\u002bqwa\u002bfXAQET\u002boKXmKU8FnTNPT2mIyVivM0ezFrxaFV024J7dOLOmVBl5VVUKa4Pqrd7bSTeZaaX3mPXwFMRmL13T7fDegUyZGVqxWblDR0MkDgL\/kv\/JouGNSxeIXFeraqZ6E9yZwbVPDTNYv3WFCro2y2CYepkN\/6aX\/5BQX8mfI2affFkM\/MAojgwtNy\/m971U17Lr5p8103IyPd4JExkG5MoiPnN\/VVNu044Uy0cFCM3Rt0HPaTvb7V\/z78hq6SCRTvWngR9gqtwjzcpJHwQbejFHAM57Fs5TZC6TfgEk7i5uYpCmtikDZzl176jF4Q2D2ZEe7d0aGks24MOCMW\/RhcxTzbTACV2YrpPZi0FRltU3HukUM7xpafEHaEPofRSbo9W\u002brCJprDVSgUTTPXDANvP\/ZRpdrM4x1WTK\/7bhGBWVrVBtMd6yw7Su3ZY30hgi8GVPunuAy\u002bRXHxqI87KBN4UP9QCk71uaXP8DUPhYxelb95\u002bQEd7j00V5\u002bgC9gl4oMFiapix1iMv9fJ5FKqN\u002bVm4v\/lgiLGATffW9EAlbyXeWShnGyosGzf\u002bF\/6mpQnGJuaL9wGCzbvLIN\/aESsyq5PF5mZRhLf1u\u002b9UeXe3ITqs3LL\/7d54\u002bmZJnSk68MWYr4y3R32\/ZqOKIObMKyxKe4p2FD2oGuvs9OBoTZQCKuleuVyUQrpDePJkIjAeAvEpYgS7ueWxCDEbhKInwrqtj6QKbSagqz8XWHQJcGmeyybBsR\u002bUy0C0oMCNbRXAnjn6GLvusn8BVdEFOTpqFlsm2BwH8QBLqnItC9YO92VTCL1tB\/dhxh8RQPfqdZYhRop0\u002bWqJyev0kFuJ\u002budt5A0\/0fyWxzOWopwzxoii2aZikfOR2Gh9yAXbrId99J\u002bOVoDPyGdCCdbN2I\u002b0OvOXVIqgR\/h0NeUJ95ePMPUG9u14d5DbkC\u002bfU7phMYkZPfJCmIgCed0tqf7efHHQD7r\/4OlelDWRI8ESoaCdUmssaNtD4XZik8k40G\/UZXvGUiIJpRYYYktWht5XAd1Bzl0HDXxQSXWUjZJYc0vpDE1VhRLumd2iAm\u002b8tamFQPAcipTQ\/aFyErIHO\/mmCqzSMw\u002bb5Sv8u6EHTxixBABi7XxtntkHF0hikhHVyDoZJRxIjIidN4QJVvvkDaIA9PlKwL1aPQD6TnmtOkBgqNlLdpcJRGiZGvdCtp\u002baj2j133bvVPen4t\u002bFabeTubZrT\u002bFQSmK6CJaycG7exPt\/w16lk89pqLJ5vtLeT\/bm\u002b47HMXBs9XpHKomVnWJ67j3os1zGjitetA9RVaKDaJDCPEG9MESqpPTJ6R8WeAd0L5PhKszriph8zfv\/ktIJDhk9ej5paHJQXMggtt2CQB\/pk0bQzbYGO1vFy6QIhmM3q\/r0P1U09Tl\/d\u002bxgowOytkcDRD\/WlVfDSRRS97lGHb7hhwWeb4SXLeYLWLXt2K4OQXdp\u002bClv\/\u002bIP6bKAA\u002buKTaFEgdeqh0tazgH\u002bybi4hlJ0jFZI8dRBHqJkEqQan8ajmRfVfXMa6BBynypfNG0cfJLnj41FHk\/9tJifCsAgDJxGSYxoTQ8AryGB0YWympuKOYXzSCkiP416w4XLr3\u002btb5zKhznNhjLH\/Zsp7v0mIjx7mqvHpK9YcEkvMo9mvTa61i\u002bjiR645x4tei0fAir6\/gLCoZ9SouX\/Xhtl9gX9EhpxdSOfgeH271I7Hewh6s2R18i72JGUhpyFAwU\u002bHlwcjE7sVUZxuAtb8A9Aw6PV2j0hWVv7tccuNUXuKL1yPgiBCwPK2azQqhK3lOQ46mxjqVFUVThvUCxCfOzjCCgWfODDo7c63KRgrI6aDPnv0AZg8L4Anm6tsGwS0uQyREOACRX188a8Ck\u002bM3cXg0zCKl9ntnCgyderEP6fjzUcMywOP5cLcMvir2wxfuXBJCEaVx3nY4scQ3\/EW8d95GVu\u002bwV\/GJQDIzOLJz0198E\u002bX8mG4FPjWJT\/iggkzJxNL6wV2VIVZb2oDxcEJuBr5ZdYrYTThkoLzCtLTcNF9vBcwo9xkTJE9Q4l49mDJhBpyQSLiRySfXSpIa1TmjoW8UR0\/xkueRH9SOPad9KhbBHD7B0hUv0abVYtxKvFGuxXCE7YUlBnhWhq6B1yBBcHOV7AtatbugFhhPJaahJofRO6bjgf298ONDDGqCSho\/jsDoII3CKEuz\u002bfwD9T5vISr2ERBPYAIA66B\/ti2DrcQsOhb6O\u002bFBN7pqX4hub7k26cTyxdnotFQGj0LTjmKiYmwfORBYCNXJvorh9i1UTAKMxFeljbxI1Vp0ayZ5As72PUY4T54WWPyHxaMFZOqUG3Nl8H6N58u6KuHbFhFOeB9FLp5o3fUsUoCXpryA5DqaurqUtskn7T\/l\u002b4wGQnikRKmg0YESFnuXdXvPTAWwc1I1\/kgbRHREvlObjR7YRhmf4kbjcYS4IhsdrMOevyow3GARzoPFg\/eULTXTKyJLt4zQM460zj2IOlMw2637o814N\/uyS7B\/ammRt1jeOWtMsxi0L8EwbCdWRIHSKyc9HpYwt9V04QtqkYXCDX\u002bguHJpOd5donZBfNmgAIEvfQ9k30wDncU8c3flBI2sggY1mWOCANgPNp9\u002blTlF2l6IjRvqY5QN\/wdUA9XTsSeIC04\/zfDeVNoRK6L54vwcsZ4gPIXwU9Vw\u002bs\/eIRBAiDnMi1BvAbP0EvWwFfG\u002bxBqCn9Cs1qnVJjdN5HtoHAc7fXX7NFmA1OiwsThPdF59Sg6Ojo6sMfbVfHSkIZ6bpK2Mh4sIkpfG\u002boolCarY8NdwmM3EeGizFw3e4hzpNa\/\/qqGdvUuUKudTu4SHnyHVrBIOUDHsOZ4lR4hU3wFPu5PeX8M3RXu\/Ej\/uErAl7OWeAFU8t8Ri6zgPHF85cx5pQLtuYiGURyXGHisqiSmGn7qLnupdEUJYtZ29\/pEDj5CWr\u002bx0qloy0QaPA55VEcfMdCtvyV84xY3ZQnqUqr2VjdRc767g4sWnX37yqtV9kj77u0iPD2tnGsXKNYC8VWRx6I7TqM\/qlqqwpdNxK7VvwP\u002bU7zPCVFYF52JxevwTDCG7q1Yyf6CK6Yx72zpuf0pj9gH\/0HPKaOQoQ8F7EvDHBDYOjmGHJvOm\u002bn4pkhOnQ8UccnzU66sbFVvvlGl7FsxeXEGsdDSZJOvV3Fw31AZJg1daXISuFurMqV22QhyEiw14PyvED9eon3D35QNYZ8zA0t0gi6HzLYJGAuL1wJaFCy5ee6cLyT18dCqpjtHyzcuhItdc4sA73l\u002b2tkc1rKp1Q\/8U5hBlx6G9HCXA1xnSxr2VALGh2nHFgTmfIYxOKEPzNWyfFXoYg\u002bxfY5GfzHJ2ZE2VufhEYn1jGLaMP0hFNfr6SPOhTTA\/1NX726YHGm6YHm4fZmFSDLrfserAoj8zMhKAoN0YVVullKiKiUBF9xZkHv73eEVfTBl\/0pOUApwTbi93FxiKApP\u002bhAcrX3k\u002bLSS0JKyQwkptV\/Ag6jg3g8YVgqp65WuPQtQKCVzOLwDF2htZyC3KUQJ2EODf1zeND1IIflqQfsSnxJ4gnEDnmV34JKFNUp6RQyvEET8G7jdPbpm5JE34ox1DEh2Du0mjxLsU2v21tHwAR4wuM6MxlAWQ9fuYz1sdOIhVHZnAbtz2lPmC8076B3mY5xfeSRC6Q9pYo3F7UBuPh5oqS3PlfsMMNuT2AX5L\u002bMra\/jdcq7FruGSGeZWNgvddezhb3FOOht8tRkCFc8zJcJ3ARH0xRnCNwaKUzKQXf6LAn4gUVSrP\/gO36zoFvpTBhfEK\u002bhuaa1KwL5JKXg6\/2TVBHMttsM9lJffQPyXBDyGSuUsuH1i\/g0GKTnMdKhbkSV8sQQs4gFBVGsMuctcdIywpEpaNWNtcHo94MbXBHPjYQuSmUJNBIFUTHtbj6VsSGpfsMQ1TGrQas8dGcPi3eN25Vgmzia78Kv9YYZW6BqqeJDPLeMnacDCHw7L7LT\u002bWphbuI9DZJcKBDLn\u002bKK8fevrmbjfujY0d4Y\/Yf\u002bZ1Eb\u002bssd9MW6xWsEaOq3hXB0habkdmFXTNzA099UAXqgVURxf7l86TeGFReflLUQyj0ShMJx9f0F3ZbgA7orxtVbH2uHYtjyNlT27Okzd\u002b8tAycEoilsNZBA7c5JVe89RtNd23v2ysjxpre\u002b44pPMUdPmLrrj6wTMbisaNIaMPRatcVOWIJ6TN5rnmDilfip0xwrhzy59CTAHyEfkMizrk4Qpjr3n0sPTRBjlLIQ1sMsNX6QoQZIop7zF0zWhHOfKu2MeLMvo\u002bGy27ZgDf62ic\u002bD2ug34IhWUKLiK55HJ4Jp2s9g142TyeOk\/zK\u002bY8\/2CDb2p4RUyofbkhHhVrIEMBdftFeMjRO0s1LnLyNAsQ\/\/tX99JaAptBSo\/nN\u002b9wGCmJbK9CFDHorBCNSReOzvttmZWTf8K7jccjo2rSNI3DB1W5RX202ixyMQrscDScE2uJL6gnSM5xUzMoOLA1ODSpAeKwyhKysH7QUZpqvJmXVgEmMImJE9i5jLqHBd7PBXy\u002bkBzuGvSCWigJPT\/g7QrpOhdMHvYl03JiBlGeDXKv8j5tvpJvNo8ql3LYvXUucyxdxR\/u2WetBpcJxHpDZbebwPGGq6u8ztjNlcGbgmCL\/GDiJ1xbKkF9589ooOqdRKklJo1I0ifzG2jIkFdtMuZhs\/V79BsMlE2IBTdTHsvbj\u002bL8mvvrWI9L9gvzXsz\u002bR1zwHu5g2AsDvTqlsq1DRAueF9RXw4Ts\/e0wcbDT4FGVrK3zEOv5pQHxERctUgyKmmILA76L4TQz2e\u002b\/l7ItKPgnjRHdabiYM\u002bohCRtWrWOPfGr\u002bfTRTFp1zzGfnhzXL6zmF7L5O5wVwfrUAbXQz1in\u002bo14slV49L4cqzUL5apGpjDOKpMuveDEYeIKM\u002bVFM6fAcdD8\/uvYYoVB83Xyif03hdN\u002bEUXrMEZEHTWN2RwdLonNMKFxXZh\/txqpeta06ubWqWtaKUIJjnkWv9HD0ZQflSPQzT8tMA\u002bO5A\/xScwv5ImsvOEtZKOiqk9642\u002bdtCiSwGJGToibfqt5JymB3FYD2I8Xets55d2KerQE8o\u002bGI09Aov6wscxq52xRr\u002bDc\u002bXKP9ec\u002bi0kMs16E69N0E\u002bQS1DKjHArFZ0Q\/iaw8iwrV3hQD7DybF\/7\/jKU1MqfJBLfBcrlVTNmzZmcyyKcISPJ2IMckWiniPfqYg3\u002bGyXfR1e5grLAufxKFffY310QV\u002b11WI28S4bSR84OVByPg2EWF7\u002bUTjW5Taj84tZ1To37iYnh0lBjvsr2JG65sn47bOX0tk\u002b1py2gWG7UL\u002b\/BKIkRAE\u002bmChl4mMgxbGEFs10bsGYasGm49cRkS\/mbwxSX\/WXZ3UMO69Gq55QDEzqr\u002bWHYzpwjCDDFNMX2ViESc\u002bppkfWCe9KB5FXr12ptjwBQNkVz8kyQ\u002b\u002bICto72A47yx9h0qPN44nZ1NctvQsJzounriJ8Q4czly6\u002buvQor1WAD\/3poHtFhecS964chVNyzR\u002bh9qTDK2tOkSELpeLPPDwyMstUkhZG6XFqrPBn7deWEFWqHoU55lxIAvqDOBYFtxaGMMiijRf\u002b0XTZcorTJo1RpNLVpEWSsYxj7BRCkC5XpDtx2j0KsmsGQb0\u002bSUlKdTG5VknjvDGj1uQ3QPqvwK3y26gEOaGeS7L45z\/CPZBZbHzuaKxBIFGT4mgGOXJxZ5P5xs3Y4PwZs1uJxeuHlnWOhIbTTUrhroy\u002bLxGFjJOr9MFXTVyJdXfBC8T6VgXfzmj8Ik1N6hxabvCVWSrHiL4c6yLfB0TiAOyVfbT8ympcbGS7Q4h\/xMvIeTo3DXNQw0O1IHLTEJX1AcRtuANKbEc8zoSt\/0dDg4Uu4qjvovMFGxw7h0fd6WxyJYkq7NATZkhg4TsROv77ICkBYXXx\u002bh7A\u002bm8JNx\/A7mLyB4fWvTB9oQQz874hm2l1CVJOD72Z7ubBSHrQb3mocgc0j5rQYsBl9m\/cSsfdamdVYfy3KsJfih3ZhmfL3AO3Pa2NCsXaK\/rPBPsrz3ChQov9h6iIbFtIaez6hPT2WDy0zob7c\/LsE7Ta6MuJzdeujOFCvtIUUldFaoj9X3h20uBDcosdzmf\u002bKa1z0\u002bm\/TNKK0c\/XInV7\/hy5H\/1otbRPX5wMQHY2lAwkSUTTgtsqSpXeBLu2nmLXpm1QYBrSAyPEVHVwcfTGCF38hpjzo=",
+      "tag": "CozdV8twS\u002bSRCCrxoNNlZQ=="
+    }</script>
+    <script data-pjax>
+      (() => {
+        const form = document.getElementById("protected-writeup-form");
+        const gate = document.getElementById("protected-gate");
+        const content = document.getElementById("protected-writeup-content");
+        const status = document.getElementById("protected-writeup-status");
+        const dataElement = document.getElementById("protected-writeup-data");
+        if (!form || !gate || !content || !status || !dataElement) return;
+
+        const payload = JSON.parse(dataElement.textContent);
+        const bytesFromBase64 = (value) => Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
+
+        const deriveKey = async (password, salt) => {
+          const material = await crypto.subtle.importKey(
+            "raw",
+            new TextEncoder().encode(password),
+            "PBKDF2",
+            false,
+            ["deriveKey"],
+          );
+          return crypto.subtle.deriveKey(
+            {
+              name: "PBKDF2",
+              salt,
+              iterations: payload.iterations,
+              hash: "SHA-256",
+            },
+            material,
+            { name: "AES-GCM", length: 256 },
+            false,
+            ["decrypt"],
+          );
+        };
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const password = new FormData(form).get("password");
+          status.textContent = "Unlocking…";
+          status.className = "protected-status";
+          try {
+            const key = await deriveKey(password, bytesFromBase64(payload.salt));
+            const ciphertext = bytesFromBase64(payload.ciphertext);
+            const tag = bytesFromBase64(payload.tag);
+            const encrypted = new Uint8Array(ciphertext.length + tag.length);
+            encrypted.set(ciphertext);
+            encrypted.set(tag, ciphertext.length);
+            const plaintext = await crypto.subtle.decrypt(
+              { name: "AES-GCM", iv: bytesFromBase64(payload.iv), tagLength: 128 },
+              key,
+              encrypted,
+            );
+            content.innerHTML = new TextDecoder().decode(plaintext);
+            content.hidden = false;
+            gate.hidden = true;
+            document.querySelectorAll("pre code").forEach((block) => {
+              if (window.hljs) window.hljs.highlightElement(block);
+            });
+          } catch (error) {
+            status.textContent = "Incorrect password.";
+            status.className = "protected-status protected-status-error";
+          }
+        });
+      })();
+    </script></section>
+        </div><footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info"><div>
+      <span class="icon-copyright"></span>2020-2026<span class="footer-info-sep rotate"></span>
+      Diep Manh Tuan
+    </div><div>
+        Powered by&nbsp;<a
+          href="https://gohugo.io/"
+          target="_blank"
+          >Hugo</a
+        >&nbsp; Theme.<a
+          href="https://github.com/D-Sketon/hugo-theme-reimu"
+          target="_blank"
+          >Reimu</a
+        >
+      </div><div>
+        <span class="icon-brush"
+          >&nbsp;8.3k</span
+        >
+        &nbsp;|&nbsp;
+        <span class="icon-coffee">&nbsp;00:40</span>
+      </div><div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv"
+          >Number of visits&nbsp;<span
+            id="busuanzi_value_site_pv"
+          ></span
+        ></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv"
+          >Number of visitors&nbsp;<span
+            id="busuanzi_value_site_uv"
+          ></span
+        ></span>
+      </div></div>
+</footer>
+<div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div><div id="mask" class="hide"></div>
+      </div><nav id="mobile-nav">
+  <div class="sidebar-wrap"><div class="sidebar-toc-sidebar"><h3 class="toc-title">Contents</h3>
+<div class="sidebar-toc-wrapper toc-div-class">
+  <nav id="TableOfContents"></nav>
+</div></div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img
+    data-src="/avatar/images/tuan.jpg"
+    data-sizes="auto"
+    alt="Diep Manh Tuan"
+    class="lazyload"
+  />
+  <div class="sidebar-author-name">Diep Manh Tuan</div>
+  <div class="sidebar-description">Digital Forensics | @VSL.0utl4w</div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>Posts</div><div class="sidebar-state-number">3</div>
+  </div>
+  <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
+    <div>Categories</div>
+    <div class="sidebar-state-number">
+      3
+    </div>
+  </a>
+  <a class="sidebar-state-tag" href="/tags/" aria-label="sidebar-state-tag-link">
+    <div>Tags</div>
+    <div class="sidebar-state-number">0</div>
+  </a>
+</div>
+<div class="sidebar-social"></div>
+<div class="sidebar-menu"><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/"
+        aria-label="Home"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Home</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/archives"
+        aria-label="Archives"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Archives</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/about"
+        aria-label="About"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">About</div>
+    </div><div class="sidebar-menu-link-wrap">
+      <a
+        class="sidebar-menu-link-dummy"
+        href="/friend"
+        aria-label="Friend"
+      ></a>
+      <div class='sidebar-menu-icon icon rotate'>&#xe62b;</div>
+      <div class="sidebar-menu-link">Friend</div>
+    </div></div>
+</div></div><div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div></nav>
+</div><script
+    src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"
+    integrity="sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf&#43;e" crossorigin="anonymous"></script><script
+    src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"
+    integrity="sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script><script src="/js/main.js" integrity="" crossorigin="anonymous" ></script><script src="/js/aos.js" integrity="" crossorigin="anonymous" ></script><script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", aosInit);
+    } else {
+      aosInit();
+    }
+  </script><script src="/js/pjax_main.js" integrity="" crossorigin="anonymous" data-pjax></script><script
+    src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js"
+    integrity="sha384-8LyaidD9GPxQQgLJO/WRw/O2h3BoNq/ApI/ecpvM6RsrCz2qP2ppBXUKihP4V/2d" crossorigin="anonymous"></script><script>
+  if (window.firework) {
+    const options = JSON.parse("{\"excludeelements\":[\"a\",\"button\"],\"particles\":[{\"colors\":[\"var(--red-1)\",\"var(--red-2)\",\"var(--red-3)\",\"var(--red-4)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"emit\"],\"number\":20,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.3,0.5],\"radius\":[16,32]}},{\"colors\":[\"var(--red-0)\"],\"duration\":[1200,1800],\"easing\":\"easeOutExpo\",\"move\":[\"diffuse\"],\"number\":1,\"shape\":\"circle\",\"shapeOptions\":{\"alpha\":[0.2,0.5],\"lineWidth\":6,\"radius\":20}}]}");
+    options.excludeElements = options.excludeelements;
+    delete options.excludeelements;
+    window.firework(options);
+  }
+</script>
+
+<div id="lazy-script">
+  <div><script data-pjax>
+        window.REIMU_POST = {
+          author: "Diep Manh Tuan",
+          title: "Holmes CTF 2026",
+          url: "https:\/\/tu4nsecc.github.io\/posts\/holmes-ctf-2026\/",
+          description: "A password-protected digital forensics writeup for the Paper Ghost challenge.",
+          cover: "https:\/\/tu4nsecc.github.io\/images\/holmes_2026\/paper_ghost\/anh1.png",
+        };
+      </script><script src="/js/insert_highlight.js" integrity="" crossorigin="anonymous" data-pjax></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script></div>
+</div><script
+    src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js"
+    asyncintegrity="sha384-0M75wtSkhjIInv4coYlaJU83&#43;OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id&#43;S" crossorigin="anonymous"></script><script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script><script>
+  const reimuCopyright = String.raw`
+   ______     ______     __     __    __     __  __    
+  /\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+  \ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+   \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+    \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                    
+  `;
+  console.log(String.raw`%c ${reimuCopyright}`, "color: #ff5252;");
+  console.log(
+    "%c Theme.Reimu" + " %c https://github.com/D-Sketon/hugo-theme-reimu ",
+    "color: white; background: #ff5252; padding:5px 0;",
+    "padding:4px;border:1px solid #ff5252;",
+  );
+</script></body>
+</html>

@@ -12,12 +12,32 @@
     
     <copyright>All articles on this blog are licensed under the BY-NC-SA license agreement unless otherwise stated. Please indicate the source when reprinting!</copyright>
     
-    <lastBuildDate>Mon, 06 Oct 2025 18:59:10 +0700</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2026 14:20:00 +0700</lastBuildDate>
     
     
     <atom:link href="https://tu4nsecc.github.io/posts/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>Holmes CTF 2026</title>
+      <link>https://tu4nsecc.github.io/posts/holmes-ctf-2026/</link>
+      <pubDate>Thu, 17 Sep 2026 14:20:00 &#43;0700</pubDate>
+      <author>xxx@example.com (Diep Manh Tuan)</author>
+      <guid>https://tu4nsecc.github.io/posts/holmes-ctf-2026/</guid>
+      <description>
+        <![CDATA[<h1>Holmes CTF 2026</h1><p>Author: Diep Manh Tuan(xxx@example.com)</p>
+        
+          
+        
+        <hr><p>Published on 2026-09-17 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2026-09-17</p>]]>
+      </description>
+      
+        <category>CTF</category><category>writeup</category><category>forensics</category>
+      
+    </item>
     
     
 
