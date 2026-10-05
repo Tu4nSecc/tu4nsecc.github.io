@@ -146,22 +146,7 @@ This article does not have a corresponding language version
   <nav id="TableOfContents">
   <ul>
     <li><a href="#paper-ghost">Paper Ghost</a></li>
-    <li><a href="#incident-timeline">Incident Timeline</a></li>
-    <li><a href="#final-answers">Final Answers</a></li>
-    <li><a href="#screenshot-checklist">Screenshot Checklist</a></li>
-    <li><a href="#diogenes-sherlock-08---standalone-forensic-write-up">DIOGENES Sherlock 08 - Standalone Forensic Write-up</a></li>
-    <li><a href="#question-1---what-c2-was-used">Question 1 - What C2 was used?</a></li>
-    <li><a href="#question-2---what-sessionkeyencryptionkey-was-used">Question 2 - What SessionKey:EncryptionKey was used?</a></li>
-    <li><a href="#question-3---which-cve-was-used-for-privilege-escalation">Question 3 - Which CVE was used for privilege escalation?</a></li>
-    <li><a href="#question-4---what-is-the-md5-of-the-custom-bof">Question 4 - What is the MD5 of the custom BOF?</a></li>
-    <li><a href="#question-5---what-objectsid-belonged-to-the-writable-object">Question 5 - What ObjectSID belonged to the writable object?</a></li>
-    <li><a href="#question-6---which-password-discovery-attack-was-used-and-when">Question 6 - Which password-discovery attack was used and when?</a></li>
-    <li><a href="#question-7---which-credentials-were-used-to-perform-the-attack">Question 7 - Which credentials were used to perform the attack?</a></li>
-    <li><a href="#question-8---which-user-was-targeted-and-what-was-the-resulting-password">Question 8 - Which user was targeted and what was the resulting password?</a></li>
-    <li><a href="#question-9---what-new-logon-type-was-created-after-privilege-escalation">Question 9 - What new logon type was created after privilege escalation?</a></li>
-    <li><a href="#question-10---what-path-was-used-to-upload-the-new-agent">Question 10 - What path was used to upload the new agent?</a></li>
-    <li><a href="#question-11---which-service-group-was-used-to-start-the-new-agent">Question 11 - Which service group was used to start the new agent?</a></li>
-    <li><a href="#question-12---what-is-the-new-beaconidsessionkey">Question 12 - What is the new BeaconID:SessionKey?</a></li>
+    <li><a href="#borrow-name-forensic-write-up">Borrow Name Forensic Write-up</a></li>
   </ul>
 </nav>
 </div></div>
@@ -664,10 +649,10 @@ Access scope:  EXT-3 (ticketing host only)
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">tainsworth:D10g3n3s_T1ck3ts#2026
 </code></pre><hr>
-<h1 id="incident-timeline">
+<h2 id="incident-timeline">
 <a class="header-anchor" href="#incident-timeline"></a>
 Incident Timeline
-</h1><ul>
+</h2><ul>
 <li>The artifacts can be combined into the following timeline:</li>
 </ul>
 <pre tabindex="0"><code class="language-velocity" data-lang="velocity">2026-08-19 15:35:50
@@ -691,10 +676,10 @@ SRUM recorded 172064531 outbound bytes for update.exe.
 <li>Windows Search indexing also preserved the missing <code>EXT-0419.pdf</code> contractor record, allowing the DIOGENES developer credentials to be recovered even though the original PDF was absent from the collected Desktop directory.</li>
 </ul>
 <hr>
-<h1 id="final-answers">
+<h2 id="final-answers">
 <a class="header-anchor" href="#final-answers"></a>
 Final Answers
-</h1><pre tabindex="0"><code class="language-velocity" data-lang="velocity">Q1: 2026-08-19 15:35:50
+</h2><pre tabindex="0"><code class="language-velocity" data-lang="velocity">Q1: 2026-08-19 15:35:50
 Q2: RS200000000627E4&amp;0
 Q3: E:\CO-LT-0469 update package\update.exe
 Q4: 2026-08-19 15:36:25
@@ -703,15 +688,12 @@ Q6: 2026-08-19 15:38:08
 Q7: 127
 Q8: 172.064531
 Q9: tainsworth:D10g3n3s_T1ck3ts#2026
-</code></pre><h1 id="screenshot-checklist">
-<a class="header-anchor" href="#screenshot-checklist"></a>
-Screenshot Checklist
-</h1><hr>
+</code></pre><hr>
 <hr>
 <hr>
-<h1 id="diogenes-sherlock-08---standalone-forensic-write-up">
-<a class="header-anchor" href="#diogenes-sherlock-08---standalone-forensic-write-up"></a>
-DIOGENES Sherlock 08 - Standalone Forensic Write-up
+<h1 id="borrow-name-forensic-write-up">
+<a class="header-anchor" href="#borrow-name-forensic-write-up"></a>
+Borrow Name Forensic Write-up
 </h1><p>Challenge link: <a href="https://drive.google.com/file/d/1SltVmbWg8Eykz-DmtAjnmnEL_EQ1fAwH/view?usp=sharing">https://drive.google.com/file/d/1SltVmbWg8Eykz-DmtAjnmnEL_EQ1fAwH/view?usp=sharing</a></p>
 <h2 id="challenge-description">
 <a class="header-anchor" href="#challenge-description"></a>
@@ -822,10 +804,10 @@ Reproducibility setup
 <li>Python 3 for deterministic parsing, RC4, carving, and hashing.</li>
 </ul>
 <p>The following small Python functions are included in the relevant sections so that no hidden helper files are needed.</p>
-<h1 id="question-1---what-c2-was-used">
+<h2 id="question-1---what-c2-was-used">
 <a class="header-anchor" href="#question-1---what-c2-was-used"></a>
 Question 1 - What C2 was used?
-</h1><h2 id="answer">
+</h2><h2 id="answer">
 <a class="header-anchor" href="#answer"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->Adaptix<!-- raw HTML omitted --></p>
@@ -921,10 +903,10 @@ Step 3: Confirm the Adaptix fingerprint
 </span></span><span style="display:flex;"><span>HTTP/S Beacon Listener
 </span></span><span style="display:flex;"><span>BOF &amp; Async BOF support
 </span></span></code></pre></div><p><img src="/images/holmes_2026/borrowname/cau1_2.png" alt="Question 1 evidence"></p>
-<h1 id="question-2---what-sessionkeyencryptionkey-was-used">
+<h2 id="question-2---what-sessionkeyencryptionkey-was-used">
 <a class="header-anchor" href="#question-2---what-sessionkeyencryptionkey-was-used"></a>
 Question 2 - What SessionKey:EncryptionKey was used?
-</h1><h2 id="answer-1">
+</h2><h2 id="answer-1">
 <a class="header-anchor" href="#answer-1"></a>
 Answer
 </h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>53fc4c03c7b461befe5dcb268e3d9208:4580221ac3fe51be1797524a048e552d
@@ -1550,10 +1532,10 @@ Question 2 conclusion
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>SessionKey = 53fc4c03c7b461befe5dcb268e3d9208
 </span></span></code></pre></div><p>Submit:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>53fc4c03c7b461befe5dcb268e3d9208:4580221ac3fe51be1797524a048e552d
-</span></span></code></pre></div><h1 id="question-3---which-cve-was-used-for-privilege-escalation">
+</span></span></code></pre></div><h2 id="question-3---which-cve-was-used-for-privilege-escalation">
 <a class="header-anchor" href="#question-3---which-cve-was-used-for-privilege-escalation"></a>
 Question 3 - Which CVE was used for privilege escalation?
-</h1><h2 id="answer-2">
+</h2><h2 id="answer-2">
 <a class="header-anchor" href="#answer-2"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->CVE-2026-27912<!-- raw HTML omitted --></p>
@@ -1588,10 +1570,10 @@ Step 3.2: Interpret the decrypted action
 <p>A public NVD lookup can be used as a secondary reference:</p>
 <p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-27912">https://nvd.nist.gov/vuln/detail/CVE-2026-27912</a></p>
 <p>For the challenge answer, the authoritative evidence is the decrypted task output visible in the CyberChef result. Do not move the hostname fields into Question 2; they belong to the later registration and correlation analysis.</p>
-<h1 id="question-4---what-is-the-md5-of-the-custom-bof">
+<h2 id="question-4---what-is-the-md5-of-the-custom-bof">
 <a class="header-anchor" href="#question-4---what-is-the-md5-of-the-custom-bof"></a>
 Question 4 - What is the MD5 of the custom BOF?
-</h1><h2 id="answer-3">
+</h2><h2 id="answer-3">
 <a class="header-anchor" href="#answer-3"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->56c92e28050c334b1b54974ffd022192<!-- raw HTML omitted --></p>
@@ -1794,10 +1776,10 @@ Recover the exact BOF from the supplied PCAP
 <p><img src="/images/holmes_2026/borrowname/cau4_1.png" alt="Question 4 - export and carve evidence"></p>
 <p><img src="/images/holmes_2026/borrowname/cau4_2.png" alt="Question 4 - decrypted BOF evidence"></p>
 <p><img src="/images/holmes_2026/borrowname/cau4_3.png" alt="Question 4 - hash evidence"></p>
-<h1 id="question-5---what-objectsid-belonged-to-the-writable-object">
+<h2 id="question-5---what-objectsid-belonged-to-the-writable-object">
 <a class="header-anchor" href="#question-5---what-objectsid-belonged-to-the-writable-object"></a>
 Question 5 - What ObjectSID belonged to the writable object?
-</h1><h2 id="answer-4">
+</h2><h2 id="answer-4">
 <a class="header-anchor" href="#answer-4"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->S-1-5-21-2253468260-689643353-167204612-1125<!-- raw HTML omitted --></p>
@@ -1810,10 +1792,10 @@ Answer
 <p>Once the decoded task text has been saved as <!-- raw HTML omitted -->results\decoded_tasks.txt<!-- raw HTML omitted -->, verify it with:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Select-String -Path results\decoded_tasks.txt -Pattern <span style="color:#e6db74">&#34;ObjectDN|ObjectSID|WriteProperty|ObjectAceType&#34;</span>
 </span></span></code></pre></div><p><img src="/images/holmes_2026/borrowname/cau5.png" alt="Question 5 evidence"></p>
-<h1 id="question-6---which-password-discovery-attack-was-used-and-when">
+<h2 id="question-6---which-password-discovery-attack-was-used-and-when">
 <a class="header-anchor" href="#question-6---which-password-discovery-attack-was-used-and-when"></a>
 Question 6 - Which password-discovery attack was used and when?
-</h1><h2 id="answer-5">
+</h2><h2 id="answer-5">
 <a class="header-anchor" href="#answer-5"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->Internal_Monologue:2026-09-09 20:44:11<!-- raw HTML omitted --></p>
@@ -1841,10 +1823,10 @@ Answer
 </ul>
 <p>The answer uses UTC exactly as recorded in the EVTX. Do not convert it to local Vietnam time.</p>
 <p><img src="/images/holmes_2026/borrowname/cau6.png" alt="Question 6 evidence"></p>
-<h1 id="question-7---which-credentials-were-used-to-perform-the-attack">
+<h2 id="question-7---which-credentials-were-used-to-perform-the-attack">
 <a class="header-anchor" href="#question-7---which-credentials-were-used-to-perform-the-attack"></a>
 Question 7 - Which credentials were used to perform the attack?
-</h1><h2 id="answer-6">
+</h2><h2 id="answer-6">
 <a class="header-anchor" href="#answer-6"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->afenwick:<em>Seash5lls</em><!-- raw HTML omitted --></p>
@@ -1857,10 +1839,10 @@ Answer
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Select-String -Path results\decoded_tasks.txt -Pattern <span style="color:#e6db74">&#34;afenwick::DIOCORE|Impersonating afenwick&#34;</span>
 </span></span></code></pre></div><p>The NTLMv2 response is evidence of the authentication exchange; it is not itself the cleartext password. Keep the password only in the private authorized report.</p>
 <p><img src="/images/holmes_2026/borrowname/cau7.png" alt="Question 7 evidence"></p>
-<h1 id="question-8---which-user-was-targeted-and-what-was-the-resulting-password">
+<h2 id="question-8---which-user-was-targeted-and-what-was-the-resulting-password">
 <a class="header-anchor" href="#question-8---which-user-was-targeted-and-what-was-the-resulting-password"></a>
 Question 8 - Which user was targeted and what was the resulting password?
-</h1><h2 id="answer-7">
+</h2><h2 id="answer-7">
 <a class="header-anchor" href="#answer-7"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->jreed:Aigohng8vai0seish4zi<!-- raw HTML omitted --></p>
@@ -1875,10 +1857,10 @@ Answer
 </span></span></code></pre></div><p>This is a direct answer: <!-- raw HTML omitted -->jreed<!-- raw HTML omitted --> is the target and the new password is the value printed after <!-- raw HTML omitted -->New password:<!-- raw HTML omitted -->.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Select-String -Path results\decoded_tasks.txt -Pattern <span style="color:#e6db74">&#34;fake UPN|jreed@CORE|New password|Password change success|Verified&#34;</span>
 </span></span></code></pre></div><p><img src="/images/holmes_2026/borrowname/cau8.png" alt="Question 8 evidence"></p>
-<h1 id="question-9---what-new-logon-type-was-created-after-privilege-escalation">
+<h2 id="question-9---what-new-logon-type-was-created-after-privilege-escalation">
 <a class="header-anchor" href="#question-9---what-new-logon-type-was-created-after-privilege-escalation"></a>
 Question 9 - What new logon type was created after privilege escalation?
-</h1><h2 id="answer-8">
+</h2><h2 id="answer-8">
 <a class="header-anchor" href="#answer-8"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->9<!-- raw HTML omitted --></p>
@@ -1887,10 +1869,10 @@ Answer
 </span></span></code></pre></div><p>Logon type 9 is commonly associated with NewCredentials. The challenge asks for the number, so submit only <!-- raw HTML omitted -->9<!-- raw HTML omitted -->.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Select-String -Path results\decoded_tasks.txt -Pattern <span style="color:#e6db74">&#34;logon: 9|NewCredentials&#34;</span>
 </span></span></code></pre></div><p><img src="/images/holmes_2026/borrowname/cau9.png" alt="Question 9 evidence"></p>
-<h1 id="question-10---what-path-was-used-to-upload-the-new-agent">
+<h2 id="question-10---what-path-was-used-to-upload-the-new-agent">
 <a class="header-anchor" href="#question-10---what-path-was-used-to-upload-the-new-agent"></a>
 Question 10 - What path was used to upload the new agent?
-</h1><h2 id="answer-9">
+</h2><h2 id="answer-9">
 <a class="header-anchor" href="#answer-9"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->\192.168.56.11\ADMIN$\svc_bkup<!-- raw HTML omitted --></p>
@@ -1903,10 +1885,10 @@ Answer
 </span></span></code></pre></div><p>Do not remove the leading two backslashes, the administrative share, or the filename.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Select-String -Path results\decoded_tasks.txt -Pattern <span style="color:#e6db74">&#34;Trying to connect|Uploading binary|ADMIN\$|svc_bkup&#34;</span>
 </span></span></code></pre></div><p><img src="/images/holmes_2026/borrowname/cau10.png" alt="Question 10 evidence"></p>
-<h1 id="question-11---which-service-group-was-used-to-start-the-new-agent">
+<h2 id="question-11---which-service-group-was-used-to-start-the-new-agent">
 <a class="header-anchor" href="#question-11---which-service-group-was-used-to-start-the-new-agent"></a>
 Question 11 - Which service group was used to start the new agent?
-</h1><h2 id="answer-10">
+</h2><h2 id="answer-10">
 <a class="header-anchor" href="#answer-10"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->defragsvc<!-- raw HTML omitted --></p>
@@ -1919,10 +1901,10 @@ Answer
 </span></span></code></pre></div><p>The value appears both as the service name and as the <!-- raw HTML omitted -->svchost.exe -k<!-- raw HTML omitted --> service group.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Select-String -Path results\decoded_tasks.txt -Pattern <span style="color:#e6db74">&#34;Opening service|svchost.exe -k|Service was started|Service path was restored&#34;</span>
 </span></span></code></pre></div><p><img src="/images/holmes_2026/borrowname/cau11.png" alt="Question 11 evidence"></p>
-<h1 id="question-12---what-is-the-new-beaconidsessionkey">
+<h2 id="question-12---what-is-the-new-beaconidsessionkey">
 <a class="header-anchor" href="#question-12---what-is-the-new-beaconidsessionkey"></a>
 Question 12 - What is the new BeaconID:SessionKey?
-</h1><h2 id="answer-11">
+</h2><h2 id="answer-11">
 <a class="header-anchor" href="#answer-11"></a>
 Answer
 </h2><p><!-- raw HTML omitted -->ddc68fa7:289122cf1ec91c67eb89c30642adfea4<!-- raw HTML omitted --></p>
@@ -2057,22 +2039,7 @@ Safe submission checklist
   <nav id="TableOfContents">
   <ul>
     <li><a href="#paper-ghost">Paper Ghost</a></li>
-    <li><a href="#incident-timeline">Incident Timeline</a></li>
-    <li><a href="#final-answers">Final Answers</a></li>
-    <li><a href="#screenshot-checklist">Screenshot Checklist</a></li>
-    <li><a href="#diogenes-sherlock-08---standalone-forensic-write-up">DIOGENES Sherlock 08 - Standalone Forensic Write-up</a></li>
-    <li><a href="#question-1---what-c2-was-used">Question 1 - What C2 was used?</a></li>
-    <li><a href="#question-2---what-sessionkeyencryptionkey-was-used">Question 2 - What SessionKey:EncryptionKey was used?</a></li>
-    <li><a href="#question-3---which-cve-was-used-for-privilege-escalation">Question 3 - Which CVE was used for privilege escalation?</a></li>
-    <li><a href="#question-4---what-is-the-md5-of-the-custom-bof">Question 4 - What is the MD5 of the custom BOF?</a></li>
-    <li><a href="#question-5---what-objectsid-belonged-to-the-writable-object">Question 5 - What ObjectSID belonged to the writable object?</a></li>
-    <li><a href="#question-6---which-password-discovery-attack-was-used-and-when">Question 6 - Which password-discovery attack was used and when?</a></li>
-    <li><a href="#question-7---which-credentials-were-used-to-perform-the-attack">Question 7 - Which credentials were used to perform the attack?</a></li>
-    <li><a href="#question-8---which-user-was-targeted-and-what-was-the-resulting-password">Question 8 - Which user was targeted and what was the resulting password?</a></li>
-    <li><a href="#question-9---what-new-logon-type-was-created-after-privilege-escalation">Question 9 - What new logon type was created after privilege escalation?</a></li>
-    <li><a href="#question-10---what-path-was-used-to-upload-the-new-agent">Question 10 - What path was used to upload the new agent?</a></li>
-    <li><a href="#question-11---which-service-group-was-used-to-start-the-new-agent">Question 11 - Which service group was used to start the new agent?</a></li>
-    <li><a href="#question-12---what-is-the-new-beaconidsessionkey">Question 12 - What is the new BeaconID:SessionKey?</a></li>
+    <li><a href="#borrow-name-forensic-write-up">Borrow Name Forensic Write-up</a></li>
   </ul>
 </nav>
 </div></div>

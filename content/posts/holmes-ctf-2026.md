@@ -489,7 +489,7 @@ tainsworth:D10g3n3s_T1ck3ts#2026
 
 ---
 
-# Incident Timeline
+## Incident Timeline
 
 - The artifacts can be combined into the following timeline:
 
@@ -517,7 +517,7 @@ SRUM recorded 172064531 outbound bytes for update.exe.
 
 ---
 
-# Final Answers
+## Final Answers
 
 ```velocity
 Q1: 2026-08-19 15:35:50
@@ -537,7 +537,7 @@ Q9: tainsworth:D10g3n3s_T1ck3ts#2026
 
 ---
 
-# DIOGENES Sherlock 08 - Borrow Name Forensic Write-up
+# Borrow Name Forensic Write-up
 
 Challenge link: [https://drive.google.com/file/d/1SltVmbWg8Eykz-DmtAjnmnEL_EQ1fAwH/view?usp=sharing](https://drive.google.com/file/d/1SltVmbWg8Eykz-DmtAjnmnEL_EQ1fAwH/view?usp=sharing)
 
@@ -608,7 +608,7 @@ The following small Python functions are included in the relevant sections so th
 
 <!-- SCREENSHOT NOTE - Capture the terminal after running <code>Get-ChildItem</code>. This proves that the original input is in <code>danger</code> and that any later result files were created by the analyst. -->
 
-# Question 1 - What C2 was used?
+## Question 1 - What C2 was used?
 
 ## Answer
 
@@ -742,7 +742,7 @@ BOF & Async BOF support
 
 ![Question 1 evidence](/images/holmes_2026/borrowname/cau1_2.png)
 
-# Question 2 - What SessionKey:EncryptionKey was used?
+## Question 2 - What SessionKey:EncryptionKey was used?
 
 ## Answer
 
@@ -1675,7 +1675,7 @@ Submit:
 53fc4c03c7b461befe5dcb268e3d9208:4580221ac3fe51be1797524a048e552d
 ~~~
 
-# Question 3 - Which CVE was used for privilege escalation?
+## Question 3 - Which CVE was used for privilege escalation?
 
 ## Answer
 
@@ -1726,7 +1726,7 @@ https://nvd.nist.gov/vuln/detail/CVE-2026-27912
 
 For the challenge answer, the authoritative evidence is the decrypted task output visible in the CyberChef result. Do not move the hostname fields into Question 2; they belong to the later registration and correlation analysis.
 
-# Question 4 - What is the MD5 of the custom BOF?
+## Question 4 - What is the MD5 of the custom BOF?
 
 ## Answer
 
@@ -1958,7 +1958,7 @@ The MD5 value required by the challenge is <code>56c92e28050c334b1b54974ffd02219
 
 <!-- SCREENSHOT NOTE - Capture Wireshark while selecting or exporting the target response and record the packet/application stream used. Capture the terminal output from <code>q4_extract_bof.py</code> with the full MD5. In IDA, load <code>results\\ntlm_capture_bof.bin</code> as raw x64 only for static inspection; do not run it, and capture Strings/Imports containing the SSPI and NTLM markers. -->
 
-# Question 5 - What ObjectSID belonged to the writable object?
+## Question 5 - What ObjectSID belonged to the writable object?
 
 ## Answer
 
@@ -1985,7 +1985,7 @@ Select-String -Path results\decoded_tasks.txt -Pattern "ObjectDN|ObjectSID|Write
 
 ![Question 5 evidence](/images/holmes_2026/borrowname/cau5.png)
 
-# Question 6 - Which password-discovery attack was used and when?
+## Question 6 - Which password-discovery attack was used and when?
 
 ## Answer
 
@@ -2029,7 +2029,7 @@ The answer uses UTC exactly as recorded in the EVTX. Do not convert it to local 
 
 ![Question 6 evidence](/images/holmes_2026/borrowname/cau6.png)
 
-# Question 7 - Which credentials were used to perform the attack?
+## Question 7 - Which credentials were used to perform the attack?
 
 ## Answer
 
@@ -2061,7 +2061,7 @@ The NTLMv2 response is evidence of the authentication exchange; it is not itself
 
 ![Question 7 evidence](/images/holmes_2026/borrowname/cau7.png)
 
-# Question 8 - Which user was targeted and what was the resulting password?
+## Question 8 - Which user was targeted and what was the resulting password?
 
 ## Answer
 
@@ -2089,7 +2089,7 @@ Select-String -Path results\decoded_tasks.txt -Pattern "fake UPN|jreed@CORE|New 
 
 ![Question 8 evidence](/images/holmes_2026/borrowname/cau8.png)
 
-# Question 9 - What new logon type was created after privilege escalation?
+## Question 9 - What new logon type was created after privilege escalation?
 
 ## Answer
 
@@ -2111,7 +2111,7 @@ Select-String -Path results\decoded_tasks.txt -Pattern "logon: 9|NewCredentials"
 
 ![Question 9 evidence](/images/holmes_2026/borrowname/cau9.png)
 
-# Question 10 - What path was used to upload the new agent?
+## Question 10 - What path was used to upload the new agent?
 
 ## Answer
 
@@ -2141,7 +2141,7 @@ Select-String -Path results\decoded_tasks.txt -Pattern "Trying to connect|Upload
 
 ![Question 10 evidence](/images/holmes_2026/borrowname/cau10.png)
 
-# Question 11 - Which service group was used to start the new agent?
+## Question 11 - Which service group was used to start the new agent?
 
 ## Answer
 
@@ -2167,7 +2167,7 @@ Select-String -Path results\decoded_tasks.txt -Pattern "Opening service|svchost.
 
 ![Question 11 evidence](/images/holmes_2026/borrowname/cau11.png)
 
-# Question 12 - What is the new BeaconID:SessionKey?
+## Question 12 - What is the new BeaconID:SessionKey?
 
 ## Answer
 
