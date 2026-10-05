@@ -30,7 +30,18 @@
       <description>
         <![CDATA[<h1>Holmes CTF 2026</h1><p>Author: Diep Manh Tuan(xxx@example.com)</p>
         
-          
+          <p>Paper Ghost challenge link: <a href="https://drive.google.com/drive/folders/1SCN6WeJOJ1yRRv5zTcL_T0W5MmW4Aj54?usp=sharing">https://drive.google.com/drive/folders/1SCN6WeJOJ1yRRv5zTcL_T0W5MmW4Aj54?usp=sharing</a></p>
+<h1 id="paper-ghost">
+<a class="header-anchor" href="#paper-ghost"></a>
+Paper Ghost
+</h1><p>Challenge name: <strong>Paper Ghost</strong></p>
+<p>Difficulty: <strong>Easy</strong></p>
+<p>Category: <strong>Digital Forensics / Windows Forensics</strong></p>
+<p>Describe: The story will unfold through the PDFs provided with each challenge&rsquo;s downloadable ZIP. All characters, locations and events are fictional. Any resemblance to real people, places or events is purely coincidental.</p>
+<p><strong>link chall:</strong> <a href="https://drive.google.com/drive/folders/1SCN6WeJOJ1yRRv5zTcL_T0W5MmW4Aj54?usp=sharing">https://drive.google.com/drive/folders/1SCN6WeJOJ1yRRv5zTcL_T0W5MmW4Aj54?usp=sharing</a></p>
+<ul>
+<li>
+<p>The challenge provides a Windows triage collection. The investigation mainly uses Windows Registry artifacts, Recent files and Jump Lists, SRUM network usage data, and the Windows Search index.</p>
         
         <hr><p>Published on 2026-09-17 at <a href='https://tu4nsecc.github.io/'>Welcome to my blog</a>, last modified on 2026-09-17</p>]]>
       </description>
